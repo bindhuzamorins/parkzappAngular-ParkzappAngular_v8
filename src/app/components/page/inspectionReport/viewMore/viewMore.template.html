@@ -1,0 +1,128 @@
+<h1 class="dialog-head"><b>Inspection Report</b>
+  <span matTooltip="Close" matTooltipPosition="right" (click)="close()"><i class="material-icons">close</i></span>
+</h1>
+<div id="scrollable-area">
+  <mat-card>
+    <img src="{{imageUrl}}{{parkImage}}" />
+    <br>
+    <br>
+
+    <div *ngIf="fieldsStatus">
+      <b class="headIng">Parkname</b> :
+      <span class="headIng">{{parkName}}</span>
+      <br>
+      <b class="headIng">Street Address</b> :
+      <span class="headIng">{{mainHead.streetAddress}}</span>
+      <br>
+      <b class="headIng">City</b> :
+      <span class="headIng">{{mainHead.city}}</span>
+      <br>
+      <b class="headIng">Inspected date</b> :
+      <span class="headIng">{{mainHead.inspectedDate}}</span>
+      <br>
+      <b class="headIng">Inspected by</b> :
+      <span class="headIng">{{mainHead.inspectorName}}</span>
+      <br>
+      <b class="headIng">Certificate Number</b> :
+      <span *ngIf=certificateStatus class="headIng">{{certificateNumber}}</span>
+      <br>
+      <b class="headIng">Inspection type</b>:
+      <span class="headIng">{{mainHead.inspectionType}}</span>
+      <br>
+      <b class="headIng">Inspection time</b>:
+      <span class="headIng">{{mainHead.time}}</span>
+      <br>
+      <b class="headIng">Temperature</b>:
+      <span class="headIng">{{mainHead.temperature}} F</span>
+      <br>
+      <b class="headIng">Weather</b>:
+      <span class="headIng">{{mainHead.weather}}</span>
+      <br>
+      <b class="headIng">Overview Note</b>:
+      <span class="headIng">{{mainHead.overviewNote}}</span>
+
+    </div>
+
+    <!--<button (click)="print()">print</button> <br>-->
+    <table *ngIf="fieldsStatus" class="table table-hover table-striped" ID="print-section">
+      <thead>
+        <div *ngFor="let report of reports">
+          <tr *ngFor="let questionSet of report.questionSetAndQuestions">
+            <td colspan="3" style="text-align: left;">QUESTION SET :{{questionSet.questionSetName}}
+              <table class="table table-hover table-striped">
+                <thead>
+                  <tr>
+                    <th style="width:5%; text-align: left;">SL #</th>
+                    <th>QUESTIONS</th>
+                    <th class="answer">ANSWER</th>
+                    <th>Updated Note</th>
+                    <th>Actions</th>
+
+
+                  </tr>
+                  <tr *ngFor="let question of questionSet.questions let i=index">
+                    <td style="width:5%; text-align: left;">{{i + 1}}</td>
+                    <td style="width:75%">{{question.question}}<br><span [class.hidden]="question.attachStatus"
+                        [ngStyle]="{'color': question.attachStatus? 'black' : 'red'}">Note :
+                        {{question.answerNote}}</span><br>
+                      <div [class.hidden]="question.videoStatus"><a
+                          href="{{imageUrl}}{{question.attachedFile}}">{{imageUrl}}{{question.attachedFile}}</a></div>
+                    </td>
+                    <td><span
+                        [ngStyle]="{'color': question.colorStatus? 'black' : 'red'}">{{question.answer}}</span><br>
+                      <div [class.hidden]="question.imgStatus"><img class="img-r"
+                          (click)="goToLink(question.attachedFile)" src="{{imageUrl}}{{question.attachedFile}}"></div>
+                    </td>
+                    <td>
+
+                      <span>
+                        {{question.updatedNote}}</span><br>
+
+                      <div *ngIf="question.updatedFile" [class.hidden]="question.updateImgStatus"><img class="img-r"
+                          (click)="goToLink(question.updatedFile)" src="{{imageUrl}}{{question.updatedFile}}"></div>
+                    </td>
+
+                    <td>
+                      <button matTooltip="Add Note" (click)="addNote(question)" class="btn btn-xs" style="border:none;">
+                        <i class="fa fa-plus-circle" style="font-size:23px;color:#488305bd"></i></button>
+                      <button matTooltip="View Note" (click)="viewNote(question)" class="btn btn-xs"
+                        style="border:none;">
+                        <i class="fa fa-eye" style="font-size:23px;color:#488305bd"></i></button>
+
+                    </td>
+
+
+                    <!-- <button *ngIf="record.asset_type=='image'" (click)="view(record)"
+                        class="btn btn-xs view-btn">View</button>
+                      <a target="_blank" href="{{imageUrl}}{{record.asset_url}}" *ngIf="record.asset_type=='doc'"
+                        class="btn btn-xs view-btn-doc">View</a>
+                      <button (click)="delete(record)" class="btn btn-xs delete-btn">Add</button> -->
+
+
+                  </tr>
+
+                </thead>
+              </table>
+            </td>
+          </tr>
+
+          <div *ngIf="fieldsStatus">
+            <b class="headIng">Issues Requiring Immediate Attention:</b>
+            <span class="headIng">{{mainHead.immediateIssue}}</span>
+            <br>
+            <b class="headIng">Issues Requiring Attention In Next Budget Period:</b>
+            <span class="headIng">{{mainHead.issueNextPeriod}}</span>
+            <br>
+            <b class="headIng">Other Comments:</b>
+            <span class="headIng">{{mainHead.comments}}</span>
+            <br>
+            <b class="headIng">Contact Person Concerning Above Noted Issue(s):</b>
+            <span class="headIng">{{mainHead.contactPerson}}</span>
+            <br>
+          </div>
+
+        </div>
+      </thead>
+    </table>
+  </mat-card>
+</div>

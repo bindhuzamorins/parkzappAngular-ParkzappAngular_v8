@@ -1,0 +1,17 @@
+.scroll{
+    
+    width: 600px;
+    height: 75px;   
+    overflow-x: hidden;
+    overflow-y: auto;
+    
+}
+
+.center {
+    text-align: center;
+  }
+
+.other-btn {
+    color: rgba(89, 131, 40, 0.74);
+    border-color: transparent;
+  }

@@ -1,0 +1,22 @@
+<h1 class="dialog-head"><b>Approve Inspection Request</b>
+  <span matTooltip="Close" matTooltipPosition="right" (click)="close()"><i class="material-icons">close</i></span>
+</h1>
+<mat-card>
+  <form #approveForm="ngForm">
+    <mat-form-field class=" col-md-4">
+    <mat-select class="animated fadeInDown col-md-6" required placeholder="Recurrence" [(ngModel)]="recurrenceName" name="recurrenceName" style="padding: 0px;">
+      <mat-option [value]="recurrence.id" *ngFor="let recurrence of recurrences">
+        {{recurrence.schedule_name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field><br/><br/>
+  
+    <mat-form-field class=" col-md-4">
+      <input onkeydown="return false"  [min]="minDate"  [matDatepicker]="picker2"  [(ngModel)]="InspectionDate" name="InspectionDate" required matInput placeholder="Inspection Date">
+      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+      <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
+    <br/>
+    <button (click)="requestApprove()" [disabled]="!approveForm.valid || !btnStatus" mat-raised-button>{{btnLabel}}</button>
+  </form>
+</mat-card>

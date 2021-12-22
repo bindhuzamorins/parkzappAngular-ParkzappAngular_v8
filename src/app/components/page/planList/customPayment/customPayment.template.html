@@ -1,0 +1,20 @@
+<h1 class="dialog-head"><b>Custom Payment</b>
+  <span matTooltip="Close" matTooltipPosition="right" (click)="close()"><i class="material-icons">close</i></span>
+</h1>
+<mat-card>
+  <form #payForm="ngForm" (ngSubmit)="pay(payForm.value)">
+    <mat-form-field>
+      <input pattern="[A-Za-z]{0,}" type="text" [(ngModel)]="firstname" name="firstname" required matInput placeholder="First name">
+    </mat-form-field>
+    <mat-form-field>
+      <input pattern="[A-Za-z]{0,}" type="text" [(ngModel)]="lastname" name="lastname" required matInput placeholder="Last name">
+    </mat-form-field>
+    <mat-form-field>
+      <input pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" type="text" [(ngModel)]="email" name="email" required matInput placeholder="Email">
+    </mat-form-field>
+    <mat-form-field>
+      <input maxlength="6" type="number" name="amount" [(ngModel)]="amount" required matInput placeholder="Amount $">
+    </mat-form-field>
+    <button  [disabled]="!payForm.valid ||!btnStatus" mat-raised-button>{{btnLabel}}</button>
+  </form>
+</mat-card>

@@ -1,0 +1,48 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="header">
+      <a matTooltip="Back to setup" routerLink="/setup" class="pe-7s-angle-left table-back">Back</a>
+      <h4 class="title">List of all Categories</h4>
+      <button (click)="add()" matTooltip="Add new" mat-raised-button>Add New Category</button><br />
+      <mat-form-field *ngIf="dataFetchStatus && tableDataStatus" class="search-box">
+        <input autofocus [(ngModel)]="filterArray.categoryName" matInput placeholder=" Search category...">
+      </mat-form-field>
+    </div>
+    <div class="content table-responsive table-full-width">
+      <mat-progress-bar *ngIf="!dataFetchStatus" mode="indeterminate"></mat-progress-bar>
+      <table *ngIf="dataFetchStatus && tableDataStatus" class="table table-hover table-striped">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Description</th>
+            <th class="action-th">Actions</th>
+          </tr>
+        </thead>
+
+        <tbody>
+
+          <tr *ngFor="let category of categories | paginate: { itemsPerPage: 5, currentPage: p} | filterBy:filterArray">
+            <!-- <tr            *ngFor="let category of categories | filterBy: filterArray | paginate: { itemsPerPage: 5, currentPage: p }"> -->
+            <!-- <tr *ngFor="let category of categories | filterBy: filterArray | paginate: { itemsPerPage: 5, currentPage: p }"> -->
+            <td>{{category.categoryName}}</td>
+            <td>{{category.categoryDescription}}</td>
+            <td>
+              <button (click)="edit(category)" class="btn btn-xs edit-btn">Edit</button>
+              <button (click)="delete(category)" class="btn btn-xs delete-btn">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+        <!-- 
+        <tr class="icon-and-text" *ngIf="(items | filterBy: filterArray).length === 0">
+          <i class="material-icons alert-icon animated wobble">warning</i>
+          <span class="alert-text">No such details available!</span>
+        </tr> -->
+
+      </table>
+      <pagination-controls *ngIf="dataFetchStatus && tableDataStatus" class="pagination" (pageChange)="p = $event">
+      </pagination-controls>
+      <p *ngIf="!tableDataStatus" class="note center">NOTE: Currently there are no categories added to this account, You
+        can add new category by clicking on the Add New Category button</p>
+    </div>
+  </div>
+</div>

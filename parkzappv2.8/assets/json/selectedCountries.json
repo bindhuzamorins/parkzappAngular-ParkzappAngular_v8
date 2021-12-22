@@ -1,0 +1,58 @@
+[
+    {
+        "name": "Hong Kong",
+        "code": "1"
+    },
+    {
+        "name": "Malaysia",
+        "code": "2"
+    },
+    {
+        "name": "Singapore",
+        "code": "3"
+    },
+    {
+        "name": "USA",
+        "code": "4"
+    },
+    {
+        "name": "India",
+        "code": "5"
+    },
+    {
+        "name": "Bahrain",
+        "code": "6"
+    },
+    {
+        "name": "Cyprus",
+        "code": "7"
+    },
+    {
+        "name": "Egypt",
+        "code": "8"
+    },
+    {
+        "name": "Kuwait",
+        "code": "9"
+    },
+    {
+        "name": "Oman",
+        "code": "10"
+    },
+    {
+        "name": "Qatar",
+        "code": "11"
+    },
+    {
+        "name": "Saudi Arabia",
+        "code": "12"
+    },
+    {
+        "name": "United Arab Emirates",
+        "code": "13"
+    },
+    {
+        "name": "Canada",
+        "code": "14"
+    }
+]

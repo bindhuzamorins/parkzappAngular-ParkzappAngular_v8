@@ -1,0 +1,59 @@
+<h1 class="dialog-head">
+  <b>Import Settings</b>
+  <span matTooltip="Close" matTooltipPosition="right" (click)="close()">
+    <i class="material-icons">close</i>
+  </span>
+</h1>
+<mat-card>
+  <div>
+    <p>Select the configuration you want to import for {{ServiceName}} Service <br/>and then click on 'Map'.</p>
+ <div>
+
+    <mat-select *ngIf="moreDetails.park"  class="equipment-select" multiple placeholder=" Park" [(ngModel)]="park" style="width: 80%;margin-left:10%;">
+        <mat-option [value]="pa.id" *ngFor="let pa of moreDetails.park">
+          {{pa.name}}
+        </mat-option>
+      </mat-select>
+    </div>   
+    <div>
+
+        <mat-select *ngIf="moreDetails.user"  class="equipment-select" multiple placeholder=" User" [(ngModel)]="user" style="width: 80%;margin-left:10%;">
+            <mat-option [value]="u.id" *ngFor="let u of moreDetails.user">
+              {{u.name}}
+            </mat-option>
+          </mat-select>
+        </div>   
+        <div>
+
+     <mat-select *ngIf="moreDetails.email"  class="equipment-select" multiple placeholder=" Email" [(ngModel)]="email" style="width: 80%;margin-left:10%;">
+        <mat-option [value]="em.id" *ngFor="let em of moreDetails.email">
+          {{em.name}}
+        </mat-option>
+      </mat-select>
+    </div>
+    
+    <mat-select *ngIf="moreDetails.amenity"  class="equipment-select" multiple placeholder="amenity" [(ngModel)]="amenity" style="width: 80%;margin-left:10%;">
+        <mat-option [value]="am.id" *ngFor="let am of moreDetails.amenity">
+          {{am.name}}
+        </mat-option>
+      </mat-select>
+    </div>   
+    <div>
+
+    <div>  
+        <mat-select *ngIf="moreDetails.schedule"  class="equipment-select" multiple placeholder="schedule" [(ngModel)]="schedule" style="width: 80%;margin-left:10%;">
+            <mat-option [value]="sh.id" *ngFor="let sh of moreDetails.schedule">
+              {{sh.name}}
+            </mat-option>
+          </mat-select>
+        </div>   
+        <br/>  
+         <br/>
+    <div class="row" style="float:right;padding-top:4%;">
+      <button class="add-btn" mat-raised-button type="button" (click)="savemap()" [disabled]="Button1Status">{{Button1Name}}
+      </button>
+      <button class="buttons btn-danger cancel" mat-raised-button type="button" (click)="cancelmap()" [disabled]="Button12Status">{{Button2Name}}
+      </button>
+    </div>
+  </div>
+</mat-card>

@@ -1,0 +1,76 @@
+<h1 class="dialog-head">
+  <b>WORK ORDER DESCRIPTION</b>
+  <span matTooltip="Close" matTooltipPosition="right" (click)="close()">
+    <i class="material-icons">close</i>
+  </span>
+</h1>
+<div id="scrollable-area">
+  <mat-card>
+    <img src="{{imageUrl}}{{moreDetails.parkImage}}" />
+    <ul>
+      <li>Park Name:
+        <span class="li-details">{{moreDetails.parkName}}</span>
+      </li>
+      <li>Park Address:
+        <span class="li-details">{{moreDetails.streetAddress}},{{moreDetails.city}}</span>
+      </li>
+      <li>Inspected Date:
+        <span class="li-details"> {{moreDetails.date}}</span>
+      </li>
+      <li>Work order No:
+        <span class="li-details"> {{moreDetails.workOrderNo}}</span>
+      </li>
+      <li>Work Description:
+        <!-- <span class="li-details"> {{moreDetails.workDesc}}</span> -->
+        <span class="li-details lineHeight"> <div [innerHTML]="moreDetails.workDesc | nl2br : true"></div></span>
+        
+        <!-- <div [innerHTML]="'<strong>test html content</strong>\nnew line\nthird line' | nl2br"></div> -->
+
+      </li>
+      <li>Work Order Sender info:
+        <span class="li-details"> {{moreDetails.recipientEmail}}</span>
+      </li>
+      <form #pendingAddForm="ngForm">
+        <mat-form-field>
+          <input type="text" [(ngModel)]="completedBy" name="completedBy" required matInput placeholder="Work Completed By">
+        </mat-form-field>
+        <br/>
+        <mat-form-field>
+          <input maxlength="300" type="text" [(ngModel)]="material" name="material" required matInput placeholder="Material">
+        </mat-form-field>
+        <br/>
+       
+        <!-- <mat-form-field class=" col-md-6" style="    padding-left: 0; ">
+          <input  onkeydown="return false" [min]="minDate"  [max]="maxDate" [mdDatepicker]="picker1"   [(ngModel)]="date" name="date" required mdInput placeholder="Date">
+          <md-datepicker-toggle mdSuffix [for]="picker1"></md-datepicker-toggle>
+          <md-datepicker #picker1></md-datepicker>
+        </mat-form-field> -->
+       
+        <mat-form-field class=" col-md-6" style=" padding-left: 1px;">
+          <input  onkeydown="return false" (dateInput)="choosemindate();" [min]="minDate" [max]="maxDate" [matDatepicker]="picker1"   [(ngModel)]="date" name="date" required matInput placeholder="Date">
+          <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+          <mat-datepicker #picker1></mat-datepicker>
+        </mat-form-field>
+
+
+        <br/>
+        <mat-form-field style="width: 98px; padding-left: 2px;" >
+        <mat-select required  placeholder="Hours" [(ngModel)]="time1" name="hour" class="animated fadeInDown col-md-4 col-sm-4" style="margin-bottom: 0%; padding-left: 2px; padding: 0px;">
+              <mat-option *ngFor="let hr of hour " [value]="hr">
+                  {{hr}}
+              </mat-option>
+        </mat-select>
+      </mat-form-field>
+    <mat-form-field style="width: 98px; padding-left: 20px;"> 
+         <mat-select required  placeholder="Mins" [(ngModel)]="time2" name="mins" class="animated fadeInDown col-md-4 col-sm-4" style="margin-bottom: 0%;padding: 0px;">
+                <mat-option *ngFor="let m of mins " [value]="m">
+                    {{m}}
+                  </mat-option>
+                </mat-select> 
+              </mat-form-field>
+        <br/>
+        <button (click)="submit(moreDetails.id)" [disabled]="!pendingAddForm.valid" mat-raised-button>{{btnLabel}}</button>
+      </form>
+    </ul>
+  </mat-card>
+</div>

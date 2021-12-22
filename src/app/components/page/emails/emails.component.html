@@ -1,0 +1,50 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="header">
+      <a matTooltip="Back to setup" routerLink="/setup" class="pe-7s-angle-left table-back">Back</a>
+      <h4 class="title">List of all Emails</h4>
+      <button (click)="add()" matTooltip="Add new" mat-raised-button>Add New Email</button>
+      <br/>
+      <mat-form-field *ngIf="dataFetchStatus && tableDataStatus" class="search-box">
+        <input autofocus [(ngModel)]="filterArray.emailId" matInput placeholder="Search email...">
+      </mat-form-field>
+    </div>
+    <div class="content table-responsive table-full-width">
+      <mat-progress-bar *ngIf="!dataFetchStatus" mode="indeterminate"></mat-progress-bar>
+      <table *ngIf="dataFetchStatus && dataStatus && tableDataStatus" class="table table-hover table-striped">
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th class="action-th">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let email of emails | filterBy: filterArray | paginate: { itemsPerPage: 5, currentPage: p }">
+            <td>{{email.emailId}}</td>
+            <td>{{email.name}}</td>
+            <!-- <td>
+              <textarea readonly cols="50">{{email.description | emptyDescription}}</textarea>
+            </td> -->
+            <td>
+              <span [outerHTML]="email.description | emptyField"></span>
+            </td>
+            <td>
+              <button (click)="edit(email)" class="btn btn-xs edit-btn" style="margin-left: 3px;">Edit</button>
+              <button (click)="delete(email)" class="btn btn-xs delete-btn" style="margin-left: 3px;">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+
+        <tr class="icon-and-text" *ngIf="(items | filterBy: filterArray).length === 0">
+          <i class="material-icons alert-icon animated wobble">warning</i>
+          <span class="alert-text">No such details available!</span>
+        </tr>
+
+      </table>
+      <pagination-controls *ngIf="dataFetchStatus && dataStatus && tableDataStatus" class="pagination" (pageChange)="p = $event"></pagination-controls>
+      <p *ngIf="!tableDataStatus" class="note center">NOTE: Currently there are no emails added to this account, You can add new email by clicking on the Add New Email button</p>
+    </div>
+  </div>
+</div>

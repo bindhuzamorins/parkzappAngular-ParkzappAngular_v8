@@ -1,0 +1,39 @@
+<mat-card>
+  <form #addForm="ngForm">
+
+    <label>#Work order: <span>{{wonumber}}</span></label>
+
+    <!-- <mat-form-field class="col-md-4 work-order">
+      <input type="text" onfocus [(ngModel)]="wonumber" name="wonumber" required mdInput placeholder="Work Order Number" readonly>
+    </mat-form-field> -->
+
+    <!-- <mat-form-field class="col-md-8">
+      <input autofocus type="text" [(ngModel)]="email" name="email" required mdInput placeholder="Email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+    </mat-form-field> -->
+
+    <mat-select class="col-md-6" required placeholder="Select Park" [(ngModel)]="park" name="park">
+      <mat-option [value]="park.id" *ngFor="let park of parks">
+        {{park.parkName}}
+      </mat-option>
+    </mat-select>
+
+    <mat-select multiple class="col-md-6 email-select" required placeholder="Select emails" [(ngModel)]="email" name="email">
+      <mat-option [value]="email.id" *ngFor="let email of emails">
+        {{email.emailId}}
+      </mat-option>
+    </mat-select>
+
+
+    <br/><br/>
+    <br/><br/>
+
+    <mat-form-field class="col-md-12">
+      <textarea rows="5" type="text" [(ngModel)]="description" name="description" matInput placeholder="Work Description" required></textarea>
+    </mat-form-field>
+    <div class="col-md-12">
+      <label>Attachment</label>
+      <input accept="image/*" (change)="fileEvent($event)" [(ngModel)]="image" name="image" type="file" /><br/>
+    </div>
+    <button (click)="generate()" [disabled]="!addForm.valid ||!btnStatus || !imageFileStatus" mat-raised-button>{{btnLabel}}</button>
+  </form>
+</mat-card>

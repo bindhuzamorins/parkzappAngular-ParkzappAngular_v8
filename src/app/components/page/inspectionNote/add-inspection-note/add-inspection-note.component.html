@@ -1,0 +1,67 @@
+<h1 class="dialog-head">
+  <b>Add Inspection Note</b>
+  <span matTooltip="Close" matTooltipPosition="right" (click)="close()">
+    <i class="material-icons">close</i>
+  </span>
+</h1>
+<mat-card style="width:400px;">
+  <form #addForm="ngForm">
+
+    <div style="display: inline-flex;width: 100%;">
+
+      <ng4-files-drop (filesSelect)="filesSelect($event)" [configId]="'my-pdf-config'" style="width: 100%;">
+        <div style="display: inline-block; height: 150px; width: 100%; background-color: #f9f9f9;border: 1px dashed;">
+          <ng4-files-click (filesSelect)="filesSelect($event)" [configId]="'my-image-config'"
+            style="padding-left:40%; ">
+            <img src="assets/parkzapp/upload.png" style="padding-top:25%;width:43%; " />
+            <br /> <span
+              style="background-color: #598328;color: white;font-family: Roboto, &quot;Helvetica Neue&quot;, sans-serif;font-size: 14px;font-weight: 500;min-width: 88px;line-height: 36px;padding: 7px 16px;border-radius: 2px;/* right: 2%; */margin-left: -20%;">
+              Choose file</span>
+            <br />
+            <span style=" margin: -16px; font-weight: normal; font-size: 9px;">Or drag and drop here</span>
+          </ng4-files-click>
+        </div>
+      </ng4-files-drop>
+      <div *ngIf="divshown" style="width: 25%;">
+        <img *ngIf="imageShown" [src]="currentProfileImage" class="imageview" />
+        <img *ngIf="docshown" src="assets/parkzapp/pdfimage.png" style="width: 100%;" />
+      </div>
+    </div>
+    <p class="note">Note: Acceptable formats are jpeg, jpg, png</p>
+
+
+    <input accept="image/*,application/pdf" (change)="fileEvent($event)" [(ngModel)]="image" name="image" type="file" />
+
+    <br />
+    <br />
+    <mat-form-field style="width:100%;">
+      <textarea required type="text" pattern="^[A-Za-z0-9](?!.*?\s$)[A-Za-z0-9\s]{0,50}$" MaxLength="150"
+        [(ngModel)]="note" name="note" required matInput placeholder="Inspection Note"></textarea>
+    </mat-form-field>
+    <br />
+    <br />
+
+    <!-- <md-select *ngIf='moreDetails' required placeholder="{{this.placeholderName}}" [(ngModel)]="parkName"
+      name="parkName">
+      <md-option [value]="parkid">
+        {{ parkname }}
+      </md-option>
+    </md-select>
+
+    <md-select *ngIf='!moreDetails' required placeholder="{{this.placeholderName}}" [(ngModel)]="parkName"
+      name="parkName">
+      <md-option *ngFor="let park of parks" [value]="park.id">
+        {{ park.parkName }}
+      </md-option>
+    </md-select>
+    <br /><br /> -->
+
+    <!-- <md-input-container>
+      <input [disabled]="parkNameStatus" auto-complete [source]="parks" placeholder="enter text" value-formatter="parkName" list-formatter="parkName"
+        type="text" [(ngModel)]="parkName" name="parkName" required mdInput placeholder="Park Name">
+    </md-input-container> -->
+    <br />
+    <br />
+    <button (click)="add()" [disabled]="!addForm.valid ||!btnStatus " mat-raised-button>{{btnLabel}}</button>
+  </form>
+</mat-card>

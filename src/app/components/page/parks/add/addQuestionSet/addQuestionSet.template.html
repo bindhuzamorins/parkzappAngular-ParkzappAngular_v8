@@ -1,0 +1,27 @@
+<h1 class="dialog-head">
+  <b>Select Customized Questionset</b>
+  <!-- <span mdTooltip="Close" mdTooltipPosition="right" (click)="close()">
+    <i class="material-icons">close</i>
+  </span> -->
+</h1>
+<mat-card>
+  <!-- <md-select (change)="changeBtnStatus()" class="equipment-select" multiple placeholder="Equipments" [(ngModel)]="newEquipments">
+                <md-option [value]="equipment.id" *ngFor="let equipment of equipments">
+                  {{equipment.equipmentName}}
+                </md-option>
+              </md-select> -->
+  <mat-form-field>
+  <mat-select (selectionChange)="changeBtnStatus()" style="width:100% !important;padding: 0px;" class="equipment-select" multiple placeholder="Customized Question Sets" [(ngModel)]="custQuestionSet">
+    <mat-option [value]="customizedQuestionSet.id" *ngFor="let customizedQuestionSet of customizedQuestionSets">
+      {{customizedQuestionSet.questionnaireSetName}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+  <!-- <button class="add-btn" [disabled]="!btnStatus" (click)="addNew()" mdTooltip="Add new" md-raised-button>{{btnLabel}}</button> -->
+  <br/>
+  <br/>
+
+
+  <br/>
+  <button class="btn btn-xs edit-btn" [disabled]="!btnStatus" (click)="selecteSets()" matTooltip="Select question sets" mat-raised-button>Add</button>
+</mat-card>

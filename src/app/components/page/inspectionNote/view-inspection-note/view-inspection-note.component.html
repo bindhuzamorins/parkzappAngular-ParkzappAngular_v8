@@ -1,0 +1,77 @@
+<h1 class="dialog-head"><b>Inspection Notes</b>
+  <span matTooltip="Close" matTooltipPosition="right" (click)="close()"><i class="material-icons">close</i></span>
+</h1>
+<!-- <div id="scrollable-area"> -->
+<mat-card>
+  <!-- <img src="{{imageUrl}}{{parkImage}}" />
+    <br>
+    <br> -->
+
+  <div *ngIf="fieldsStatus">
+    <b class="headIng">Parkname</b> :
+    <span class="headIng">{{parkName}}</span>
+    <br>
+    <!-- <b class="headIng">Street Address</b> :
+      <span class="headIng">{{mainHead.streetAddress}}</span>      <br> -->
+
+  </div>
+
+  <!--<button (click)="print()">print</button> <br>-->
+  <table *ngIf="fieldsStatus" class="table table-hover table-striped" ID="print-section">
+    <!-- <thead> -->
+    <!-- <div *ngFor="let report of reports"> -->
+    <!-- <tr *ngFor="let questionSet of report.questionSetAndQuestions"> -->
+    <!-- <td colspan="3" style="text-align: left;">QUESTION SET :{{questionSet.questionSetName}} -->
+    <!-- <table class="table table-hover table-striped"> -->
+    <thead>
+      <tr>
+        <th style="width:5%; text-align: left;">SL #</th>
+        <th>Inspection Note</th>
+        <th>Date</th>
+        <th>Created By</th>
+        <th>Attachment</th>
+        <!-- <th class="answer">ANSWER</th> -->
+      </tr>
+    </thead>
+    <tbody>
+      <!-- <tr *ngFor="let question of questionSet.questions let i=index"> -->
+      <tr *ngFor="let report of reports let i=index">
+        <td style="width:5%; text-align: left;">{{i + 1}}</td>
+        <td>{{report.inspectionNote}}</td>
+        <td>{{report.date}}</td>
+        <td>{{report.userName}}</td>
+        <td>
+          <div *ngIf="report.fileUrl"></div>
+        </td>
+
+        <!-- <td>{{question.question}}<br><span [class.hidden]="question.attachStatus"
+                        [ngStyle]="{'color': question.attachStatus? 'black' : 'red'}">Note :
+                        {{question.answerNote}}</span><br>
+                      <div [class.hidden]="question.videoStatus"><a
+                          href="{{imageUrl}}{{question.attachedFile}}">{{imageUrl}}{{question.attachedFile}}</a></div>
+                    </td>
+                    <td><span
+                        [ngStyle]="{'color': question.colorStatus? 'black' : 'red'}">{{question.answer}}</span><br>
+                      <div [class.hidden]="question.imgStatus"><img class="img-r"
+                          (click)="goToLink(question.attachedFile)" src="{{imageUrl}}{{question.attachedFile}}"></div>
+                    </td> -->
+
+
+        <!-- <button *ngIf="record.asset_type=='image'" (click)="view(record)"
+                        class="btn btn-xs view-btn">View</button>
+                      <a target="_blank" href="{{imageUrl}}{{record.asset_url}}" *ngIf="record.asset_type=='doc'"
+                        class="btn btn-xs view-btn-doc">View</a>
+                      <button (click)="delete(record)" class="btn btn-xs delete-btn">Add</button> -->
+
+
+      </tr>
+    </tbody>
+
+    <!-- </table> -->
+    <!-- </td> -->
+    <!-- </tr> -->
+    <!-- </div> -->
+    <!-- </thead> -->
+  </table>
+</mat-card>
+<!-- </div> -->

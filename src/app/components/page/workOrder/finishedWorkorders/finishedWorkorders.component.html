@@ -1,0 +1,69 @@
+<div class="col-md-12 margin-top">
+  <div class="card">
+    <div class="header">
+      <mat-progress-bar *ngIf="loadStatus" mode="indeterminate"></mat-progress-bar>
+      <form  #searchForm="ngForm" (ngSubmit)="finishedOrder(searchForm.value)">
+      <!--  <mat-form-field class="col-md-4">
+          <input type="date" [(ngModel)]="fromDate" name="fromDate" required mdInput placeholder="From">
+        </mat-form-field>
+        <mat-form-field class="col-md-4">
+          <input type="date" [(ngModel)]="toDate" name="toDate" required mdInput placeholder="To">
+        </mat-form-field>
+      -->
+      <mat-form-field class=" col-md-4" style=" padding-left: 15px;">
+        <input  onkeydown="return false" (dateInput)="choosemindate();" [max]="allmaxDate" [matDatepicker]="picker1"   [(ngModel)]="dateone" name="dateone" required matInput placeholder="From">
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field class=" col-md-4" style=" padding-left: 15px;">
+        <input onkeydown="return false" (dateInput)="choosemaxdate();" [max]="allmaxDate" [min]="minDate"  [matDatepicker]="picker2" [min]="minDate"  [(ngModel)]="datetwo" name="datetwo" required matInput placeholder="To">
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+      </mat-form-field>
+        <button [disabled]="!searchForm.valid || !searchBtnStatus" mat-raised-button class="search-btn">{{searchBtnLabel}}</button>
+      </form>
+      <br/>    <br/>    <br/>
+    </div>
+    <div class="content table-responsive table-full-width">
+      <mat-form-field class="search-box" *ngIf='dataFetchStatus'>
+        <input autofocus [(ngModel)]="filterArray.filter_by" matInput placeholder="Search by Park / Inspector / #Work order">
+      </mat-form-field>
+      <table class="table table-hover table-striped" *ngIf='dataFetchStatus'>
+        <thead>
+          <tr>
+            <th>#Work order</th>
+            <th>Inspected Date</th>
+            <th>Inspector</th>
+            <th>Park Name</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- <!--<tr *ngFor="let work of works | filterBy: filterArray  | paginate: { itemsPerPage: 5, currentPage: p }"> -->
+          <tr *ngFor="let finishedWork of finishedWorks | filterBy: filterArray | paginate: { itemsPerPage: 5, currentPage: p }">
+
+            <!-- <tr *ngFor="let finishedWork of finishedWorks | filterBy: filterArray"> -->
+            <td>{{finishedWork.workOrderNo}}</td>
+            <td>{{finishedWork.date}}</td>
+            <td>{{finishedWork.inspectorName}}</td>
+            <td>{{finishedWork.parkName}}</td>
+            <td>
+              <button (click)="view(finishedWork)" class="btn btn-xs view-btn" style="margin-bottom: 3px;">View Details</button>
+              <button (click)="print(finishedWork,$event.target)" [disabled]="!planprintStatus" class="btn btn-xs edit-btn" style="margin-left: 3px;">Print & Download</button>
+            </td>
+          </tr>
+          <tr class="icon-and-text" *ngIf="(items | filterBy: filterArray).length === 0">
+            <i class="material-icons alert-icon animated wobble">warning</i>
+            <span class="alert-text">No such details available!</span>
+          </tr>
+        </tbody>
+      </table>
+      <!--<pagination-controls *ngIf='dataFetchStatus' class="pagination" (pageChange)="p = $event"></pagination-controls>-->
+      <pagination-controls *ngIf='dataFetchStatus' class="pagination" (pageChange)="p = $event"></pagination-controls>
+      <div *ngIf="messageStatus">
+        <br/>  <br/>  <br/>
+        <br/>
+      </div>
+    </div>
+  </div>
+</div>

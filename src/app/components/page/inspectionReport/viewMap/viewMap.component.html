@@ -1,0 +1,9 @@
+<h1 class="dialog-head"><b>Inspection Map</b>
+  <span matTooltip="Close" matTooltipPosition="right" (click)="close()"><i class="material-icons">close</i></span>
+</h1>
+<mat-card>
+  <agm-map [zoom]="17" [latitude]="lat" [longitude]="lng">
+    <agm-marker [latitude]="lat" [longitude]="lng"></agm-marker>
+  </agm-map>
+
+</mat-card>

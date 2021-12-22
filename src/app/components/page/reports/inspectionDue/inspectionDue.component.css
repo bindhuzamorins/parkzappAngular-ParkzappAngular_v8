@@ -1,0 +1,123 @@
+.green{
+    color:green;
+}
+.red{
+    color:#bb1d1d;
+}
+.search-box {
+    width: 100%;
+  }
+  /*.dialog-head {
+  color: #666666;
+  font-size: 20px;
+  margin-top: 0px;
+}
+
+.dialog-head span {
+  float: right;
+  cursor: pointer;
+}*/
+
+mat-form-field {
+    width: 50%;
+    font-family: 'Simonetta', cursive;
+    font-weight: bold;
+    font-size: 17px;
+  }
+  
+  button {
+    background-color: rgba(47, 74, 12, 0.82);
+    color: white;
+    width: 100%;
+  }
+  
+  .search-again-table {
+    font-family: 'Simonetta', cursive;
+    font-weight: bold;
+    font-size: 15px;
+    float: right;
+    padding-right: 15px;
+    color: #5c882a;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  
+  .search-again-link {
+    color: #5c882a;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  
+  mat-select {
+    width: 100%;
+    font-family: 'Simonetta', cursive;
+    font-weight: bold;
+    font-size: 17px;
+    margin-bottom: 0%;
+  }
+
+  
+  label {
+    width: 100%;
+    font-family: 'Simonetta', cursive;
+    font-weight: bold;
+    color: #a7a7a7;
+    font-size: 17px;
+  }
+  
+  .common-btn {
+    background-color: #6dc030;
+    color: white;
+    border-color: #6dc030;
+    width: 100%;
+  }
+  .printme {
+      background-color: #6dc030 !important;
+      color: white;
+      border-color: #6dc030;
+      width: 100%;
+  }
+  .up-btn {
+    margin-left: 55%;
+    margin-top: -20%;
+  }
+  
+  .down-btn {
+    margin-bottom: -10%;
+  }
+  
+  .search-box {
+    width: 100%;
+  }
+  
+  .to-up {
+    right: auto;
+    left: 190px;
+    bottom: -10px;
+  }
+  
+  .submit_search {
+    margin-top: 0px;
+  }
+  
+  .viewbtn {
+    margin-bottom: -10%;
+  }
+  
+  .printbtn {
+    margin-bottom: -25%;
+    margin-left: 1%;
+  }
+  
+  .sentbtn {
+    margin-top: -6%;
+    margin-left: 70%;
+  }
+  
+  .to-left {
+    margin-right: 10%;
+    left: 15px;
+    margin-bottom: 2%;
+    padding-top: 1%;
+  }
+  

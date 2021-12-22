@@ -1,0 +1,82 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="header">
+      <a matTooltip="Back to setup" routerLink="/setup" class="pe-7s-angle-left table-back">Back</a>
+      <h4 class="title">List of all Questions</h4>
+      <button (click)="add()" matTooltip="Add new" mat-raised-button>Add New Question</button><br />
+      <div class="row">
+        <div class="col-md-12 ">
+          <div class="col-md-6">
+            <mat-form-field>
+            <mat-select class="col-md-6" required placeholder="Inspection" [(ngModel)]="inspectionType"
+              name="inspectionType" style="padding: 0px;">
+              <mat-option [value]="inspectionType.id" (click)="fetchQsData(inspectionType.id)"
+                *ngFor="let inspectionType of inspectionTypes">
+                {{inspectionType.inspectiontype}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          </div>
+          <div class="col-md-6">
+          <mat-form-field>
+            <mat-select class="col-md-6" required placeholder="Park" [(ngModel)]="parkId" name="parkId" style="padding: 0px;">
+              <mat-option [value]="park.id" (click)="fetchQsData(park.id)" *ngFor="let park of parks">
+                {{park.parkName}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <mat-form-field class="col-md-12">
+            <mat-select class="col-md-12" required placeholder="Question Set" [(ngModel)]="questionnaireSetName"
+              name="questionnaireSetName" style="padding: 0px;">
+              <mat-option (click)="fetchDatabyid(questionsset.id)" *ngFor="let questionsset of questionssets"
+                [value]="questionsset.id">
+                {{questionsset.questionnaireSetName}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <mat-form-field *ngIf="dataFetchStatus" class="search-box col-md-12">
+        <input autofocus [(ngModel)]="filterArray.question" matInput placeholder="Search question..">
+      </mat-form-field>
+
+    </div>
+
+    <div class="content table-responsive table-full-width">
+
+      <mat-progress-bar *ngIf="!dataFetchStatus" mode="indeterminate"></mat-progress-bar>
+
+      <table *ngIf="dataFetchStatus" class="table table-hover table-striped">
+        <thead>
+          <tr>
+            <th width="65%">Question</th>
+            <th width="10%">Answer</th>
+            <th width="15%">Question Set</th>
+            <th class="action-w" width="10%">Action</th>
+          </tr>
+        </thead>
+
+        <tbody>
+         
+          <tr
+            *ngFor="let question of questions | filterBy: filterArray | paginate: { itemsPerPage: 5, currentPage: p };">
+            <td>{{question.question}}</td>
+            <td>{{question.answer}}</td>
+            <td>{{question.questionnaire_set_name}}</td>
+            <td>
+              <button (click)="edit(question)" [class.hidden]="question.status"
+                class="btn btn-xs edit-btn" >Edit</button>
+              <button (click)="del(question)" [class.hidden]="question.status"
+                class="btn btn-xs delete-btn" style="margin-left: 3px;">Delete</button>
+
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <pagination-controls *ngIf="dataFetchStatus" class="pagination" (pageChange)="p = $event"></pagination-controls>
+    </div>
+  </div>
+</div>

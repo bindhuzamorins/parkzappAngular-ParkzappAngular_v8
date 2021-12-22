@@ -1,0 +1,48 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="header">
+      <a matTooltip="Back to setup" routerLink="/setup" class="pe-7s-angle-left table-back">Back</a>
+      <h4 class="title">List of all Cities</h4>
+      <button (click)="add()" matTooltip="Add new" mat-raised-button>Add New City</button><br />
+      <mat-form-field *ngIf="dataFetchStatus && tableDataStatus" class="search-box">
+        <input autofocus [(ngModel)]="filterArray.city" matInput placeholder="Search city...">
+      </mat-form-field>
+    </div>
+    <div class="content table-responsive table-full-width">
+      <mat-progress-bar *ngIf="!dataFetchStatus" mode="indeterminate"></mat-progress-bar>
+      <table *ngIf="dataFetchStatus && tableDataStatus" class="table table-hover table-striped">
+        <thead>
+
+          <tr>
+            <th>City</th>
+            <th>State</th>
+            <th>Street Address</th>
+            <th class="action-th">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let cityDetail of cities | filterBy: filterArray | paginate: { itemsPerPage: 5, currentPage: p }">
+            <td>{{cityDetail.city}}</td>
+            <td>{{cityDetail.state}}</td>
+            <td>{{cityDetail.address}}, {{cityDetail.zipCode}}</td>
+            <td>
+              <button (click)="viewMore(cityDetail)" class="btn btn-xs view-btn" >View More</button>
+              <button (click)="edit(cityDetail)" class="btn btn-xs edit-btn" style="margin-left: 3px;">Edit</button>
+              <button (click)="delete(cityDetail)" class="btn btn-xs delete-btn" style="margin-left: 3px;">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+
+        <tr class="icon-and-text" *ngIf="(items | filterBy: filterArray).length === 0">
+          <i class="material-icons alert-icon animated wobble">warning</i>
+          <span class="alert-text">No such details available!</span>
+        </tr>
+
+      </table>
+      <pagination-controls *ngIf="dataFetchStatus && tableDataStatus" class="pagination" (pageChange)="p = $event">
+      </pagination-controls>
+      <p *ngIf="!tableDataStatus" class="note center">NOTE: Currently there are no cities added to this account, You can
+        add new city by clicking on the Add New City button</p>
+    </div>
+  </div>
+</div>

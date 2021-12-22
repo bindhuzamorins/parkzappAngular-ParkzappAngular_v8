@@ -1,0 +1,35 @@
+<mat-card>
+  <a matTooltip="Back to help" routerLink="/help" class="pe-7s-angle-left table-back">Back</a>
+  <h3>If you have business inquiries or other questions, please fill out the following form to contact us. Thank you.</h3>
+  <button class="complaint-btn" (click)="registerComplaint()" mat-raised-button>Register Inquiry</button>
+
+
+
+  <form #addForm="ngForm">
+    <mat-form-field class="animated fadeInUp">
+      <input #fullname="ngModel" [rangeLength]="[3,20]" (keypress)="trimme()" pattern="[A-Za-z ]{3,20}" type="text" [(ngModel)]="name" name="name" required
+        matInput placeholder="Name">
+    </mat-form-field>
+    <p class="error-msg animated fadeInDown" *ngIf="fullname.errors?.rangeLength">Min 3 and max 20 characters!</p>
+    <p class="error-msg animated fadeInDown" *ngIf="fullname.errors?.pattern">Special characters and numbers are not allowed!</p>
+
+
+    <mat-form-field class="animated fadeInUp">
+      <input type="email" #emailID="ngModel" [(ngModel)]="email" [email]="true" name="email"
+        required matInput placeholder="Email">
+    </mat-form-field>
+    <p class="error-msg animated fadeInDown" *ngIf="emailID.errors?.pattern">Please enter a valid Email ID!</p>
+
+
+    <mat-form-field class="animated fadeInUp">
+      <input #subj="ngModel" [rangeLength]="[3, 50]" type="text" [(ngModel)]="subject" name="subject" required matInput placeholder="Subject">
+    </mat-form-field>
+    <p class="error-msg animated fadeInDown" *ngIf="subj.errors?.rangeLength">Min 3 and max 50 characters!</p>
+
+
+    <mat-form-field class="animated fadeInUp">
+      <textarea type="number" [(ngModel)]="body" name="body" required matInput placeholder="Message"></textarea>
+    </mat-form-field>
+    <button class="add-btn" (click)="add(addForm)" [disabled]="!addForm.valid ||!btnStatus" mat-raised-button>{{btnLabel}}</button>
+  </form>
+</mat-card>

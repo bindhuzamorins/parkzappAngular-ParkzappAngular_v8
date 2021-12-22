@@ -1,0 +1,181 @@
+<div class="col-md-12">
+
+  <div class="card">
+    <div class="header">
+      <h4 class="title">{{this.headClass}}</h4>
+      <button *ngIf="serviceOne" (click)="add()" matTooltip="Add new" mat-raised-button>{{this.btnName}}</button>
+      <button *ngIf="serviceThree" (click)="addbuilding()" matTooltip="Add new"
+        mat-raised-button>{{this.btnName}}</button>
+      <button *ngIf="serviceTwo" (click)="add()" matTooltip="Add new" mat-raised-button>{{this.btnName}}</button>
+      <button *ngIf="serviceFour" (click)="add()" matTooltip="Add new" mat-raised-button>{{this.btnName}}</button>
+      <button *ngIf="serviceFive" (click)="add()" matTooltip="Add new" mat-raised-button>{{this.btnName}}</button>
+      <button *ngIf="serviceSix" (click)="add()" matTooltip="Add new" mat-raised-button>{{this.btnName}}</button>
+
+      <br />
+      <mat-form-field *ngIf="dataFetchStatus && tableDataStatus" class="search-box">
+        <input autofocus [(ngModel)]="filterArray.parkName" matInput placeholder="{{this.searchPlaceholder}}">
+      </mat-form-field>
+    </div>
+    <div class="content table-responsive table-full-width scroll">
+      <mat-progress-bar *ngIf="!dataFetchStatus || loadingStatus" mode="indeterminate"></mat-progress-bar>
+      <table *ngIf="dataFetchStatus && tableDataStatus && playGroundGridStatus" class="table table-hover table-striped">
+        <thead>
+          <tr>
+            <th>Logo</th>
+            <th>Park Name</th>
+            <th class="center">Inspections</th>
+            <th class="center">Inspectors</th>
+            <th class="center">Equipment</th>
+            <th class="center">Checklist</th>
+            <th class="center">Amenities</th>
+            <th class="center">Records</th>
+            <th class="action-th">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let park of parks | filterBy: filterArray | paginate: { itemsPerPage: 5, currentPage: p }">
+            <td>
+              <img class="logo-img" src="{{imageUrl}}{{park.parkImage}}" />
+            </td>
+            <td>{{park.parkName}}</td>
+            <td class="center">
+              <button matTooltip="View Inspections of {{park.parkName}}" (click)="viewInspections(park)"
+                class="animated zoomIn btn btn-xs other-btn">
+                <i class="material-icons">event</i>
+              </button>
+            </td>
+            <td class="center">
+              <button matTooltip="View Inspectors of {{park.parkName}}" (click)="viewInspectors(park)"
+                class="animated zoomIn btn btn-xs other-btn">
+                <i class="material-icons">supervisor_account</i>
+              </button>
+            </td>
+            <td class="center">
+              <button matTooltip="View Equipment of {{park.parkName}}" (click)="viewEquipments(park)"
+                class="animated rotateIn btn btn-xs other-btn">
+                <i class="material-icons">toys</i>
+              </button>
+            </td>
+            <td class="center">
+              <button matTooltip="View Assessment Checklist of {{park.parkName}}" (click)="viewChecklist(park)"
+                class="animated zoomIn  btn btn-xs other-btn">
+                <i class="material-icons">assignment_turned_in</i>
+              </button>
+            </td>
+            <td class="center">
+              <button matTooltip="View Amenities of {{park.parkName}}" (click)="viewAmenities(park)"
+                class="animated zoomIn  btn btn-xs other-btn">
+                <i class="material-icons">format_paint</i>
+              </button>
+            </td>
+            <td class="center">
+              <button matTooltip="View Records of {{park.parkName}}" (click)="viewRecords(park)"
+                class="animated zoomIn  btn btn-xs other-btn">
+                <i class="material-icons">burst_mode</i>
+              </button>
+            </td>
+            <td style="width:16%;">
+              <button (click)="view(park)" matTooltip="View Inspections of {{park.parkName}}"
+                class="btn btn-xs view-btn">View</button>
+              <button (click)="map(park)" matTooltip="View Map of {{park.parkName}}" class="btn btn-xs map-btn" style="margin-left: 3px;">
+                <i class="material-icons">place</i>
+              </button>
+
+              <button (click)="blue(park)" matTooltip="Blue Print" class="btn btn-xs map-btn blueto-bttn" style="margin-left: 3px;">
+                <i class="material-icons" >blur_linear</i>
+              </button>
+
+              <button (click)="edit(park)" matTooltip="Edit Details Of {{park.parkName}}"
+                class="btn btn-xs edit-btn" style="margin-left: 3px;">Edit</button>
+            </td>
+          </tr>
+        </tbody>
+
+        <tr class="icon-and-text" *ngIf="(items | filterBy: filterArray).length === 0">
+          <i class="material-icons alert-icon animated wobble">warning</i>
+          <span class="alert-text">No such details available!</span>
+        </tr>
+
+      </table>
+
+      <!-- for other services start -->
+      <table *ngIf="dataFetchStatus && tableDataStatus && otherServiceStatus" class="table table-hover table-striped">
+        <thead>
+          <tr>
+            <th>Logo</th>
+            <th>{{thName}}</th>
+            <th *ngIf="serviceThree">Park Name</th>
+            <th class="center">Inspections</th>
+            <th class="center">Inspectors</th>
+            <th class="center">Amenities</th>
+            <th class="center">Records</th>
+            <th class="action-th">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let park of parks | filterBy: filterArray | paginate: { itemsPerPage: 5, currentPage: p }">
+            <td>
+              <img class="logo-img" src="{{imageUrl}}{{park.parkImage}}" />
+            </td>
+            <td>{{park.parkName}}</td>
+            <td *ngIf="serviceThree">
+              <div *ngIf="(park.buildingUnder == 'false')" style="color:red"> X </div>
+              <div *ngIf="(park.buildingUnder != 'false')"> {{park.buildingUnder}} </div>
+            </td>
+
+            <td class="center">
+              <button matTooltip="View Inspections of {{park.parkName}}" (click)="viewInspections(park)"
+                class="animated zoomIn btn btn-xs {{this.otherButtonClass}}">
+                <i class="material-icons">event</i>
+              </button>
+            </td>
+            <td class="center">
+              <button matTooltip="View Inspectors of {{park.parkName}}" (click)="viewInspectors(park)"
+                class="animated zoomIn btn btn-xs {{this.otherButtonClass}}">
+                <i class="material-icons">supervisor_account</i>
+              </button>
+            </td>
+            <td class="center">
+              <button matTooltip="View Amenities of {{park.parkName}}" (click)="viewAmenities(park)"
+                class="animated zoomIn  btn btn-xs {{this.otherButtonClass}}">
+                <i class="material-icons">format_paint</i>
+              </button>
+            </td>
+            <td class="center">
+              <button matTooltip="View Records of {{park.parkName}}" (click)="viewRecords(park)"
+                class="animated zoomIn  btn btn-xs {{this.otherButtonClass}}">
+                <i class="material-icons">burst_mode</i>
+              </button>
+            </td>
+            <td style="width:16%">
+              <button (click)="view(park)" matTooltip="View Details of {{park.parkName}}"
+                class="btn btn-xs view-btn">View</button>
+              <button (click)="map(park)" matTooltip="View Map of {{park.parkName}}" class="btn btn-xs map-btn" style="margin-left: 3px;">
+                <i class="material-icons">place</i>
+              </button>
+
+              <button (click)="blue(park)" matTooltip="Blue Print" class="btn btn-xs map-btn blueto-bttn" style="margin-left: 3px;">
+                <i class="material-icons">blur_linear</i>
+              </button>
+
+              <button (click)="edit(park)" matTooltip="Edit Details of {{park.parkName}}"
+                class="btn btn-xs edit-btn" style="margin-left: 3px;">Edit</button>
+            </td>
+          </tr>
+        </tbody>
+
+        <tr class="icon-and-text" *ngIf="(items | filterBy: filterArray).length === 0">
+          <i class="material-icons alert-icon animated wobble">warning</i>
+          <span class="alert-text">No such details available!</span>
+        </tr>
+
+      </table>
+      <!-- end-->
+
+      <pagination-controls *ngIf="dataFetchStatus && tableDataStatus" class="pagination" (pageChange)="p = $event">
+      </pagination-controls>
+      <p *ngIf="!tableDataStatus" class="note center">NOTE: Currently there are no {{this.insName}}s added to this
+        account, You can add new {{this.insName}} by clicking on the Add New {{this.insName}} button</p>
+    </div>
+  </div>
+</div>

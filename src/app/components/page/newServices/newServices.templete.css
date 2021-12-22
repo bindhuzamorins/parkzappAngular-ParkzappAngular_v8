@@ -1,0 +1,91 @@
+.dialog-head {
+    font-family: 'Simonetta', cursive;
+    color: #666666;
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 0px;
+  }
+  
+  .dialog-head span {
+    float: right;
+    cursor: pointer;
+  }
+  
+  mat-form-field {
+    width: 150%;
+    font-family: 'Simonetta', cursive;
+    font-weight: bold;
+    font-size: 16px;
+  }
+  
+  .send-btn {
+    font-family: 'Simonetta', cursive;
+    background-color: #0a837f;
+    color: white !important;
+    width: 100%;
+    letter-spacing: 2px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  mat-dialog-container {
+    width: 550px !important;
+    /* width: 1550px !important; */
+  }
+
+  mat-dialog-container {
+    width: 550px !important;
+    /* width: 1550px !important; */
+    
+  }
+/*   
+  .logo1{
+    text-align: center;
+    position: relative;
+  } */
+  .mat-card{
+    padding-bottom: 10px;
+    
+  }
+  .lineh{
+    padding-top: 0% !important;
+    font-size:14px;
+    /* list-style: height 1.6em; */
+  }
+  
+  .height{
+    line-height: 0.428571 !important;
+    height: 117px !important;
+  }
+  .large {
+    font-size: 60px;
+  }
+  .disabled {
+    color: gray;
+    cursor: not-allowed;
+    box-shadow: none;   
+}
+.tiles-content {
+  text-align: center !important;
+ 
+}
+
+@media only screen and (max-width: 768px){
+  .scrollNew
+  {
+    height: 350px;
+    overflow-y: auto;
+    scroll-behavior: auto;
+  } 
+}
+
+mat-card{
+  transition: box-shadow 280ms cubic-bezier(.4,0,.2,1);
+  width: 550px !important;
+  display: block;
+  position: relative;
+  padding: 24px;
+  border-radius: 2px;
+}
+
+

@@ -1,0 +1,44 @@
+h3 {
+  font-size: 20px;
+  text-align: center;
+  font-family: 'Simonetta', cursive;
+  font-weight: bold;
+  color: #878787;
+}
+
+mat-card {
+  overflow: auto;
+}
+
+.links {
+  margin-top: 25px;
+}
+
+.tiles-content span {
+  font-size: 20px;
+}
+
+.tiles-content i {
+  font-size: 30px;
+}
+
+.tiles-content {
+  height: 71px !important;
+  font-size: 38px;
+}
+@media screen and (min-width: 310px) {
+  .tiles-content[_ngcontent-c4] {
+    font-size: 20px;
+    line-height: 1.556;
+    height: 91px !important;
+}
+}
+
+@media screen and (min-width: 310px) {
+  .tiles-content span{
+    font-size: 18px !important;
+    line-height: 1.556;
+    height: 91px !important;
+    margin-left: 10px;
+}
+}

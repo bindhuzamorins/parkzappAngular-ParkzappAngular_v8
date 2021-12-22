@@ -1,0 +1,38 @@
+<h1 class="dialog-head">
+  <b>Update question</b>
+  <span matTooltip="Close" matTooltipPosition="right" (click)="close()">
+    <i class="material-icons">close</i>
+  </span>
+</h1>
+<mat-card>
+  <form #editForm="ngForm" (ngSubmit)="edit(editForm.value)">
+    <!-- <md-select (click)="enableButton()" required placeholder="Inspection Type" [ngModel]="moreDetails.inspectionTypeId" name="inspectionType" (click)="fetchQuestionSet(editForm.value.inspectionType)"> -->
+      <mat-form-field>
+      <mat-select [disabled]="true" required placeholder="Inspection Type" [ngModel]="moreDetails.inspectionTypeId" name="inspectionType">
+      <mat-option  [value]="inspectionType.id" *ngFor="let inspectionType of inspectionTypes">
+        {{inspectionType.inspectiontype}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select disabled (click)="enableButton()" required placeholder="Question Set" [ngModel]="moreDetails.questionnaire_set_id" name="questionSet">
+      <mat-option [value]="questionSet.id" *ngFor="let questionSet of questionSets">
+        {{questionSet.questionnaireSetName}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+    <mat-form-field>
+      <textarea (keyup)="enableButton()" pattern="^[A-Za-z0-9](?!.*?\s$)[A-Za-z0-9,.'?\s]{3,}$" maxlength="300" type="text" [ngModel]="moreDetails.question" name="question" required matInput placeholder="Question"></textarea>
+    </mat-form-field>
+
+
+    <mat-form-field>
+    <mat-select (click)="enableButton()" required placeholder="Answer" [(ngModel)]="moreDetails.answer" name="answer">
+      <mat-option [value]="linkData" *ngFor="let linkData of linkDatas">
+        {{linkData}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+    <button type="submit" [disabled]="!editForm.valid ||!btnStatus" mat-raised-button>{{btnLabel}}</button>
+  </form>
+</mat-card>

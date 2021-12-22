@@ -1,0 +1,35 @@
+<h1 class="dialog-head">
+  <b>{{moreDetails.city}}</b>
+  <span matTooltip="Close" matTooltipPosition="right" (click)="close()">
+    <i class="material-icons">close</i>
+  </span>
+</h1>
+<mat-card>
+  <img *ngIf="moreDetails.imageName" src="{{imageUrl}}{{moreDetails.cityLogo}}" />
+  <br>
+  <ul>
+    <!-- <li>City ID: <span class="li-details">{{moreDetails.id}}</span></li> -->
+    <li>City Name:
+      <span class="li-details">{{moreDetails.city}}</span>
+    </li>
+    <li>Street Address:
+      <span class="li-details"> {{moreDetails.address}}</span>
+    </li>
+    <li>Country:
+        <span class="li-details"> {{country}}</span>
+      </li>
+      <li>State:
+        <span class="li-details"> {{moreDetails.state}}</span>
+      </li>
+      <li>Zipcode:
+          <span class="li-details"> {{moreDetails.zipCode}}</span>
+        </li>
+        <li>Time Zone:
+          <span class="li-details"> {{moreDetails.timezone}}</span>
+        </li>
+    <li>Agency Name:
+      <span class="li-details"> {{moreDetails.agencyName}}</span>
+    </li>
+  
+  </ul>
+</mat-card>

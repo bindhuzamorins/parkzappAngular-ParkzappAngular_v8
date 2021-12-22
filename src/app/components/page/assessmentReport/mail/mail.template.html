@@ -1,0 +1,12 @@
+<h1 class="dialog-head"><b>Send Mail</b>
+  <span matTooltip="Close" matTooltipPosition="right" (click)="close()"><i class="material-icons">close</i></span>
+</h1>
+<mat-card class="card">
+  <form #mailForm="ngForm">
+    <mat-form-field>
+      <input type="text" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" [(ngModel)]="email" name="email"
+        required matInput placeholder="Email">
+    </mat-form-field><br />
+    <button (click)="send()" [disabled]="!mailForm.valid || !btnStatus" mat-raised-button>{{btnLabel}}</button>
+  </form>
+</mat-card>

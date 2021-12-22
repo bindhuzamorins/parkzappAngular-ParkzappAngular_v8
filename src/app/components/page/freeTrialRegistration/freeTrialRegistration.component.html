@@ -1,0 +1,45 @@
+<div class="reg-content-main">
+  <div class="col-md-4 col-sm-4  col-xs-2"></div>
+  <div class="reg-content col-md-4  col-sm-4  col-xs-8">
+    <img class="logo" src="./assets/parkzapp/logo.png" />
+    <h3>Create&nbsp;<span class="span-class">New&nbsp;</span>Account</h3>
+    <form #registerForm="ngForm" (ngSubmit)="register(registerForm.value)">
+      <mat-form-field class="col-md-6 col-sm-6">
+        <input autofocus required name="firstName" [(ngModel)]="firstName" type="text" class="animated fadeInUp" matInput placeholder="First Name">
+      </mat-form-field>
+      <mat-form-field class="col-md-6 col-sm-6">
+        <input required name="lastName" [(ngModel)]="lastName" type="text" class="animated fadeInUp" matInput placeholder="Last Name">
+      </mat-form-field>
+      <mat-form-field class="col-md-6 col-sm-6">
+        <input required (change)="checkUsername(username)" name="username" [(ngModel)]="username" type="text" class="animated fadeInUp"
+          matInput placeholder="Username">
+      </mat-form-field>
+      <mat-form-field class="col-md-6 col-sm-6">
+        <input required name="password" [(ngModel)]="password" type="password" class="animated fadeInUp" [minlength]="8" matInput placeholder="Password">
+     </mat-form-field>
+      
+      <mat-form-field class="col-md-6 col-sm-6">
+        <input pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" type="email" [(ngModel)]="email" name="email" required matInput
+          placeholder="Email" (change)="showOtpButton()">
+      </mat-form-field>
+      <div *ngIf="otpButtonStatus" class="col-md-6 col-sm-6 otp">
+        <a (click)="sendVerificationCode(email)">{{btnName}}</a>
+      </div>
+      <div *ngIf="verificationCodeField">
+        <mat-form-field class="col-md-6 col-sm-6">
+          <input required name="verificationCode" [(ngModel)]="verificationCode" type="text" class="animated fadeInUp" matInput placeholder="verificationCode"
+            (keyup)="compareOtp(verificationCode)">
+        </mat-form-field>
+      </div>
+      <p class="note" class="col-md-12 col-sm-12">Note: Password need to be above 8 characters</p>
+      <br>
+      <div class="col-md-12 col-sm-12 termsandcond">
+        <input required name="checkbox" [(ngModel)]="checkbox" type="checkbox" class="animated fadeInUp"> I accept the
+        <a href="https://s3.amazonaws.com/parkzappprod/helpdocuments/Terms.pdf" target="_blank"><b>Terms and Condition</b></a>
+      </div><br>
+      <div class="trialregbtn col-md-12 col-sm-12">
+        <button [disabled]="!registerForm.valid || !btnStatus" type="submit" mat-raised-button>{{btnLabel}}</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+.action-w{
+  padding-left: 13px;
+  padding-right: 50px;
+  width: 110px !important;
+}
+
+mat-form-field {
+  width: 100%;
+  font-family: 'Simonetta', cursive;
+  font-size: 17px;
+}

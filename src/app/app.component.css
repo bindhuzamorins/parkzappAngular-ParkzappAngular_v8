@@ -1,0 +1,200 @@
+.logout-btn {
+  cursor: pointer;
+}
+
+.upgarde-icon {
+  font-size: 17px !important;
+  float: left !important;
+  width: 24px !important;
+}
+
+.confirm-msg {
+  padding: 3%;
+}
+
+.expiry-date {
+  background-color: rgba(51, 40, 131, 0.57);
+  color: white;
+  cursor: pointer;
+  height: 21px;
+  padding: 5px;
+  font-size: 11px;
+  margin-top: 13px;
+  width: 100% !important;
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
+  transform: translate3d(0, 0, 0);
+  transition: background .4s cubic-bezier(.25, .8, .25, 1), box-shadow 280ms cubic-bezier(.4, 0, .2, 1);
+}
+
+.upgrade-btn {
+  background-color: #598329;
+  color: white;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.dropdown {
+  margin-right: 13px;
+  margin-top: 5px;
+}
+
+.green-tick {
+  color: #598329;
+}
+
+.red-close {
+  color: #f07241;
+}
+
+.statusBar {
+  height: 10px !important;
+  border-radius: 20px !important;
+}
+
+.start {
+  font-size: 10px;
+  padding-left: 2px;
+}
+
+.days {
+  padding-left: 64px;
+  font-size: 10px;
+}
+
+.validDays {
+  padding-left: 73px;
+  font-size: 10px;
+}
+
+.progress_bar_text {
+  margin-top: -11%;
+}
+
+.reset {
+  margin-top: 13px;
+  margin-right: 10px;
+}
+
+.modalDialog {
+  position: fixed;
+  font-family: Arial, Helvetica, sans-serif;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 99999;
+  opacity: 0;
+  -webkit-transition: opacity 400ms ease-in;
+  -moz-transition: opacity 400ms ease-in;
+  transition: opacity 400ms ease-in;
+  pointer-events: none;
+}
+
+#openModal:target {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modalDialog>div {
+  width: 500px;
+  position: relative;
+  margin: 10% auto;
+  background: #fff;
+  -webkit-box-shadow: 10px 10px 0 #777;
+  box-shadow: 10px 10px 0 #777;
+}
+
+.close {
+  color: #bec5cc;
+  position: absolute;
+  right: 24px;
+  text-align: center;
+  top: 20px;
+  text-decoration: none;
+}
+
+.close:hover {
+  color: #555;
+}
+
+.dialog-header {
+  background: #f9fafb;
+  margin: 0;
+  padding: 15px 20px;
+  border-bottom: 1px solid #ecf0f1;
+}
+
+.dialog-content {
+  background: #fff;
+  margin: 0;
+  padding: 20px;
+}
+
+.dialog-header h2 {
+  margin: 0;
+  color: #34495e;
+}
+
+.dialog-content p {
+  color: #555;
+}
+
+.vacum {
+  background-color: #DCDCDC !important;
+  /*border: .5px solid;*/
+}
+
+.daysLeft {
+  font-size: 10px;
+  padding-left: 52px;
+  color: green;
+}
+
+.daysLeftWarning {
+  font-size: 10px;
+  padding-left: 52px;
+  color: red;
+  animation: blinker 1s step-start infinite;
+}
+
+
+.scrollnew
+{
+  height: 350px;
+  overflow-y: auto;
+  scroll-behavior: auto;
+} 
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
+.serviceButton {
+  height: 50px;
+  width: 90%;
+  text-align: center;
+}
+
+#mobileLogout
+{
+  display: none;
+}
+
+@media only screen and (max-width: 768px){
+
+  #mobileLogout
+  {
+    display: block;
+
+  }
+  #desktopLogout
+  {
+    display: none;
+
+  }
+}
+

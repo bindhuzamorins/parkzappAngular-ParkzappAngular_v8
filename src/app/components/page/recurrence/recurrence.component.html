@@ -1,0 +1,40 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="header">
+      <a matTooltip="Back to setup" routerLink="/setup" class="pe-7s-angle-left table-back">Back</a>
+      <h4 class="title">List of all recurrence</h4>
+      <button (click)="add()" matTooltip="Add new" mat-raised-button>Add New Recurrence</button><br/>
+      <mat-form-field class="search-box" *ngIf="dataFetchStatus">
+        <input autofocus [(ngModel)]="filterArray.schedule_name" matInput placeholder="Search recurrence...">
+      </mat-form-field>
+    </div>
+    <div class="content table-responsive table-full-width">
+    
+      <table *ngIf="dataFetchStatus" class="table table-hover table-striped">
+        <thead>
+          <tr>
+            <th>Recurrence Name</th>
+            <th>Days</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let recurrence of recurrences | filterBy: filterArray | paginate: { itemsPerPage: 5, currentPage: p }">
+            <td>{{recurrence.schedule_name}}</td>
+            <td>{{recurrence.days}}</td>
+            <td>
+              <button (click)="edit(recurrence)" class="btn btn-xs edit-btn">Edit</button>
+              <button (click)="delete(recurrence)" class="btn btn-xs delete-btn" style="margin-left: 3px;">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+        <tr class="icon-and-text" *ngIf="(items | filterBy: filterArray).length === 0">
+          <i class="material-icons alert-icon animated wobble">warning</i>
+          <span class="alert-text">No such details available!</span>
+        </tr>
+      </table>
+      <pagination-controls *ngIf='dataFetchStatus' class="pagination" (pageChange)="p = $event"></pagination-controls>
+    </div>
+  </div>
+</div>
+

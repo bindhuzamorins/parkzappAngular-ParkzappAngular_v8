@@ -1,0 +1,41 @@
+h3 {
+  font-size: 20px;
+  text-align: center;
+  font-family: 'Simonetta', cursive;
+  font-weight: bold;
+  color: #878787;
+}
+
+mat-card {
+  overflow: auto;
+}
+
+.links {
+  margin-top: 25px;
+  overflow: scroll;
+  height: 330px;
+}
+
+.tiles-content span {
+  font-size: 20px;
+  margin-left: 10px;
+}
+
+.tiles-content i { 
+  font-size: 30px;
+}
+
+.tiles-content {
+  font-size: 38px;
+  height: 71px !important;
+}
+
+.video {
+  margin-top: 10px;
+}
+@media screen and (min-width: 310px){
+  .tiles-content[_ngcontent-c4] {
+    font-size: 20px !important;
+    height: 71px !important;
+}
+}

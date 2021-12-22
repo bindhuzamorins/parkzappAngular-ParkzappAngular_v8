@@ -1,0 +1,55 @@
+td a {
+  color: #3f3f3f;
+}
+
+tr .name {
+  text-transform: capitalize;
+}
+
+.download-btn {
+  float: right;
+  background-color: rgb(121, 154, 82);
+  color: white;
+  margin-right: 7px;
+}
+
+
+/**PRINT CSS*/
+
+.print-table {
+  background-color: white;
+  width: 80%;
+  padding: 14px;
+  margin-left: 10%;
+}
+
+.print-table table {
+  color: black;
+  background-color: white;
+}
+
+.print-table th,
+td {
+  padding: 6px;
+}
+
+
+/**PRINT CSS*/
+
+@media screen and (max-width: 768px) {
+  .view {
+    margin-bottom: 8px;
+  }
+ 
+}
+@media screen and (max-width: 1024px){
+  .view {
+    margin-bottom: 10px;
+  }
+  .edit {
+    margin-bottom: 10px;
+  }
+  .delete {
+    margin-bottom: 10px;
+  }
+}

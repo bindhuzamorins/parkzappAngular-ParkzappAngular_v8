@@ -1,0 +1,40 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../out-tsc/app",
+    "baseUrl": "",
+    "types": [
+      "node"
+    ]
+  },
+  "exclude": [
+    "test.ts",
+    "**/*.spec.ts"
+  ],
+  "files": [
+    "environments/environment.ts",
+    "app/app.module.ts",
+    "app/app.component.ts",
+
+    //"node_modules/jqwidgets-scripts/jqwidgets-ts/angular_jqxbargauge.ts",
+    "main.ts",
+    "../src/polyfills.ts",
+    "../node_modules/ng2-archwizard/index.ts",
+    "../node_modules/angular4-files-upload/index.ts",
+    "../node_modules/angular4-files-upload/src/index.ts",
+    "../node_modules/angular4-files-upload/src/app/index.ts",
+    "../node_modules/angular4-files-upload/src/app/ng4-files/index.ts",
+    "../node_modules/angular4-files-upload/src/app/ng4-files/declarations/index.ts",
+    "../node_modules/angular4-files-upload/src/app/ng4-files/ng4-files.module.ts",
+    "../node_modules/angular4-files-upload/src/app/ng4-files/services/index.ts",
+    "../node_modules/angular4-files-upload/src/app/ng4-files/components/index.ts",
+    "../node_modules/angular4-files-upload/src/app/ng4-files/declarations/ng4-files-config.ts",
+    "../node_modules/angular4-files-upload/src/app/ng4-files/declarations/ng4-files-selected.ts",
+    "../node_modules/angular4-files-upload/src/app/ng4-files/components/ng4-files-click/index.ts",
+    "../node_modules/angular4-files-upload/src/app/ng4-files/components/ng4-files-drop/index.ts",
+    "../node_modules/angular4-files-upload/src/app/ng4-files/services/ng4-files-utils.service.ts",
+    "../node_modules/angular4-files-upload/src/app/ng4-files/components/ng4-files-click/ng4-files-click.component.ts",
+    "../node_modules/angular4-files-upload/src/app/ng4-files/components/ng4-files-drop/ng4-files-drop.component.ts",
+    "../node_modules/angular4-files-upload/src/app/ng4-files/services/ng4-files.service.ts",
+ ]
+}

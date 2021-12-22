@@ -1,0 +1,43 @@
+<h1 class="dialog-head"><b>Inspections in {{moreDetails.parkName}}</b>
+  <span matTooltip="Close" matTooltipPosition="right" (click)="close()"><i class="material-icons">close</i></span>
+</h1>
+<button class="add-btn" (click)="add()" matTooltip="Add new" mat-raised-button>Add Inspection</button><br />
+<mat-form-field class="search-box">
+  <input autofocus [(ngModel)]="filterArray.inspectionType" matInput placeholder="Search inspection type...">
+</mat-form-field>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Inspection Type</th>
+      <th>Inspector</th>
+      <th>Inspection Due</th>
+      <th>Last Inspected Date</th>
+      <th>Occurs</th>
+      <th>Priority</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      *ngFor="let assignedInspection of assignedInspections | filterBy: filterArray | paginate: { itemsPerPage: 8, currentPage: p }">
+      <td>{{assignedInspection.inspectionType}}</td>
+      <td>{{assignedInspection.InspectorName}}</td>
+      <td>{{assignedInspection.inspectionDate}}</td>
+      <td>{{assignedInspection.lastInspectedDate}}</td>
+      <td>{{assignedInspection.recurrence}}</td>
+      <td>{{assignedInspection.priority}}</td>
+
+      <td>
+        <button *ngIf="assignedInspection.lastInspectedDate=='Not Inspected'" (click)="edit(assignedInspection)"
+          class="btn btn-xs edit-btn">Edit</button>
+        <button *ngIf="assignedInspection.lastInspectedDate=='Not Inspected'" (click)="delete(assignedInspection)"
+          class="btn btn-xs delete-btn" style="margin-left: 3px;">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+  <tr class="icon-and-text" *ngIf="(items | filterBy: filterArray).length === 0">
+    <i class="material-icons alert-icon animated wobble">warning</i>
+    <span class="alert-text">No such details available!</span>
+  </tr>
+</table>
+<pagination-controls class="pagination" (pageChange)="p = $event"></pagination-controls>

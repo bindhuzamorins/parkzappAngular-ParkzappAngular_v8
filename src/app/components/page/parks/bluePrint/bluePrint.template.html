@@ -1,0 +1,9 @@
+<h1 class="dialog-head"><b>Blue Print of {{moreDetails.parkName}}</b>
+  <span matTooltip="Close" matTooltipPosition="right" (click)="close()"><i class="material-icons">close</i></span>
+</h1>
+<mat-card>
+    <img  *ngIf='moreDetails.blueprint' src="{{imageUrl}}{{moreDetails.blueprint}}" />
+    <div *ngIf='!moreDetails.blueprint'>Sorry no records!</div>
+
+
+</mat-card>

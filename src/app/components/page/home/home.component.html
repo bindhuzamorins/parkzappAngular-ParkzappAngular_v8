@@ -1,0 +1,61 @@
+<style>
+  .playHome {
+  color: #4c751a !important;
+}
+
+/*FOR ICE ARENA SERVICE COLOR*/
+.iceHome {
+  /* color: rgba(51, 40, 131, 0.74) !important; */
+  color: #164b96 !important; 
+}
+.sidebar
+{
+  
+}
+
+</style>
+
+<div class="main-content">
+  <a routerLink="/parks" class="col-md-6 col-sm-6 tiles">
+    <div class="tiles-content {{this.homeClass}}">
+      <i id="iconHome" class="pe-7s-leaf animated fadeInUp"></i>
+      <span style="margin-left: 15px;">{{this.nameClass}}</span>
+      <p class="description">{{this.nameDescription}}</p>
+    </div>
+  </a>
+  <a routerLink="/users" class="col-md-6 col-sm-6 tiles">
+    <div class="tiles-content {{this.homeClass}}">
+      <i class="pe-7s-users animated fadeInUp"></i>
+      <span style="margin-left: 15px;">Users</span>
+      <p class="description">View to add or manage users.</p>
+    </div>
+  </a>
+  <a routerLink="/records" class="col-md-6 col-sm-6 tiles">
+    <div class="tiles-content {{this.homeClass}}">
+      <i class="pe-7s-note2 animated fadeInUp"></i>
+      <span style="margin-left: 15px;">Records</span>
+      <p class="description">View previous park records or add a new record.</p>
+    </div>
+  </a>
+  <a routerLink="/reports" class="col-md-6 col-sm-6 tiles">
+    <div class="tiles-content {{this.homeClass}}">
+      <i class="pe-7s-news-paper animated fadeInUp"></i>
+      <span style="margin-left: 15px;">Reports</span>
+      <p class="description space">View current Inspection Requests / Manage Inspections / {{this.nameClass}} History / Work Order / Work Order History / Inspection reports </p>
+    </div>
+  </a>
+  <a routerLink="/setup" class="col-md-6 col-sm-6 tiles">
+    <div class="tiles-content {{this.homeClass}}">
+      <i class="pe-7s-config animated fadeInUp"></i>
+      <span style="margin-left: 15px;">Setup</span>
+      <p class="description">Lets configure your Preferences/ City / User /Questions / Emails / Amenities</p>
+    </div>
+  </a>
+  <a class="col-md-6 col-sm-6 tiles">
+    <div routerLink="/help" class="tiles-content {{this.homeClass}}">
+      <i class="pe-7s-help1 animated fadeInUp"></i>
+      <span style="margin-left: 15px;">Help</span>
+      <p class="description">Please view our help documents & videos for easy navigation.</p>
+    </div>
+  </a>
+</div>

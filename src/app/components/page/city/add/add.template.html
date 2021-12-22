@@ -1,0 +1,119 @@
+<h1 class="dialog-head"><b>Add new city</b>
+  <span matTooltip="Close" matTooltipPosition="right" (click)="close()"><i class="material-icons">close</i></span>
+</h1>
+<mat-card>
+  <form #addForm="ngForm">
+    <div class="col-md-12 ">
+      <div class="col-md-6 ">
+        <mat-form-field>
+          <input pattern="^[A-Za-z0-9](?!.*?\s$)[A-Za-z0-9,.'\s]{0,}$" minlength="3" maxlength="50" type="text"
+            [(ngModel)]="city" name="city" required matInput placeholder="City">
+        </mat-form-field>
+      </div>
+      <div class="col-md-6 ">
+        <mat-form-field>
+          <input type="text" minlength="3" maxlength="50" [(ngModel)]="address" name="address" required matInput
+            placeholder="Street Address">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col-md-12 ">
+      <div class="col-md-6">
+
+        <!-- <md-select required placeholder="Country" [(ngModel)]="country" name="country"
+          class="animated fadeInDown col-md-4 col-sm-4" style="padding:0;">
+          <md-option (click)="fetchState(country.code)" [value]="country.code" *ngFor="let country of countries">
+            {{country.name}}
+          </md-option>
+        </md-select> -->
+        <mat-form-field >
+        <mat-select required placeholder="Country" [(ngModel)]="country" name="country"
+          class="animated fadeInDown col-md-4 col-sm-4" style="padding:0;">
+          <mat-option (click)="fetchState(this.countryCode)" [value]="this.countryCode">
+            {{this.countryName}}
+          </mat-option>
+        </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field>
+        <mat-select required placeholder="State" (click)="checkCountryStatus()" [(ngModel)]="state" name="state"
+          class="animated fadeInDown col-md-4 col-sm-4" style="padding:0;">
+          <mat-option [value]="state.name" *ngFor="let state of allStates">
+            {{state.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      </div>
+    </div>
+    <div class="col-md-12 ">
+      <div class="col-md-6 ">
+        <!-- <mat-form-field>
+        <input pattern="[0-9]{4,6}" type="text" [(ngModel)]="zipCode" name="zipCode" required mdInput placeholder="Zipcode">
+        
+     </mat-form-field> -->
+
+        <mat-form-field *ngIf="country==14">
+          <input pattern="[A-Za-z0-9\s]{3,7}$" type="text" [(ngModel)]="zipCode" name="zipCode" required matInput
+            placeholder="Zipcode">
+        </mat-form-field>
+        <mat-form-field *ngIf="country!=14">
+          <input pattern="[0-9]{4,6}$" type="text" [(ngModel)]="zipCode" name="zipCode" required matInput
+            placeholder="Zipcode">
+        </mat-form-field>
+
+      </div>
+      <div class="col-md-6 ">
+        <mat-form-field>
+        <mat-select required placeholder="Time Zone" [(ngModel)]="timezone" name="timezone"
+          class="animated fadeInDown col-md-4 col-sm-4" style="padding-right:0;padding-left:0;padding: 0px;">
+          <mat-option [value]="mytimes.name" *ngFor="let mytimes of timezones">
+            {{mytimes.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      </div>
+    </div>
+    <div class="col-md-12 ">
+      <div class="col-md-12">
+        <mat-form-field>
+          <input type="text" [(ngModel)]="agencyName" name="agencyName" matInput placeholder="Agency Name">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="col-md-12 ">
+      <div class="col-md-12 ">
+        <label>Logo</label>
+        <!--  <input accept="image/*" (change)="fileEvent($event)" [(ngModel)]="image" name="image" type="file" /><br/> -->
+
+        <div style="display: inline-flex;width: 100%;">
+
+          <ng4-files-drop (filesSelect)="filesSelect($event)" [configId]="'my-gif-config'" style="width: 100%;">
+            <div
+              style="display: inline-block; height: 150px; width: 100%; background-color: #f9f9f9;border: 1px dashed;">
+              <ng4-files-click (filesSelect)="filesSelect($event)" [configId]="'my-image-config'"
+                style="padding-left:48%; ">
+                <img src="assets/parkzapp/upload.png" style="padding-top:25%;width:43%; " />
+                <br /> <span
+                  style="background-color: #598328;color: white;font-family: Roboto, &quot;Helvetica Neue&quot;, sans-serif;font-size: 14px;font-weight: 500;min-width: 88px;line-height: 36px;padding: 7px 16px;border-radius: 2px;/* right: 2%; */margin-left: -20%;">
+                  Choose file</span>
+                <br />
+                <span style=" margin: -16px; font-weight: normal; font-size: 9px;">Or drag and drop here</span>
+              </ng4-files-click>
+            </div>
+          </ng4-files-drop>
+          <div *ngIf="divshown" style="width: 25%;margin-left: 1%;">
+            <img *ngIf="imageShown" [src]="currentProfileImage" class="imageview" />
+
+          </div>
+        </div>
+
+        <p class="note" style="float: left;">Note: Acceptable image formats are jpeg, jpg, gif and png</p>
+        <br />
+      </div>
+    </div>
+    <button (click)="add()" [disabled]="!addForm.valid ||!btnStatus || !imageFileStatus"
+      mat-raised-button>{{btnLabel}}</button>
+
+  </form>
+</mat-card>

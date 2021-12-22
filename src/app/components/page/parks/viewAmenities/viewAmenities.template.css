@@ -1,0 +1,95 @@
+.dialog-head {
+  color: #666666;
+  font-size: 20px;
+  margin-top: 0px;
+}
+
+.dialog-head span {
+  float: right;
+  cursor: pointer;
+}
+
+mat-form-field {
+  width: 100%;
+  font-family: 'Simonetta', cursive;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+img {
+  width: 300px;
+  height: 200px;
+}
+
+mat-dialog-container {
+  width: 100%;
+  transform: none;
+  opacity: 1;
+}
+
+ul {
+  padding-left: 0px;
+  list-style: none;
+  color: #666666;
+  font-size: 18px;
+  max-height: 200px;
+  overflow: auto;
+}
+
+.li-details {
+  font-weight: 200 !important;
+  margin-left: 5px;
+}
+
+agm-map {
+  height: 115px;
+}
+
+.add-btn {
+  float: right;
+  background-color: #598328;
+  color: white;
+}
+
+mat-select {
+  width: 100%;
+}
+
+.more-width {
+  width: 250px;
+}
+
+.more-width-quantity {
+  width: 100px;
+}
+
+.center {
+  text-align: center;
+}
+
+.selectpicker {
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #333;
+  background-color: transparent;
+  border-color: transparent;
+  width: 70px;
+  margin-left: 15px;
+  text-align: center;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding: 2px 30px 2px 2px;
+  border: none;
+  transition-duration: 0.25s;
+  transition-timing-function: linear;
+  cursor: pointer;
+      padding-left: 19px;
+    font-family: 'Simonetta', cursive;
+    font-weight: bold;
+}
+
+.selectpicker:hover {
+  font-size: 23px;
+  color:green;
+}

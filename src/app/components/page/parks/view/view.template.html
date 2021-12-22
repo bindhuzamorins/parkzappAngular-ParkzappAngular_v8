@@ -1,0 +1,53 @@
+<h1 class="dialog-head"><b>{{moreDetails.parkName}}</b>
+  <span matTooltip="Close" matTooltipPosition="right" (click)="close()"><i class="material-icons">close</i></span>
+</h1>
+<mat-card>
+  <img src="{{imageUrl}}{{moreDetails.parkImage}}" />
+  <!-- <agm-map [latitude]="moreDetails.latitude" [longitude]="moreDetails.longitude">
+    <agm-marker [latitude]="moreDetails.latitude" [longitude]="moreDetails.longitude"></agm-marker>
+  </agm-map> -->
+  <ul>
+    <!-- <li><b>Park ID:</b>
+      <span class="li-details">{{moreDetails.id}}</span>
+    </li> -->
+    <li><b>Name:</b>
+      <span class="li-details">{{moreDetails.parkName}}</span>
+    </li>
+    <div *ngIf="serviceThree && (moreDetails.buildingUnder != 'false')">
+      <li><b>Park Name:</b>
+        <span class="li-details">{{moreDetails.buildingUnder}}</span>
+      </li>
+    </div>
+
+    <li class="widthaddress"><b>Address:</b>
+      <span>{{moreDetails.address}}</span>
+    </li>
+    <!-- <li><b>Country:</b>
+      <span class="li-details" [outerHTML]="moreDetails.work_type | emptyField"></span>
+    </li> -->
+    <li><b>City:</b>
+      <span class="li-details" [outerHTML]="moreDetails.city | emptyField"></span>
+    </li>
+    <li><b>State:</b>
+      <span class="li-details" [outerHTML]="moreDetails.state | emptyField"></span>
+    </li>
+    <li><b>Zipcode:</b>
+      <span class="li-details" [outerHTML]="moreDetails.zipCode | emptyField"></span>
+    </li>
+    <li><b>Phone:</b>
+      <span class="li-details" [outerHTML]="moreDetails.phone | emptyField"></span>
+    </li>
+    <li><b>Email:</b>
+      <span class="li-details" [outerHTML]="moreDetails.email | emptyField"></span>
+    </li>
+    <li><b>Website:</b>
+      <span class="li-details" [outerHTML]="moreDetails.website | emptyField"></span>
+    </li>
+    <li><b>Category Name:</b>
+      <span class="li-details" [outerHTML]="moreDetails.parkCategory | emptyField"></span>
+    </li>
+    <li><b>Area:</b>
+      <span class="li-details" [outerHTML]="moreDetails.area | emptyField"></span>
+    </li>
+  </ul>
+</mat-card>

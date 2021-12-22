@@ -1,0 +1,11 @@
+<h1 class="dialog-head"><b>Assessment Checklist for  {{moreDetails.parkName}}</b>
+  <span matTooltip="Close" matTooltipPosition="right" (click)="close()"><i class="material-icons">close</i></span>
+</h1>
+<mat-card>
+  <div class="assessment-list">
+    <div *ngFor="let check of checklist" class="col-md-6 check-div">
+      <mat-checkbox (click)="updateChecklist(check)" [(ngModel)]="check.status">{{check.label}}</mat-checkbox>
+    </div>
+  </div>
+  <button (click)="update()" [disabled]="!btnStatus" class="buttons" mat-raised-button>{{btnLabel}}</button>
+</mat-card>

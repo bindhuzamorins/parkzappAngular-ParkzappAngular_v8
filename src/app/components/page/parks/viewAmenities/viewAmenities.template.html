@@ -1,0 +1,61 @@
+<h1 class="dialog-head"><b>Amenities in {{moreDetails.parkName}}</b>
+  <span matTooltip="Close" matTooltipPosition="right" (click)="close()"><i class="material-icons">close</i></span>
+</h1>
+
+<mat-form-field style="width: 60%;font-weight: normal;">
+<mat-select (click)="checkEmptyData()" (selectionChange)="changeBtnStatus()" class="equipment-select" multiple placeholder="Amenities" [(ngModel)]="newAmenities">
+  <mat-option [value]="amen.id" *ngFor="let amen of amenities">
+    {{amen.amenity}}
+  </mat-option>
+</mat-select>
+</mat-form-field>
+<button class="add-btn" [disabled]="!btnStatus" (click)="addNew()" matTooltip="Add new" mat-raised-button>{{btnLabel}}</button>
+<br/><br/>
+
+<mat-form-field *ngIf="tableStatus" class="search-box">
+  <input autofocus [(ngModel)]="filterArray.amenity" matInput placeholder="Search amenity...">
+</mat-form-field>
+
+<table *ngIf="tableStatus" class="table table-hover">
+  <thead>
+    <tr>
+      <th class="more-width">Amenity Name</th>
+      <th class="more-width-quantity">Quantity</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let amen of assignedAmenities  | filterBy: filterArray  | paginate: { itemsPerPage: 6, currentPage: p }">
+      <td matTooltip="{{amen.description}}">{{amen.amenity}}</td>
+      <td>
+        
+        <select (change)="quantityChange(amen,$event.target.value)" [ngModel]="amen.quantity" matTooltip="Click to change quantiy"
+          class="selectpicker">
+          <option [ngValue]="1">1</option>
+          <option [ngValue]="2">2</option>
+          <option [ngValue]="3">3</option>
+          <option [ngValue]="4">4</option>
+          <option [ngValue]="5">5</option>
+          <option [ngValue]="6">6</option>
+          <option [ngValue]="7">7</option>
+          <option [ngValue]="8">8</option>
+          <option [ngValue]="9">9</option>
+          <option [ngValue]="10">10</option>
+        </select>
+      </td>
+      <td>
+        <button (click)="delete(amen)" class="btn btn-xs delete-btn">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+  <tr class="icon-and-text" *ngIf="(items | filterBy: filterArray).length === 0">
+    <i class="material-icons alert-icon animated wobble">warning</i>
+    <span class="alert-text">No such details available!</span>
+  </tr>
+</table>
+<pagination-controls *ngIf="tableStatus" class="pagination" (pageChange)="p = $event"></pagination-controls>
+
+<p *ngIf="tableStatus" class="note">Note: You can change the quantity by clicking on them.</p>
+
+<!-- <p *ngIf="!tableStatus" class="note">Currently no amenities selected.</p> -->
+<p *ngIf="!tableStatus" class="note">Select amenities and click on add new amenities button to add amenities to park.</p>

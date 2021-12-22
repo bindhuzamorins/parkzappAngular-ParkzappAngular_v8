@@ -1,0 +1,39 @@
+<h1 class="dialog-head">
+  <b>{{this.inspectionType}} assigned to {{moreDetails.first_name}} {{moreDetails.last_name}}</b>
+  <span matTooltip="Close" matTooltipPosition="right" (click)="close()">
+    <i class="material-icons">close</i>
+  </span>
+</h1>
+
+<mat-form-field class="search-box">
+  <input autofocus [(ngModel)]="filterArray.park_name" matInput placeholder="{{this.searchName}}">
+</mat-form-field>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>{{this.userHead}}</th>
+      <th *ngIf="serviceThree">Park Name</th>
+      <th>Inspection Type</th>
+      <th>Assigned Date</th>
+      <th>Inspection Due</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let assignedPark of assignedParks  | filterBy: filterArray | paginate: { itemsPerPage: 8, currentPage: p }">
+      <td>{{assignedPark.park_name}}</td>
+      <td *ngIf="serviceThree">
+          <div *ngIf = "(assignedPark.buildingUnder == 'false')" style="color:red"> X </div>
+          <div *ngIf = "(assignedPark.buildingUnder != 'false')">{{assignedPark.buildingUnder}} </div>
+      </td>
+      <td>{{assignedPark.inspection_name}}</td>
+      <td>{{assignedPark.assigning_date | date:'shortDate'}}</td>
+      <td>{{assignedPark.inspection_date | date:'shortDate'}}</td>
+    </tr>
+  </tbody>
+  <tr class="icon-and-text" *ngIf="(items | filterBy: filterArray).length === 0">
+    <i class="material-icons alert-icon animated wobble">warning</i>
+    <span class="alert-text">No such details available!</span>
+  </tr>
+</table>
+<pagination-controls class="pagination" (pageChange)="p = $event"></pagination-controls>

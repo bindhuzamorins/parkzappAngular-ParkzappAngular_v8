@@ -1,0 +1,10 @@
+<div>
+ 
+    <img-cropper #cropper [image]="imagedata" [settings]="cropperSettings"></img-cropper><br>
+    <img [src]="imagedata.image" [width]="cropperSettings.croppedWidth" [height]="cropperSettings.croppedHeight">
+
+</div>
+<br/>
+<button mat-raised-button class="edit-btn" [mat-dialog-close]="imagedata.image" >Crop</button>
+<button mat-raised-button class="delete-btn" (click)="cancelme()">Cancel</button>
+

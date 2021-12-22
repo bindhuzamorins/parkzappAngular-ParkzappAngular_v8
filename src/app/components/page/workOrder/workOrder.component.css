@@ -1,0 +1,25 @@
+mat-tab-group {
+  padding: 8px;
+}
+
+.main-div {
+  background-color: rgba(255, 255, 255, 0.91);
+  overflow: auto;
+}
+
+.main-div a {
+  margin-top: 1%;
+}
+
+a {
+  color: #598328;
+  cursor: pointer;
+  margin-bottom: 10px;
+  margin-left: 10px;
+}
+
+.nav a {
+  color: black;
+  margin-bottom: 0px;
+  margin-left: 0px;
+}

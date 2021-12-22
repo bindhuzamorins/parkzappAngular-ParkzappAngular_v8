@@ -1,0 +1,18 @@
+<h1 class="dialog-head"><b>Add new area</b>
+  <span matTooltip="Close" matTooltipPosition="right" (click)="close()"><i class="material-icons">close</i></span>
+</h1>
+<mat-card>
+  <form #addForm="ngForm">
+    <mat-form-field class="animated fadeInDown col-md-12 col-sm-12">
+      <input pattern="[A-Za-z0-9 ]{2,50}" type="text" [(ngModel)]="area" name="area" required matInput placeholder="Area name">
+    </mat-form-field>
+    <mat-form-field class="animated fadeInDown col-md-12 col-sm-12">
+    <mat-select required placeholder="City" [(ngModel)]="city" name="city" class="animated fadeInDown col-md-12 col-sm-12" style="padding: 0px;">
+      <mat-option [value]="cit.id" *ngFor="let cit of cities">
+        {{cit.city}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field><br/><br/>
+    <button (click)="add()" [disabled]="!addForm.valid ||!btnStatus" mat-raised-button>{{btnLabel}}</button>
+  </form>
+</mat-card>

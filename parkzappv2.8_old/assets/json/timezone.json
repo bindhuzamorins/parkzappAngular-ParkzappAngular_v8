@@ -1,0 +1,198 @@
+[
+    {
+        "name": "Asia/Hong_Kong",
+        "cid": "1"
+    },
+    {
+        "name": "Asia/Kuala_Lumpur",
+        "cid": "2"
+    },
+    {
+        "name": "Asia/Kuching",
+        "cid": "2"
+    },
+    {
+        "name": "Asia/Singapore",
+        "cid": "3"
+    },
+    {
+        "name": "America/New_York",
+        "cid": "4"
+    },
+    {
+        "name": "America/Detroit",
+        "cid": "4"
+    },
+    {
+        "name": "America/Kentucky/Louisville",
+        "cid": "4"
+    },
+    {
+        "name": "America/Kentucky/Monticello",
+        "cid": "4"
+    },
+    {
+        "name": "America/Indiana/Indianapolis",
+        "cid": "4"
+    },
+    {
+        "name": "America/Indiana/Vincennes",
+        "cid": "4"
+    },
+    {
+        "name": "America/Indiana/Winamac",
+        "cid": "4"
+    },
+    {
+        "name": "America/Indiana/Marengo",
+        "cid": "4"
+    },
+    {
+        "name": "America/Indiana/Petersburg",
+        "cid": "4"
+    },
+    {
+        "name": "America/Indiana/Vevay",
+        "cid": "4"
+    },
+    {
+        "name": "America/Chicago",
+        "cid": "4"
+    },
+    {
+        "name": "America/Indiana/Tell_City",
+        "cid": "4"
+    },
+    {
+        "name": "America/Indiana/Knox",
+        "cid": "4"
+    },
+    {
+        "name": "America/Menominee",
+        "cid": "4"
+    },
+    {
+        "name": "America/North_Dakota/Center",
+        "cid": "4"
+    },
+    {
+        "name": "America/North_Dakota/New_Salem",
+        "cid": "4"
+    },
+    {
+        "name": "America/North_Dakota/Beulah",
+        "cid": "4"
+    },
+    {
+        "name": "America/Denver",
+        "cid": "4"
+    },
+    {
+        "name": "America/Boise",
+        "cid": "4"
+    },
+    {
+        "name": "America/Phoenix",
+        "cid": "4"
+    },
+    {
+        "name": "America/Los_Angeles",
+        "cid": "4"
+    },
+    {
+        "name": "America/Anchorage",
+        "cid": "4"
+    },
+    {
+        "name": "America/Juneau",
+        "cid": "4"
+    },
+    {
+        "name": "America/Sitka",
+        "cid": "4"
+    },
+    {
+        "name": "America/Metlakatla",
+        "cid": "4"
+    },
+    {
+        "name": "America/Yakutat",
+        "cid": "4"
+    },
+    {
+        "name": "America/Nome",
+        "cid": "4"
+    },
+    {
+        "name": "America/Adak",
+        "cid": "4"
+    },
+    {
+        "name": "Pacific/Honolulu",
+        "cid": "4"
+    },
+    {
+        "name": "Asia/Kolkata",
+        "cid": "5"
+    },
+    {
+        "name": "Asia/Bahrain",
+        "cid": "6"
+    },
+    {
+        "name": "Asia/Nicosia",
+        "cid": "7"
+    },
+    {
+        "name": "Asia/Famagusta",
+        "cid": "7"
+    },
+    {
+        "name": "Africa/Cairo",
+        "cid": "8"
+    },
+    {
+        "name": "Asia/Kuwait",
+        "cid": "9"
+    },
+    {
+        "name": "Asia/Muscat",
+        "cid": "10"
+    },
+    {
+        "name": "Asia/Qatar",
+        "cid": "11"
+    },
+    {
+        "name": "Asia/Riyadh",
+        "cid": "12"
+    },
+    {
+        "name": "Asia/Dubai",
+        "cid": "13"
+    },
+    {
+        "name": "Newfoundland",
+        "cid": "14"
+    },
+    {
+        "name": "Atlantic",
+        "cid": "14"
+    },
+    {
+        "name": "Eastern",
+        "cid": "14"
+    },
+    {
+        "name": "Central",
+        "cid": "14"
+    },
+    {
+        "name": "Mountain",
+        "cid": "14"
+    },
+    {
+        "name": "Pacific",
+        "cid": "14"
+    }
+]

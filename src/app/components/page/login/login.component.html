@@ -1,0 +1,54 @@
+<div *ngIf="!formStatus" class="login-content-main">
+  <div class="col-md-4 col-sm-4  col-xs-2"></div>
+  <div class="login-content col-md-4  col-sm-4  col-xs-8">
+    <img class="logo" src="./assets/parkzapp/PZlogo.png" />
+    <h2 class="welcome-text">Welcome to
+      <span class="parkzapp-span"> ParkZapp </span> Admin
+      <br>
+      <span>Login to your Account</span>
+    </h2>
+ <!-- 
+      <a  href="https://www.parkzapp.com/parkzappv2.2/#/login">
+       <a  href="https://www.parkzapp.com/parkzappv2.2"> -->
+
+     <!--<a href="https://www.parkzapp.com/parkzappv2.4.2/#/login">
+      <button class="btn btn-xs edit-btn edit" mat-raised-button type="button">Switch to Old Version</button>
+    </a> -->
+    
+    <form #loginForm="ngForm">
+      <mat-form-field>
+        <input pattern=".{6,8}" autofocus required name="zappcode" [(ngModel)]="zappcode" type="text"
+          class="animated fadeInUp" matInput placeholder="Zappcode">
+      </mat-form-field>
+      <mat-form-field>
+        <input pattern=".{2,20}" minlength="2" required #usernameEmailRef name="username" [(ngModel)]="username"
+          type="text" class="animated fadeInUp" matInput placeholder="Username">
+      </mat-form-field>
+      <mat-form-field>
+        <input pattern=".{8,}" required #usernameEmailRef name="password" [(ngModel)]="password" type="password"
+          class="animated fadeInUp" matInput placeholder="Password">
+      </mat-form-field>
+      <br />
+      <span class="remember"><input type="checkbox" name="remember" value="1" (click)="rememberMe()"> Remember me</span>
+
+      <a (click)="forgotPwdDialog()" class="forgot-password-link">Forgot your password?</a>
+      <button [disabled]="!loginForm.valid || !submitBtnStatus" (click)="checkUser()" class="login-btn"
+        mat-button>{{submitBtnLabel}}</button>
+    </form>
+    <div class="copyright">
+      <b>Copyright © 2015-{{mydate | date: 'yy'}} by ParkZapp.
+        <br>All Rights Reserved.</b>
+      <br>
+      <b>
+        <a href="https://s3.amazonaws.com/parkzappdev/helpdocuments/Terms.pdf" target="_blank">Terms and Conditions</a>
+        |
+        <a href="https://s3.amazonaws.com/parkzappdev/helpdocuments/PrivacyPolicy.pdf" target="_blank">Privacy
+          Policy</a>
+      </b>
+
+    </div>
+    <p class="version"><i>This site can be best viewed in Chrome and Mozilla Firefox, To check your browser version <a
+          href="http://www.whatbrowser.org/" target="_blank">Click here</a>
+      </i></p>
+  </div>
+</div>

@@ -1,0 +1,6 @@
+textarea {
+    overflow: auto;
+    resize: none;
+    background-color: transparent !important;
+    border-color: transparent;
+}

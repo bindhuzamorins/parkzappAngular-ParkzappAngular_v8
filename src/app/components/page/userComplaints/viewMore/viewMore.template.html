@@ -1,0 +1,16 @@
+<h3 class="dialog-head">
+  <b>Complaint Description</b>
+  <span matTooltip="Close" matTooltipPosition="right" (click)="close()"><i class="material-icons">close</i></span>
+</h3>
+<mat-card>
+  <img *ngIf="moreDetails.parkImage" src="{{imageUrl}}{{moreDetails.parkImage}}" />
+  <ul>
+    <li>Park Name: <span class="li-details">{{moreDetails.parkName}}</span></li>
+    <li>Street Address: <span class="li-details"> {{moreDetails.streetAddress}}</span></li>
+    <li>City Name: <span class="li-details">{{moreDetails.city}}</span></li>
+    <li>Zipcode: <span class="li-details"> {{moreDetails.zipCode}}</span></li>
+    <li>Date: <span class="li-details"> {{moreDetails.date  | date:'shortDate'}}</span></li>
+    <li>Workorder No.: <span class="li-details"> {{moreDetails.workOrderNo}}</span></li>
+    <li>Complaint Description: <span class="li-details"> {{moreDetails.workDesc}}</span></li>
+  </ul>
+</mat-card>

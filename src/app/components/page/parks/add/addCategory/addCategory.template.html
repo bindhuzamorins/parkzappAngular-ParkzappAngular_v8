@@ -1,0 +1,14 @@
+<h1 class="dialog-head"><b>Add new Category</b>
+  <span matTooltip="Close" matTooltipPosition="right" (click)="close()"><i class="material-icons">close</i></span>
+</h1>
+<mat-card>
+  <form #addForm="ngForm">
+    <mat-form-field class="animated fadeInDown col-md-12 col-sm-12">
+      <input type="text" [(ngModel)]="name" name="name" required matInput placeholder="Category name">
+    </mat-form-field>
+    <mat-form-field class="animated fadeInDown col-md-12 col-sm-12">
+      <textarea type="text" [(ngModel)]="description" name="description" required matInput placeholder="Description"></textarea>
+    </mat-form-field>
+    <button (click)="add()" [disabled]="!addForm.valid ||!btnStatus" mat-raised-button>{{btnLabel}}</button>
+  </form>
+</mat-card>

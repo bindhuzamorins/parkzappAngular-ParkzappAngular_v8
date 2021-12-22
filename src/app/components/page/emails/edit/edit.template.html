@@ -1,0 +1,25 @@
+<h1 class="dialog-head">
+  <b>Edit email</b>
+  <span matTooltip="Close" matTooltipPosition="right" (click)="close()">
+    <i class="material-icons">close</i>
+  </span>
+</h1>
+<mat-card>
+  <form #editForm="ngForm" (ngSubmit)="edit(editForm.value)">
+    <mat-form-field>
+      <input (keyup)="enableButton()" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$" type="email" [ngModel]="moreDetails.emailId"
+       maxlength="64" name="email" required matInput placeholder="Email ID">
+    </mat-form-field>
+    <br/>
+    <mat-form-field>
+      <input (keyup)="enableButton()" pattern="[A-Za-z ]{2,20}" type="text" [ngModel]="moreDetails.name" name="name" required matInput
+        placeholder="Full name">
+    </mat-form-field>
+    <br/>
+    <mat-form-field>
+      <textarea (keyup)="enableButton()" pattern=".{2,50}" type="text" [ngModel]="moreDetails.description" rows="4" name="description"
+        matInput placeholder="Description (if any)"></textarea>
+    </mat-form-field>
+    <button type="submit" [disabled]="!editForm.valid ||!btnStatus" mat-raised-button>{{btnLabel}}</button>
+  </form>
+</mat-card>

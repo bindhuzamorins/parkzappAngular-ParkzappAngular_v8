@@ -1,0 +1,205 @@
+<div class="col-md-12">
+  <div class="card">
+    <div>
+      <div class="header">
+        <a matTooltip="Back to reports" routerLink="/reports" class="pe-7s-angle-left table-back">Back</a>
+        <h4 class="title">Assessment checklist report</h4>
+      </div>
+      <mat-card *ngIf='!formStatus'>
+        <form #searchForm="ngForm">
+          <div class="row">
+            <mat-select class="col-md-6" required placeholder="Park" [(ngModel)]="parkName" name="parkName" style="padding-top:20px;">
+              <mat-option [value]="park.id" *ngFor="let park of parks">
+                {{park.parkName}}
+              </mat-option>
+            </mat-select>
+            <mat-form-field class="col-md-3">
+              <input onkeydown="return false" (dateInput)="choosemindate();" [max]="maxDate" [matDatepicker]="picker1"   [(ngModel)]="dateone" name="dateone" required matInput placeholder="From">
+              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="col-md-3" >
+              <input onkeydown="return false" (dateInput)="choosemaxdate();" [max]="allmaxDate" [min]="minDate"  [matDatepicker]="picker2" [min]="minDate"  [(ngModel)]="datetwo" name="datetwo" required matInput placeholder="To">
+              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+            <!--
+            <mat-form-field class="">
+              <input type="date" name="fromDate col-md-4" [(ngModel)]="fromDate" required mdInput placeholder="From">
+            </mat-form-field>
+            <mat-form-field class="">
+              <input type="date" name="toDate col-md-4" [(ngModel)]="toDate" required mdInput placeholder="To">
+            </mat-form-field>
+          -->
+          </div>
+          <div class="submit_search">
+            <button (click)="search()" mat-raised-button [disabled]="!searchForm.valid">{{btnLabel}}</button>
+          </div>
+        </form>
+        <br>
+        <mat-progress-bar mode="indeterminate" *ngIf="loadStatus"></mat-progress-bar>
+        <!--<mat-form-field class="search-box">
+          <input autofocus mdInput placeholder="Search inspection report...">
+        </mat-form-field>-->
+      </mat-card>
+
+
+      <div *ngIf="dataFetchStatus" class="content table-responsive table-full-width">
+        <div class="header">
+          <mat-form-field class="search-box" *ngIf="dataFetchStatus && formStatus">
+            <input autofocus matInput [(ngModel)]="filterArray.inspector" placeholder="Search inspection report...">
+          </mat-form-field>
+        </div>
+        <span class="search-again-table" (click)="showForm()">Search again</span>
+
+        <table class="table table-hover table-striped">
+          <thead>
+            <tr>
+              <th>INSPECTOR NAME</th>
+              <th>INSPECTED DATE</th>
+              <th>TIME TAKEN</th>
+              <th colspan="2" style="align-content: center">ACTIONS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let inspectionReport of inspectionReports | filterBy: filterArray  | paginate: { itemsPerPage: 5, currentPage: p } let i = index">
+              <td>{{inspectionReport.inspector}} </td>
+              <td>{{inspectionReport.inspectedDate | date:'shortDate'}}</td>
+              <td>{{inspectionReport.timeTaken}}</td>
+              <td colspan="2">
+                <button class="btn btn-xs common-btn printme" (click)="ViewAndPrint(inspectionReport)">Print</button>
+                <button class="btn btn-xs common-btn" (click)="sentMail(inspectionReport)">Sent Mail</button>
+              </td>
+            </tr>
+          </tbody>
+          <tr class="icon-and-text" *ngIf="(items | filterBy: filterArray).length === 0">
+            <i class="material-icons alert-icon animated wobble">warning</i>
+            <span class="alert-text">No such details available!</span>
+          </tr>
+        </table>
+        <pagination-controls *ngIf='dataFetchStatus' class="pagination" (pageChange)="p = $event"></pagination-controls>
+
+      </div>
+      <div *ngIf="messageStatus">
+        <p class="note center">
+          <span (click)="showForm()" class="search-again-link">Search again</span> No inspection report found
+        </p>
+        <br/>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<div class="col-md-12">
+  <div class="card">
+    <div>
+      <div class="header">
+        <a mdTooltip="Back to reports" routerLink="/reports" class="pe-7s-angle-left table-back">Back</a>
+        <h4 class="title">Inspection report</h4>
+      </div>
+      <md-card *ngIf='!formStatus'>
+        <form #searchForm="ngForm">
+          <md-select class="col-md-3" required placeholder="Park" [(ngModel)]="parkName" name="parkName">
+            <md-option [value]="park.id" *ngFor="let park of parks">
+              {{park.parkName}}
+            </md-option>
+          </md-select>
+          <md-select class=" col-md-3" required placeholder="Inspection" [(ngModel)]="inspectionType" name="inspectionType">
+            <md-option [value]="inspectionType.id" *ngFor="let inspectionType of inspectionTypes">
+              {{inspectionType.inspectiontype}}
+            </md-option>
+          </md-select>
+          <br/>
+          <mat-form-field class="to-left">
+            <input type="date" name="fromDate col-md-3" [(ngModel)]="fromDate" required mdInput placeholder="From">
+          </mat-form-field>
+          <mat-form-field class="to-up">
+            <input type="date" name="toDate col-md-3" [(ngModel)]="toDate" required mdInput placeholder="To">
+          </mat-form-field>
+          <div class="submit_search">
+            <button (click)="search()" [disabled]="!searchForm.valid || !btnStatus" md-raised-button>{{btnLabel}}</button>
+          </div>
+        </form>
+        <br>
+        <md-progress-bar mode="indeterminate" *ngIf="loadStatus"></md-progress-bar>
+        <mat-form-field class="search-box" *ngIf="dataFetchStatus">
+          <input autofocus mdInput [(ngModel)]="filterArray.inspector" placeholder="Search inspection report...">
+        </mat-form-field>
+      </md-card>
+    </div>
+  
+
+    <div *ngIf="dataFetchStatus && formStatus" class="content table-responsive table-full-width">
+      <div class="header">
+        <mat-form-field class="search-box" *ngIf="dataFetchStatus && formStatus">
+          <input autofocus mdInput [(ngModel)]="filterArray.inspector" placeholder="Search inspection report...">
+        </mat-form-field>
+      </div>
+      <span class="search-again-table" (click)="showForm()">Search again</span>
+
+      <table *ngIf="dataFetchStatus" class="table table-hover table-striped">
+        <thead>
+          <tr>
+            <th>PARK NAME</th>
+            <th>ASSIGNED DATE</th>
+            <th>INSPECTOR NAME</th>
+            <th>INSPECTION NAME</th>
+            <th>INSPECTED DATE</th>
+            <th colspan="3">ACTIONS</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let inspectionReport of inspectionReports  | filterBy: filterArray | paginate: { itemsPerPage: 5, currentPage: p } let i = index ">
+            <td>{{inspectionReport.parkName}} </td>
+            <td>{{inspectionReport.assignedDate | date:'shortDate'}}</td>
+            <td>{{inspectionReport.inspector}}</td>
+            <td>{{inspectionReport.inspectionName}}</td>
+            <td>{{inspectionReport.inspectedDate | date:'shortDate'}}</td>
+            <td>
+              <button (click)="viewMore(inspectionReport)" class="btn btn-xs common-btn">View Report</button>
+            </td>
+            <td>
+              <button (click)="print(inspectionReport,$event.target)"   class="btn btn-xs common-btn printme">  Print  </button>
+            </td>
+            <td>
+              <button (click)="sentMail(inspectionReport)" class="btn btn-xs common-btn">Sent Mail</button>
+            </td>
+          </tr>
+        </tbody>
+        <tr class="icon-and-text" *ngIf="(items | filterBy: filterArray).length === 0">
+          <i class="material-icons alert-icon animated wobble">warning</i>
+          <span class="alert-text">No such details available!</span>
+        </tr>
+      </table>
+      <pagination-controls *ngIf='dataFetchStatus' class="pagination" (pageChange)="p = $event"></pagination-controls>
+
+    </div>
+    <div *ngIf="messageStatus">
+      <p class="note center">
+        <span (click)="showForm()" class="search-again-link">Search again</span>
+        No inspection report found
+      </p>
+      <br/>
+    </div>
+
+  </div>
+</div>-->

@@ -1,0 +1,77 @@
+<div class="col-md-12 margin-top">
+  <div class="card">
+    <div class="header">
+      <mat-progress-bar *ngIf="loadStatus" mode="indeterminate"></mat-progress-bar>
+      <form  #searchForm="ngForm" (ngSubmit)="pendingOrder(searchForm.value)">
+      <!--  <mat-form-field class="col-md-4">
+          <input type="date" [(ngModel)]="fromDate" name="fromDate" required mdInput placeholder="From">
+        </mat-form-field>
+        <mat-form-field class="col-md-4">
+          <input type="date" [(ngModel)]="toDate" name="toDate" required mdInput placeholder="To">
+        </mat-form-field>
+      -->
+      <mat-form-field class=" col-md-4" style=" padding-left: 15px;">
+        <input  onkeydown="return false" (dateInput)="choosemindate();" [max]="allmaxDate" [matDatepicker]="picker1"   [(ngModel)]="dateone" name="dateone" required matInput placeholder="From">
+        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+        <mat-datepicker #picker1></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field class=" col-md-4" style=" padding-left: 15px;">
+        <input onkeydown="return false" (dateInput)="choosemaxdate();" [max]="allmaxDate" [min]="minDate"  [matDatepicker]="picker2" [min]="minDate"  [(ngModel)]="datetwo" name="datetwo" required matInput placeholder="To">
+        <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+        <mat-datepicker #picker2></mat-datepicker>
+      </mat-form-field>
+      
+        <button [disabled]="!searchForm.valid || !searchBtnStatus" mat-raised-button class="search-btn">{{searchBtnLabel}}</button>
+      </form>
+      <br/>    <br/>    <br/>
+    </div>
+    <div class="content table-responsive table-full-width">
+      <mat-form-field class="search-box" *ngIf='dataFetchStatus'>
+        <input autofocus [(ngModel)]="filterArray.filter_by" matInput placeholder="Search by Park / Inspector / #Work order">
+      </mat-form-field>
+      <table class="table table-hover table-striped table-responsive" *ngIf='dataFetchStatus'>
+        <thead>
+          <tr>
+            <th>#Work Order</th>
+            <th>W.O Created Date</th>
+            <th>Inspected Date</th>
+            <th>Inspector</th>
+            <th>Park Name</th>
+            <th>Priority</th>
+            <th>Recurrence</th>
+            <th>Notes</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let pendingWork of pendingWorks | filterBy: filterArray  | paginate: { itemsPerPage: 5, currentPage: p }">
+            <!-- <tr *ngFor="let pendingWork of pendingWorks | filterBy: filterArray"> -->
+            <td>{{pendingWork.workOrderNo}}</td>
+            <td>{{pendingWork.workoderdate}}</td>
+            <td>{{pendingWork.date }}</td>
+            <td>{{pendingWork.inspectorName}}</td>
+            <td>{{pendingWork.parkName}}</td>
+            <td>{{pendingWork.priority}}</td>
+            <td>{{pendingWork.schedule_name}}</td>
+            <td>{{pendingWork.notes}}</td>
+            <td style="width: 19%;">
+              <button (click)="viewNote(pendingWork)" matTooltip="Add/Edit note" class="btn btn-xs note-btn">
+                    <i class="material-icons">note_add</i></button>
+              <button (click)="view(pendingWork)" class="btn btn-xs view-btn" style="margin-left: 3px;">View Details</button>
+              <button (click)="reassign(pendingWork)" class="btn btn-xs reassign-btn">Reassign</button>
+            </td>
+          </tr>
+        </tbody>
+        <tr class="icon-and-text" *ngIf="(items | filterBy: filterArray).length === 0">
+          <i class="material-icons alert-icon animated wobble">warning</i>
+          <span class="alert-text">No such details available!</span>
+        </tr>
+      </table>
+      <pagination-controls *ngIf='dataFetchStatus' class="pagination" (pageChange)="p = $event"></pagination-controls>
+      <div *ngIf="messageStatus">
+       
+        <br/>    <br/>    <br/>
+      </div>
+    </div>
+  </div>
+</div>

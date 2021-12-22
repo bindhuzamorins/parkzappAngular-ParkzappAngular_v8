@@ -1,0 +1,68 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="header">
+      <a matTooltip="Back to setup" routerLink="/reports" class="pe-7s-angle-left table-back">Back</a>
+      <h4 class="title">List of all {{this.headText}}</h4>
+    </div>
+    <div class="content table-responsive table-full-width">
+      <form #searchForm="ngForm">
+        <mat-form-field>
+        <mat-select class="col-md-6" required placeholder="{{this.insType}}" [(ngModel)]="parkId" name="parkId" style="padding: 0px;">
+          <mat-option [value]="park.id" *ngFor="let park of parks">
+            {{park.parkName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+        <button (click)="searchParkhistory()" [disabled]="!searchForm.valid" matTooltip="Search {{this.headText}}"
+          class="searchDate" mat-raised-button type="button">{{this.headText}}</button>
+        <button (click)="downloadParkhistory($event.target)" [disabled]="!planprintStatus" *ngIf="dataFetchStatus"
+          matTooltip="Print {{this.headText}}" class="download" mat-raised-button type="button">Print&nbsp;
+          <!-- <span class="glyphicon glyphicon-print"></span> -->
+          <!-- <i class="material-icons">print</i> -->
+        </button>
+
+        <br />
+
+      </form>
+      <!-- <button (click)="downloadParkhistory($event.target)"  *ngIf="dataFetchStatus" mdTooltip="Print Park History" class="download" md-raised-button
+        type="button">Print&nbsp;
+        <!-- <span class="glyphicon glyphicon-print"></span> -->
+      <!-- <i class="material-icons">print</i> -->
+      <!-- </button> -->
+      <table *ngIf="dataFetchStatus" class="table table-hover table-striped">
+        <thead>
+          <tr>
+            <th>Assigned Date</th>
+            <th>Inspector Name</th>
+            <th>Inspection Name</th>
+            <th>Inspected Date</th>
+            <th colspan="3" class="action-th">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let parkHistory of parkHistories | paginate: { itemsPerPage: 5, currentPage: p }">
+            <td>{{parkHistory.assigningDate | date:'shortDate'}}</td>
+            <td>{{parkHistory.firstName}}</td>
+            <td>{{parkHistory.inspectionName}}</td>
+            <td>{{parkHistory.inspectedDate | date:'shortDate'}}</td>
+            <td>
+              <button (click)="viewMore(parkHistory)" class="btn btn-xs view-btn">View Report</button>
+            </td>
+            <td>
+              <button (click)="print(parkHistory,$event.target)" [disabled]="!planprintStatus"
+                class="btn btn-xs view-btn">Print</button>
+            </td>
+            <td>
+              <button (click)="sentemail(parkHistory)" class="btn btn-xs view-btn">Send Mail to</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <pagination-controls *ngIf="dataFetchStatus" class="pagination" (pageChange)="p = $event"></pagination-controls>
+      <div *ngIf="messageStatus">
+        <p class="note center">No Inspection history</p>
+        <br />
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,44 @@
+.search-btn {
+  margin-right: 14%;
+  margin-top: 2%;
+}
+
+.view-btn {
+  border-color: rgba(19, 97, 148, 0.93) !important;
+  color: white !important;
+  background-color: rgba(19, 97, 148, 0.93) !important;
+}
+
+.reassign-btn {
+  border-color:#F65114 !important;
+  color: white !important;
+  background-color: #F65114 !important;
+}
+
+.search-box {
+  width: 40%;
+  margin-left: 3%;
+}
+
+.margin-top {
+  margin-top: 15px;
+}
+
+.note-btn {
+  border-color: rgba(19, 97, 148, 0.93) !important;
+  color: white !important;
+  background-color: rgba(19, 97, 148, 0.93) !important;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-right: 0px;
+  border-right-width: 0px;
+  border-top-width: 0px;
+  border-left-width: 0px;
+  border-bottom-width: 0px;
+  padding-left: 0px;
+}
+
+.note-btn i {
+  font-size: 18px;
+  padding: 3px;
+}

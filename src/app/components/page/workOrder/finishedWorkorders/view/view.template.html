@@ -1,0 +1,21 @@
+<h1 class="dialog-head"><b>WORK ORDER DESCRIPTION</b>
+  <span matTooltip="Close" matTooltipPosition="right" (click)="close()"><i class="material-icons">close</i></span>
+</h1>
+<mat-card>
+  <img src="{{imageUrl}}{{moreDetails.parkImage}}" />
+  <ul>
+    <li>Park Name: <span class="li-details">{{moreDetails.parkName}}</span></li>
+    <li>Park Address: <span class="li-details">{{moreDetails.streetAddress}},{{moreDetails.city}}</span></li>
+    <li>Inspected Date: <span class="li-details"> {{moreDetails.date}}</span></li>
+    <li>Work Order No: <span class="li-details"> {{moreDetails.workOrderNo}}</span></li>
+    
+    <li>Work Description: <span class="li-details lineHeight"><div [innerHTML]="moreDetails.workDesc | nl2br : true"></div></span></li>
+    <li>Work Completed By: <span class="li-details"> {{moreDetails.completedBy}}</span></li>
+    <li>Material: <span class="li-details"> {{moreDetails.material}}</span></li>
+    <li>Finished Date: <span class="li-details"> {{moreDetails.repairedDate}}</span></li>
+    <li>Time (hh:mm): <span class="li-details"> {{moreDetails.hours}}</span></li>
+    <li>Work Order Sender info:
+      <span class="li-details"> {{moreDetails.recipientEmail}}</span>
+    </li>
+  </ul>
+</mat-card>

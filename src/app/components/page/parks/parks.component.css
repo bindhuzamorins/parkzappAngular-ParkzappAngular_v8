@@ -1,0 +1,113 @@
+.logo-img {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+}
+
+.common-btn {
+  background-color: #37474F;
+  color: white;
+  border-color: #37474F;
+}
+
+.map-btn i {
+  font-size: 18px;
+  padding: 3px;
+}
+
+.map-btn {
+  background-color: #d04316;
+  border-color: #d04316;
+  color: white;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-right: 0px;
+  border-right-width: 0px;
+  border-top-width: 0px;
+  border-left-width: 0px;
+  border-bottom-width: 0px;
+  padding-left: 0px;
+}
+
+.blueto-bttn {
+  border-color: rgba(19, 97, 148, 0.93) !important;
+  color: white !important;
+  background-color: rgba(19, 97, 148, 0.93) !important;
+}
+
+.blueP-btn {
+  background-color: #136194ed;
+  border-color: #136194ed;
+  color: white;
+  font-size: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-right: 0px;
+  border-right-width: 0px;
+  border-top-width: 0px;
+  border-left-width: 0px;
+  border-bottom-width: 0px;
+  padding-left: 0px;
+}
+
+.other-btn {
+  color: rgba(89, 131, 40, 0.74);
+  border-color: transparent;
+}
+
+.otherBtnIcearena {
+  color: #164b96;
+  border-color: transparent;
+}
+
+.otherBtnBuilding {
+  color: #8350e2;
+  border-color: transparent;
+}
+
+.otherBtnFire {
+  color: #e90004d2;
+  border-color: transparent;
+}
+
+.otherBtnSports {
+  color: #ee5d03e7;
+  border-color: transparent;
+}
+
+.otherBtnParking {
+  color: #968013;
+  border-color: transparent;
+}
+
+.center {
+  text-align: center;
+}
+
+.action-th {
+  width: 130px;
+}
+
+mat-form-field label {
+  text-transform: capitalize !important;
+}
+
+/* @media screen and (max-width: 768px) {
+  .action-th {
+    width: 100%;
+  }
+}
+@media (min-width: 768px) and (max-width: 1024px){
+  .action-th {
+    width: 100%;
+  }
+}*/
+@media screen and (min-width: 768px){
+  .scroll {
+    overflow-x: scroll;
+    width:100%;
+      }
+  .action-th {
+    padding-right: 92px !important;
+  }
+}

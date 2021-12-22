@@ -1,0 +1,42 @@
+<h1 class="dialog-head"><b>Add new question</b>
+  <span matTooltip="Close" matTooltipPosition="right" (click)="close()"><i class="material-icons">close</i></span>
+</h1>
+<mat-card>
+  <form #addForm="ngForm">
+    <mat-form-field>
+    <mat-select required placeholder="Inspection Type" [(ngModel)]="inspectionType" name="inspectionType" style="padding: 0px;">
+      <mat-option (click)="fetchQuestionSet(inspectionType.id)" [value]="inspectionType.id"
+        *ngFor="let inspectionType of inspectionTypes">
+        {{inspectionType.inspectiontype}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select required placeholder="Park" [(ngModel)]="parkId" name="parkId" style="padding: 0px;">
+      <mat-option [value]="park.id" (click)="fetchQuestionSet(park.id)" *ngFor="let park of parks">
+        {{park.parkName}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select required placeholder="Question Set" [(ngModel)]="questionSet" name="questionSet" style="padding: 0px;">
+      <mat-option [value]="questionSet.id" *ngFor="let questionSet of questionSets">
+        {{questionSet.questionnaireSetName}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+    <mat-form-field >
+      <textarea type="text" pattern="^[A-Za-z0-9](?!.*?\s$)[A-Za-z0-9,.'?\s]{3,}$" maxlength="300"
+        [(ngModel)]="question" name="question" required matInput placeholder="Question" style="padding: 0px;"></textarea>
+    </mat-form-field>
+    <mat-form-field >
+    <mat-select required placeholder="Answer" [(ngModel)]="answer" name="answer" style="padding: 0px;">
+      <mat-option [value]="linkData" *ngFor="let linkData of linkDatas">
+        {{linkData}}
+      </mat-option>
+    </mat-select>
+    </mat-form-field>
+    <button (click)="add()" [disabled]="!addForm.valid || !btnStatus" class="buttons" mat-raised-button
+      type="button">{{btnLabel}} </button>
+  </form>
+</mat-card>

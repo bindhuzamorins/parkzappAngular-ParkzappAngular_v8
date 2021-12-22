@@ -1,0 +1,76 @@
+<div class="col-md-12">
+  <div class="card">
+    <div>
+    <div class="header">
+      <a matTooltip="Back to setup" routerLink="/reports" class="pe-7s-angle-left table-back">Back</a>
+      <h4 class="title">List of all inspection requests</h4>
+  
+      <span *ngIf='!formStatus' class="search-again-table" (click)="clearsearch(); searchForm.reset()">Clear search</span>
+      
+    </div>
+    <mat-card style="box-shadow: none;">
+        <form #searchForm="ngForm">
+            <div class="row">
+              <mat-form-field class="col-md-6">
+                <mat-select class="col-md-12" required placeholder="{{this.insType}}" [(ngModel)]="parkName" name="parkName" style="padding: 0px;">
+                  <mat-option [value]="park.id" *ngFor="let park of parks">
+                    {{park.parkName}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="col-md-6">
+                <mat-select class="col-md-12" required placeholder="Inspection" [(ngModel)]="inspectionType" name="inspectionType" style="padding: 0px;">
+                  <mat-option [value]="inspectionType.id" *ngFor="let inspectionType of inspectionTypes">
+                    {{inspectionType.inspectiontype}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+          
+          <div class="submit_search">
+            <button (click)="search()" [disabled]="!searchForm.valid || !btnStatus" mat-raised-button>{{btnLabel}}</button>
+          </div>
+        </form>
+        <br>
+   <mat-progress-bar mode="indeterminate" *ngIf="datafetch"></mat-progress-bar>
+    
+      </mat-card>
+    </div>
+    <div class="content table-responsive table-full-width">
+    
+      <table *ngIf="!loadStatus" class="table table-hover table-striped">
+        <thead>
+          <tr>
+            <th>Requested By</th>
+            <th>Park Name</th>
+            <th>Inspection Name</th>
+            <th>Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let request of requests | filterBy: filterArray | paginate: { itemsPerPage: 5, currentPage: p }">
+            <td>{{request.requestedBy}}</td>
+            <td>{{request.parkName}}</td>
+            <td>{{request.inspectionName}}</td>
+            <td>{{request.date }}</td>
+            <td>
+              <button (click)="approveDialog(request)" class="btn btn-xs common-btn activitybtn">Approve</button>
+              <button (click)="requestDecline(request)" class="btn btn-xs common-btnd activitybtn">Decline</button>
+            </td>
+          </tr>
+        </tbody>
+        <tr class="icon-and-text" *ngIf="(items | filterBy: filterArray).length === 0">
+          <i class="material-icons alert-icon animated wobble">warning</i>
+          <span class="alert-text">No such details available!</span>
+        </tr>
+      </table>
+      <div *ngIf="messageStatus">
+        <p class="note center">No inspection requests found</p>
+        <br/>
+      </div>
+      <pagination-controls *ngIf="!loadStatus" class="pagination" (pageChange)="p = $event"></pagination-controls>
+    </div>
+  </div>
+</div>

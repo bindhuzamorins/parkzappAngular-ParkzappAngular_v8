@@ -1,0 +1,26 @@
+md-tab-group {
+    padding: 8px;
+  }
+  
+  .main-div {
+    background-color: #ffffffe3;
+    overflow: auto;
+    width:100%;
+  }
+  
+  .main-div a {
+    margin-top: 1%;
+  }
+  
+  a {
+    color: #598328;
+    cursor: pointer;
+    margin-bottom: 10px;
+    margin-left: 10px;
+  }
+  
+  .nav a {
+    color: black;
+    margin-bottom: 0px;
+    margin-left: 0px;
+  }

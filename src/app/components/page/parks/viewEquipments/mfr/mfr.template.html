@@ -1,0 +1,37 @@
+<h1 class="dialog-head">
+  <b>Equipment Manufacturer Details </b>
+  <span matTooltip="Close" matTooltipPosition="right" (click)="close()">
+    <i class="material-icons">close</i>
+  </span>
+</h1>
+<mat-card>
+  <form #mfr="ngForm" (ngSubmit)="mfradd()" >
+      <div style="display: inline-flex;width: 100%;margin-bottom: 3px;">
+          
+         <ng4-files-drop (filesSelect)="filesSelect($event)" [configId]="'my-gif-config'" style="width: 100%;" >
+           <div style="display: inline-block; height: 150px; width: 100%; background-color: #f9f9f9;border: 1px dashed;">
+             <ng4-files-click (filesSelect)="filesSelect($event)" [configId]="'my-image-config'" style="padding-left:42%; ">
+             <img src="assets/parkzapp/upload.png" style="padding-top:25%;width:43%; "/>
+             <br/> <span  style="background-color: #598328;color: white;font-family: Roboto, &quot;Helvetica Neue&quot;, sans-serif;font-size: 14px;font-weight: 500;min-width: 88px;line-height: 36px;padding: 7px 16px;border-radius: 2px;/* right: 2%; */margin-left: -27%;"> Choose file</span>
+             <br/>
+             <span style=" margin: -16px; font-weight: normal; font-size: 9px;">Or drag and drop here</span>
+            </ng4-files-click>
+           </div>
+         </ng4-files-drop>
+           <div *ngIf="divshown" style="width: 25%;margin-left: 1%;">
+           <img *ngIf="imageShown" [src]="currentProfileImage" class="imageview" />
+         
+         </div>
+       </div>
+       <br/>
+      <mat-form-field>
+
+      <input pattern="^[A-Za-z0-9](?!.*?\s$)[A-Za-z0-9,.'\s]{0,}$" minlength="3" maxlength="50" [(ngModel)]="manufacturer" name="mfr_name" autofocus required matInput placeholder="Manufacturer Name">
+    </mat-form-field>
+    <mat-form-field>
+        <input pattern="^[#A-Za-z0-9](?!.*?\s$)[A-Za-z0-9,#./'\s]{0,}$" minlength="3" maxlength="50"  [(ngModel)]="model_no" name="model_no" autofocus required matInput placeholder="Model Number">
+          </mat-form-field>
+    <br/>
+    <button type="submit" class="add-btn"  [disabled]="!mfr.valid || !btnStatus" mat-raised-button>{{btnLabel}}</button>
+  </form>
+</mat-card>

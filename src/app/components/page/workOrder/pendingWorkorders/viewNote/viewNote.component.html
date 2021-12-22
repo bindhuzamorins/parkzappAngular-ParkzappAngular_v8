@@ -1,0 +1,21 @@
+<h1 class="dialog-head">
+  <b>Add / Edit Note</b>
+  <span matTooltip="Close" matTooltipPosition="right" (click)="close()">
+    <i class="material-icons">close</i>
+  </span>
+</h1>
+  <mat-card>
+    <ul>
+      <form #addForm="ngForm">
+             
+        <mat-form-field style="width: 500px;">
+            <textarea rows="5" cols="7" matTextareaAutosize  maxlength="100" type="text" [(ngModel)]="noteDetails.notes" name="noteDetails.notes" matInput placeholder="Notes" required></textarea>
+        </mat-form-field>
+        <br/>
+       
+        
+        <!-- <button (click)="submit(moreDetails.id)" [disabled]="!pendingAddForm.valid" md-raised-button>{{btnLabel}}</button> -->
+        <button (click)="add()"  mat-raised-button [disabled]="!addForm.valid">{{btnLabel}}</button>
+      </form>
+    </ul>
+  </mat-card>

@@ -1,0 +1,12 @@
+<h1 class="dialog-head"><b>{{moreDetails.asset_name}}</b>
+  <span matTooltip="Close" matTooltipPosition="right" (click)="close()"><i class="material-icons">close</i></span>
+</h1>
+<mat-card class="image-card" *ngIf="moreDetails.asset_type=='image'">
+  <div *ngIf="!imageStatus" class="loader"></div>
+  <img [hidden]="!imageStatus" (load)="loadCompleted()" src="{{imageUrl}}{{moreDetails.asset_url}}" />
+</mat-card>
+
+<mat-card *ngIf="moreDetails.asset_type=='doc'">
+  <iframe src="http://docs.google.com/gview?url={{imageUrl}}{{moreDetails.asset_url}}&embedded=true" style="width:600px; height:500px;"
+    frameborder="0"></iframe>
+</mat-card>

@@ -1,0 +1,18 @@
+
+<div class="main-div">
+  <a matTooltip="Back to Reports" routerLink="/reports" class="pe-7s-angle-left table-back">Back</a>
+  <ul class="nav nav-tabs">
+    <!--<li [ngClass]="{'active': pageName =='generateWorkorder'}" (click)="generatePage()" class="active"><a>Generate Work order</a></li>-->
+    <li [ngClass]="{'active': pageName =='finishedWorkorder'}" (click)="finishedPage()"><a>Finished Work orders</a></li>
+    <li [ngClass]="{'active': pageName =='pendingWorkorder'}" (click)="pendingPage()"><a>Pending Work orders</a></li>
+  </ul>
+  <!--<div *ngIf="pageName =='generateWorkorder'" class="animated fadeInDown">
+    <app-generateWorkorder></app-generateWorkorder>
+  </div>-->
+  <div *ngIf="pageName =='finishedWorkorder'" class="animated fadeInDown">
+    <app-finishedWorkorders></app-finishedWorkorders>
+  </div>
+  <div *ngIf="pageName =='pendingWorkorder'" class="animated fadeInDown">
+    <app-pendingWorkorders></app-pendingWorkorders>
+  </div>
+</div>

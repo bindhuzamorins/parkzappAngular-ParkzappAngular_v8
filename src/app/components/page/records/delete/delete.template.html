@@ -1,0 +1,8 @@
+<h1 class="dialog-head"><b>Delete! </b>
+  <span matTooltip="Close" matTooltipPosition="right" (click)="close()"><i class="material-icons">close</i></span>
+</h1>
+<i class="material-icons alert-icon animated wobble">warning</i>
+<span class="alert-text">Are you sure you want to delete {{moreDetails.asset_name}}?</span>
+<br/>
+<br/>
+<button (click)="delete()" [disabled]="!btnStatus" class="col-md-4" mat-raised-button>{{btnLabel}}</button>

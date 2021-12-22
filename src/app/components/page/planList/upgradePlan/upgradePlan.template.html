@@ -1,0 +1,28 @@
+<h1 class="dialog-head"><b>Change to new plan</b>
+  <span matTooltip="Close" matTooltipPosition="right" (click)="close()">
+    <i class="material-icons">close</i>
+  </span>
+</h1>
+<mat-card>
+  <h4 class="plan-name">{{moreDetails.planName}}</h4>
+  <ul>
+    <li>
+      <span *ngIf="moreDetails.maximumUser =='1'" class="li-details">Single User</span>
+      <span *ngIf="moreDetails.maximumUser !='1'" class="li-details">Up to {{moreDetails.maximumUser}} Users</span>
+
+    </li>
+    <li>
+      <span class="li-details">Up to {{moreDetails.maximumPlayGround}} Playgrounds</span></li>
+    <li>
+      <span class="li-details"> {{moreDetails.photoThresholdMb}} GB Photo Storage</span>
+    </li>
+    <li>
+      <span class="li-details"> {{moreDetails.videoThresholdMb}} GB Video Storage</span>
+    </li>
+    <!-- <li *ngIf="moreDetails.validity =='365'">
+      <span class="li-details"> {{moreDetails.price | currency:'USD':true}} for {{moreDetails.validity}} days</span>
+    </li> -->
+  </ul>
+</mat-card>
+<button *ngIf="!renewBtnStatus" (click)="pay()" class="animated fadeInDown mat-raised-button upgrade-btn">Purchase {{moreDetails.planName}}</button>
+<button *ngIf="renewBtnStatus" (click)="payRenew()" class="animated fadeInDown mat-raised-button renew-btn">Renew {{moreDetails.planName}}</button>

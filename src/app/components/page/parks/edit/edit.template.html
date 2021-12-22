@@ -1,0 +1,480 @@
+<h1 class="dialog-head">
+  <b>Edit {{moreDetails.parkName}}</b>
+  <span matTooltip="Close" matTooltipPosition="right" (click)="close()">
+    <i class="material-icons">close</i>
+  </span>
+</h1>
+<mat-card class="scroll">
+  <div *ngIf="divOneStatus">
+    <!--<form #editForm="ngForm" (ngSubmit)="edit(editForm.value)">-->
+    <form #editForm="ngForm">
+
+      <div class="row">
+        <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+          <input type="text" pattern="^[A-Za-z0-9](?!.*?\s$)[A-Za-z0-9,.'\s]{0,51}$" minlength="3" maxlength="50"
+            [(ngModel)]="moreDetails.parkName" name="parkName" required matInput placeholder="Park name">
+        </mat-form-field>
+        <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+          <input type="text" minlength="3" maxlength="50" [(ngModel)]="moreDetails.address" name="parkAddress" required
+            matInput placeholder="Address">
+        </mat-form-field>
+        <!-- <md-select required placeholder="Country" [(ngModel)]="moreDetails.country" name="parkCountry"
+          class="animated fadeInDown col-md-4 col-sm-4">
+          <md-option (click)="fetchState(country.code)" [value]="country.code" *ngFor="let country of countries">
+            {{country.name}}
+          </md-option>
+        </md-select> -->
+        <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+        <mat-select required placeholder="Country" [(ngModel)]="this.country" name="parkCountry"
+          class="animated fadeInDown col-md-4 col-sm-4" style="padding: 0px;">
+          <mat-option [value]="this.country" (click)="fetchState(this.country)">
+            {{this.countryname}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      </div>
+      <div class="row">
+        <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+        <mat-select (click)="checkCountryStatus()" (change)="fetchCities()" required placeholder="State"
+          [(ngModel)]="mystate" name="parkState" class="animated fadeInDown col-md-4 col-sm-4" style="padding: 0px;">
+          <mat-option [value]="state.name" *ngFor="let state of allStates">
+            {{state.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field> &nbsp;&nbsp;&nbsp;
+      <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+        <mat-select required placeholder="City" [(ngModel)]="moreDetails.cityId" name="parkCity"
+          class="animated fadeInDown col-md-4 col-sm-4" style="padding: 0px;">
+          <mat-option [value]="cit.id" *ngFor="let cit of cities">
+            {{cit.city}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+        <mat-form-field *ngIf="moreDetails.country==14" class="animated fadeInDown col-md-4 col-sm-4">
+          <input pattern="[A-Za-z0-9\s]{3,7}$" type="text" [(ngModel)]="moreDetails.zipCode" name="parkZipCode" required
+            matInput placeholder="Zipcode">
+        </mat-form-field>
+        <mat-form-field *ngIf="moreDetails.country!=14" class="animated fadeInDown col-md-4 col-sm-4" style="
+        bottom: 16px;">
+          <input pattern="[0-9]{4,6}$" type="text" [(ngModel)]="moreDetails.zipCode" name="parkZipCode" required matInput
+            placeholder="Zipcode">
+        </mat-form-field>
+
+
+        <!-- <md-input-container class="animated fadeInDown col-md-4 col-sm-4">
+        <input pattern="[0-9]{4,6}" type="text" [(ngModel)]="moreDetails.zipCode" name="parkZipCode" required mdInput placeholder="Zipcode">
+      </md-input-container>
+      <br/> -->
+
+        <!-- <div class="animated fadeInDown col-md-12 col-sm-12">
+        <label>Active Services</label>
+        <div *ngIf="divActiveOne">Playground inspection</div>
+        <div *ngIf="divActiveTwo">Ice arena Safety inspection</div>
+        <div *ngIf="divActiveThree">Building inspection</div>
+        <div *ngIf="divActiveFour">Sports field inspection</div>
+        <div *ngIf="divActiveFive">Fire inspection</div>
+        <div *ngIf="divActiveSix">Parking lot/Sidewalk inspection</div>
+      </div>
+
+      <br/> -->
+
+        <div class="animated fadeInDown col-md-12 col-sm-12">
+          <label>Services</label>
+          <div class="row">
+            <div *ngIf="divInActiveOne">
+              <mat-checkbox class="col-md-4" name="servicesOne" [(ngModel)]="servicesOne"
+                [disabled]="serviceOneDisabled"> Playground inspection</mat-checkbox>
+            </div>
+            <div *ngIf="divInActiveTwo">
+              <mat-checkbox class="col-md-4" name="servicesTwo" [(ngModel)]="servicesTwo"
+                [disabled]="serviceTwoDisabled">Ice arena Safety inspection</mat-checkbox>
+            </div>
+            <div *ngIf="divInActiveThree">
+              <mat-checkbox class="col-md-4" name="servicesThree" [(ngModel)]="servicesThree"
+                [disabled]="serviceThreeDisabled">Building inspection</mat-checkbox>
+            </div>
+            <div *ngIf="divInActiveFour">
+              <mat-checkbox class="col-md-4" name="servicesFour" [(ngModel)]="servicesFour"
+                [disabled]="serviceFourDisabled">Sports field inspection</mat-checkbox>
+            </div>
+            <div *ngIf="divInActiveFive">
+              <mat-checkbox class="col-md-4" name="servicesFive" [(ngModel)]="servicesFive"
+                [disabled]="serviceFiveDisabled">Fire inspection</mat-checkbox>
+            </div>
+            <div *ngIf="divInActiveSix">
+              <mat-checkbox class="col-md-4" name="servicesSix" [(ngModel)]="servicesSix"
+                [disabled]="serviceSixDisabled">Parking lot/Sidewalk inspection</mat-checkbox>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div *ngIf="showme">
+        <div class="row">
+
+          <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+          <mat-select placeholder="Park Category" [(ngModel)]="moreDetails.parkCategoryId" name="parkCategory"
+            class="animated fadeInDown col-md-4 col-sm-4" style="padding: 0px;">
+            <mat-option [value]="category.id" *ngFor="let category of categories">
+              {{category.categoryName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+          <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+            <input pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" type="email" [(ngModel)]="moreDetails.email"
+              name="parkEmail" matInput placeholder="Email">
+          </mat-form-field>
+
+          <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+            <input pattern="[0-9]{6,11}" type="text" [(ngModel)]="moreDetails.phone" name="parkPhone" matInput
+              placeholder="Phone">
+          </mat-form-field>
+        </div>
+
+        <div class="row">
+        <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+          <mat-select placeholder="Area" [(ngModel)]="moreDetails.areaId" name="parkArea"
+            class="animated fadeInDown col-md-4 col-sm-4" style="padding: 0px;">
+            <mat-option [value]="are.id" *ngFor="let are of areas">
+              {{are.area}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+          <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+            <input type="text" [(ngModel)]="moreDetails.website" name="parkWebsite" matInput placeholder="Website">
+          </mat-form-field>
+        </div>
+
+
+        <div class="row">
+
+          <div class="animated fadeInDown col-md-6 col-sm-12">
+            <label>Park Logo</label>
+            <!--  <input accept="image/*" (change)="fileEventLogo($event)" [(ngModel)]="parkImage" name="parkImage" type="file" />
+            <br/> -->
+            <div style="display: inline-flex;width: 100%;">
+
+              <ng4-files-drop (filesSelect)="filesSelect($event)" [configId]="'my-gif-config'" style="width: 100%;">
+                <div
+                  style="display: inline-block; height: 150px; width: 100%; background-color: #f9f9f9;border: 1px dashed;">
+                  <ng4-files-click (filesSelect)="filesSelect($event)" [configId]="'my-image-config'"
+                    style="padding-left:42%; ">
+                    <img src="assets/parkzapp/upload.png" style="padding-top:25%;width:43%; " />
+                    <br />
+                    <span
+                      style="background-color: #598328;color: white;font-family: Roboto, &quot;Helvetica Neue&quot;, sans-serif;font-size: 14px;font-weight: 500;min-width: 88px;line-height: 36px;padding: 7px 16px;border-radius: 2px;/* right: 2%; */margin-left: -27%;">
+                      Choose file</span>
+                    <br />
+                    <span style=" margin: -16px; font-weight: normal; font-size: 9px;">Or drag and drop here</span>
+                  </ng4-files-click>
+                </div>
+              </ng4-files-drop>
+              <div *ngIf="divshown" style="width: 25%;margin-left: 1%;">
+                <img *ngIf="imageShown" [src]="currentProfileImage" class="imageview" />
+
+              </div>
+            </div>
+
+          </div>
+          <div class="animated fadeInDown col-md-6 col-sm-12">
+            <label>Blue print</label>
+            <!--   <input accept="image/*" (change)="fileEventBlueprint($event)" [(ngModel)]="parkBluePrint" name="parkBluePrint" type="file"
+            /> -->
+            <div style="display: inline-flex;width: 100%;">
+
+              <ng4-files-drop (filesSelect)="filesSelect2($event)" [configId]="'my-gif-config2'" style="width: 100%;">
+                <div
+                  style="display: inline-block; height: 150px; width: 100%; background-color: #f9f9f9;border: 1px dashed;">
+                  <ng4-files-click (filesSelect)="filesSelect2($event)" [configId]="'my-image-config2'"
+                    style="padding-left:42%; ">
+                    <img src="assets/parkzapp/upload.png" style="padding-top:25%;width:43%; " />
+                    <br />
+                    <span
+                      style="background-color: #598328;color: white;font-family: Roboto, &quot;Helvetica Neue&quot;, sans-serif;font-size: 14px;font-weight: 500;min-width: 88px;line-height: 36px;padding: 7px 16px;border-radius: 2px;/* right: 2%; */margin-left: -27%;">
+                      Choose file</span>
+                    <br />
+                    <span style=" margin: -16px; font-weight: normal; font-size: 9px;">Or drag and drop here</span>
+                  </ng4-files-click>
+                </div>
+              </ng4-files-drop>
+              <div *ngIf="divshown2" style="width: 25%;margin-left: 1%;">
+                <img *ngIf="imageShown2" [src]="currentProfileImage2" class="imageview" />
+
+              </div>
+            </div>
+
+            <br />
+          </div>
+        </div>
+        <hr style="width: 93%;">
+        <i class="fa fa-chevron-up myuparrow" aria-hidden="true" (click)="funhideme();"></i>
+      </div>
+      <div *ngIf="!showme">
+        <span class="addmore">(Add more)</span>
+        <hr style="width: 93%;">
+        <i class="fa fa-chevron-down mydownarrow" aria-hidden="true" (click)="funshowme();"></i>
+      </div>
+      <div class="col-md-12 ">
+        <p class="note">Note: Acceptable image formats are jpeg, jpg, gif and png, You can use the below buttons to add
+          new data to the dropdown
+        </p>
+
+
+        <br />
+        <div class="col-md-6">
+          <button (click)="addNewCity()" matTooltip="Add new city in list" class="btn btn-xs add-new-btn">Add
+            City</button>
+          <button (click)="addNewArea()" matTooltip="Add new Area in list" class="btn btn-xs add-new-btn" style="margin-left: 3px;">Add
+            Area</button>
+          <button (click)="addNewCategory()" matTooltip="Add new Park Category in list"
+            class="btn btn-xs add-new-btn" style="margin-left: 3px;">Add Park Category</button>
+        </div>
+        <div class="col-md-3 " style="float: right;">
+          <button [disabled]="!editForm.valid || !btnStatus" class="buttons" mat-raised-button type="submit"
+            (click)="edit(editForm.value)">{{btnLabel}}</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- Edit BUILDING w r to SERVICE-->
+
+  <div *ngIf="divThreeStatus">
+    <form #editForm="ngForm">
+
+      <div class="row">
+        <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+          <input type="text" pattern="^[A-Za-z0-9](?!.*?\s$)[A-Za-z0-9,.'\s]{0,51}$" minlength="3" maxlength="50"
+            [(ngModel)]="moreDetails.parkName" name="parkName" required matInput placeholder="Building name">
+        </mat-form-field>
+        <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+        <mat-select placeholder="Select Park Name" [(ngModel)]="moreDetails.buildingUnderId" name="selectPark"
+          class="animated fadeInDown col-md-4 col-sm-4">
+          <mat-option [value]="park.id" *ngFor="let park of allParks">
+            {{park.parkName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+          <input type="text" minlength="3" maxlength="50" [(ngModel)]="moreDetails.address" name="parkAddress" required
+            matInput placeholder="Address">
+        </mat-form-field>
+        <!-- </div>
+      <div class="row"> -->
+        <!-- <md-select required placeholder="Country" [(ngModel)]="moreDetails.country" name="parkCountry"
+          class="animated fadeInDown col-md-4 col-sm-4">
+          <md-option (click)="fetchState(country.code)" [value]="country.code" *ngFor="let country of countries">
+            {{country.name}}
+          </md-option>
+        </md-select>
+
+        <md-select (click)="checkCountryStatus()" (change)="fetchCities()" required placeholder="State"
+          [(ngModel)]="mystate" name="parkState" class="animated fadeInDown col-md-4 col-sm-4">
+          <md-option [value]="state.name" *ngFor="let state of allStates">
+            {{state.name}}
+          </md-option>
+        </md-select>
+        <md-select required placeholder="City" [(ngModel)]="moreDetails.cityId" name="parkCity"
+          class="animated fadeInDown col-md-4 col-sm-4">
+          <md-option [value]="cit.id" *ngFor="let cit of cities">
+            {{cit.city}}
+          </md-option>
+        </md-select> -->
+        <!-- </div>
+      <div class="row"> -->
+        <div class="row col-md-12 col-sm-12">
+      <mat-form-field class="animated fadeInDown col-md-4 col-sm-4" >
+        <mat-select required placeholder="Country" [(ngModel)]="this.country" name="parkCountry"
+          class="animated fadeInDown col-md-4 col-sm-4">
+          <mat-option [value]="this.country" (click)="fetchState(this.country)">
+            {{this.countryname}}
+          </mat-option>
+        </mat-select>
+        </mat-form-field>
+        <mat-form-field class="animated fadeInDown col-md-4 col-sm-4" >
+        <mat-select (click)="checkCountryStatus()" (change)="fetchCities()" required placeholder="State"
+          [(ngModel)]="mystate" name="parkState" class="animated fadeInDown col-md-4 col-sm-4">
+          <mat-option [value]="state.name" *ngFor="let state of allStates">
+            {{state.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+        <mat-select required placeholder="City" [(ngModel)]="moreDetails.cityId" name="parkCity"
+          class="animated fadeInDown col-md-4 col-sm-4">
+          <mat-option [value]="cit.id" *ngFor="let cit of cities">
+            {{cit.city}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+        <mat-form-field *ngIf="moreDetails.country==14" class="animated fadeInDown col-md-4 col-sm-4">
+          <input pattern="[A-Za-z0-9\s]{4,6}$" type="text" [(ngModel)]="moreDetails.zipCode" name="parkZipCode" required
+            matInput placeholder="Zipcode">
+        </mat-form-field>
+        <mat-form-field *ngIf="moreDetails.country!=14" class="animated fadeInDown col-md-4 col-sm-4">
+          <input pattern="[0-9]{4,6}$" type="text" [(ngModel)]="moreDetails.zipCode" name="parkZipCode" required matInput
+            placeholder="Zipcode">
+        </mat-form-field>
+
+
+        <!-- <md-input-container class="animated fadeInDown col-md-4 col-sm-4" style="padding-top: 13px">
+          <input pattern="[0-9]{4,6}" type="text" [(ngModel)]="moreDetails.zipCode" name="parkZipCode" required mdInput
+            placeholder="Zipcode">
+        </md-input-container> -->
+        <br />
+      </div>
+</div>
+      <!-- <div class="animated fadeInDown col-md-12 col-sm-12">
+          <label>Services</label>
+          <div class="row">
+            <div *ngIf="divInActiveOne">
+              <md-checkbox class="col-md-4" name="servicesOne" [(ngModel)]="servicesOne"  [disabled]="serviceOneDisabled"> Playground inspection</md-checkbox>
+            </div>
+            <div *ngIf="divInActiveTwo">
+              <md-checkbox class="col-md-4" name="servicesTwo" [(ngModel)]="servicesTwo"  [disabled]="serviceTwoDisabled">Ice arena Safety inspection</md-checkbox>
+            </div>
+            <div *ngIf="divInActiveThree">
+              <md-checkbox class="col-md-4" name="servicesThree" [(ngModel)]="servicesThree"  [disabled]="serviceThreeDisabled">Building inspection</md-checkbox>
+            </div>
+            <div *ngIf="divInActiveFour">
+              <md-checkbox class="col-md-4" name="servicesFour" [(ngModel)]="servicesFour"  [disabled]="serviceFourDisabled">Sports field inspection</md-checkbox>
+            </div>
+            <div *ngIf="divInActiveFive">
+              <md-checkbox class="col-md-4" name="servicesFive" [(ngModel)]="servicesFive" [disabled]="serviceFiveDisabled">Fire inspection</md-checkbox>
+            </div>
+            <div *ngIf="divInActiveSix">
+              <md-checkbox class="col-md-4" name="servicesSix" [(ngModel)]="servicesSix" [disabled]="serviceSixDisabled">Parking lot/Sidewalk inspection</md-checkbox>
+            </div>
+          </div>
+        </div> -->
+
+      <div *ngIf="showme">
+        <div class="row">
+
+          <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+          <mat-select placeholder="Park Category" [(ngModel)]="moreDetails.parkCategoryId" name="parkCategory"
+            class="animated fadeInDown col-md-4 col-sm-4">
+            <mat-option [value]="category.id" *ngFor="let category of categories">
+              {{category.categoryName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+          <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+            <input pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" type="email" [(ngModel)]="moreDetails.email"
+              name="parkEmail" matInput placeholder="Email">
+          </mat-form-field>
+
+          <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+            <input pattern="[0-9]{6,11}" type="text" [(ngModel)]="moreDetails.phone" name="parkPhone" matInput
+              placeholder="Phone">
+          </mat-form-field>
+        </div>
+
+        <div class="row">
+          <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+          <mat-select placeholder="Area" [(ngModel)]="moreDetails.areaId" name="parkArea"
+            class="animated fadeInDown col-md-4 col-sm-4">
+            <mat-option [value]="are.id" *ngFor="let are of areas">
+              {{are.area}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+          <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+            <input type="text" [(ngModel)]="moreDetails.website" name="parkWebsite" matInput placeholder="Website">
+          </mat-form-field>
+        </div>
+
+
+        <div class="row">
+
+          <div class="animated fadeInDown col-md-6 col-sm-12">
+            <label>Park Logo</label>
+            <!--  <input accept="image/*" (change)="fileEventLogo($event)" [(ngModel)]="parkImage" name="parkImage" type="file" />
+              <br/> -->
+            <div style="display: inline-flex;width: 100%;">
+
+              <ng4-files-drop (filesSelect)="filesSelect($event)" [configId]="'my-gif-config'" style="width: 100%;">
+                <div
+                  style="display: inline-block; height: 150px; width: 100%; background-color: #f9f9f9;border: 1px dashed;">
+                  <ng4-files-click (filesSelect)="filesSelect($event)" [configId]="'my-image-config'"
+                    style="padding-left:42%; ">
+                    <img src="assets/parkzapp/upload.png" style="padding-top:25%;width:43%; " />
+                    <br />
+                    <span
+                      style="background-color: #598328;color: white;font-family: Roboto, &quot;Helvetica Neue&quot;, sans-serif;font-size: 14px;font-weight: 500;min-width: 88px;line-height: 36px;padding: 7px 16px;border-radius: 2px;/* right: 2%; */margin-left: -27%;">
+                      Choose file</span>
+                    <br />
+                    <span style=" margin: -16px; font-weight: normal; font-size: 9px;">Or drag and drop here</span>
+                  </ng4-files-click>
+                </div>
+              </ng4-files-drop>
+              <div *ngIf="divshown" style="width: 25%;margin-left: 1%;">
+                <img *ngIf="imageShown" [src]="currentProfileImage" class="imageview" />
+
+              </div>
+            </div>
+
+          </div>
+          <div class="animated fadeInDown col-md-6 col-sm-12">
+            <label>Blue print</label>
+            <!--   <input accept="image/*" (change)="fileEventBlueprint($event)" [(ngModel)]="parkBluePrint" name="parkBluePrint" type="file"
+              /> -->
+            <div style="display: inline-flex;width: 100%;">
+
+              <ng4-files-drop (filesSelect)="filesSelect2($event)" [configId]="'my-gif-config2'" style="width: 100%;">
+                <div
+                  style="display: inline-block; height: 150px; width: 100%; background-color: #f9f9f9;border: 1px dashed;">
+                  <ng4-files-click (filesSelect)="filesSelect2($event)" [configId]="'my-image-config2'"
+                    style="padding-left:42%; ">
+                    <img src="assets/parkzapp/upload.png" style="padding-top:25%;width:43%; " />
+                    <br />
+                    <span
+                      style="background-color: #598328;color: white;font-family: Roboto, &quot;Helvetica Neue&quot;, sans-serif;font-size: 14px;font-weight: 500;min-width: 88px;line-height: 36px;padding: 7px 16px;border-radius: 2px;/* right: 2%; */margin-left: -27%;">
+                      Choose file</span>
+                    <br />
+                    <span style=" margin: -16px; font-weight: normal; font-size: 9px;">Or drag and drop here</span>
+                  </ng4-files-click>
+                </div>
+              </ng4-files-drop>
+              <div *ngIf="divshown2" style="width: 25%;margin-left: 1%;">
+                <img *ngIf="imageShown2" [src]="currentProfileImage2" class="imageview" />
+
+              </div>
+            </div>
+
+            <br />
+          </div>
+        </div>
+        <hr style="width: 93%;">
+        <i class="fa fa-chevron-up myuparrow" aria-hidden="true" (click)="funhideme();"></i>
+      </div>
+      <div *ngIf="!showme">
+        <span class="addmore">(Add more)</span>
+        <hr style="width: 93%;">
+        <i class="fa fa-chevron-down mydownarrow" aria-hidden="true" (click)="funshowme();"></i>
+      </div>
+      <div class="col-md-12 ">
+        <p class="note">Note: Acceptable image formats are jpeg, jpg, gif and png, You can use the below buttons to add
+          new data to the dropdown
+        </p>
+
+
+        <br />
+        <div class="col-md-6">
+          <button (click)="addNewCity()" matTooltip="Add new city in list" class="btn btn-xs add-new-btn">Add
+            City</button>
+          <button (click)="addNewArea()" matTooltip="Add new Area in list" class="btn btn-xs add-new-btn">Add
+            Area</button>
+          <button (click)="addNewCategory()" matTooltip="Add new Category in list" class="btn btn-xs add-new-btn">Add
+            Category</button>
+        </div>
+        <div class="col-md-3 " style="float: right;">
+          <button [disabled]="!editForm.valid || !btnStatus" class="buttons" mat-raised-button type="submit"
+            (click)="edit(editForm.value)">{{btnLabel}}</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+</mat-card>

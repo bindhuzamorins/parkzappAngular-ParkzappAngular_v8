@@ -1,0 +1,35 @@
+<h1 class="dialog-head">
+  <b>Add Question</b>
+  <span matTooltip="Close" matTooltipPosition="right" (click)="close()">
+    <i class="material-icons">close</i>
+  </span>
+</h1>
+<mat-card>
+  <form #addForm="ngForm">
+    <mat-form-field>
+    <mat-select required placeholder="Inspection Type" [(ngModel)]="inspectionType" name="inspectionType">
+      <mat-option (click)="fetchQuestionSet(inspectionType.id)" [value]="inspectionType.id" *ngFor="let inspectionType of items">
+        {{inspectionType.inspectionType}}
+      </mat-option>
+    </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+    <mat-select required placeholder="Question Set" [(ngModel)]="questionSet" name="questionSet">
+      <mat-option [value]="questionSet.id" *ngFor="let questionSet of questionSets">
+        {{questionSet.questionnaireSetName}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+    <mat-form-field class="animated fadeInDown">
+      <input type="text" pattern="^[A-Za-z0-9](?!.*?\s$)[A-Za-z0-9,.'?\s]{0,}$" minlength="3" maxlength="300" [(ngModel)]="question" name="question set" required matInput placeholder="Enter New Question" />
+    </mat-form-field>
+  <mat-form-field>
+    <mat-select required placeholder="Answer" [(ngModel)]="answer" name="answer" class="animated fadeInDown">
+      <mat-option [value]="linkData" *ngFor="let linkData of linkDatas">
+        {{linkData}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+    <button (click)="add()" [disabled]="!addForm.valid || !btnStatus" class="buttons" mat-raised-button type="button">{{btnLabel}} </button>
+  </form>
+</mat-card>

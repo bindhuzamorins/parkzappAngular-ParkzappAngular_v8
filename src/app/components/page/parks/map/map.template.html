@@ -1,0 +1,10 @@
+<h1 class="dialog-head"><b>{{moreDetails.parkName}} location on map</b>
+  <span matTooltip="Close" matTooltipPosition="right" (click)="close()"><i class="material-icons">close</i></span>
+</h1>
+<mat-card>
+  <mat-progress-bar *ngIf="loadingStatus" mode="indeterminate"></mat-progress-bar>
+  <agm-map [zoom]="17" [latitude]="moreDetails.latitude" [longitude]="moreDetails.longitude">
+    <agm-marker (dragEnd)="markerDragEnd(m, $event)" [markerDraggable]="true" [latitude]="moreDetails.latitude" [longitude]="moreDetails.longitude"></agm-marker>
+  </agm-map>
+  <p class="note">Note: You can drag the location icon in case it's pinned to wrong point </p>
+</mat-card>

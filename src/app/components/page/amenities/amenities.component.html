@@ -1,0 +1,62 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="header">
+      <a matTooltip="Back to setup" routerLink="/setup" class="pe-7s-angle-left table-back">Back</a>
+      <h4 class="title">List of all Amenities</h4>
+      <button (click)="add()" matTooltip="Add new" mat-raised-button>Add New Amenity</button>
+      <br />
+      <mat-form-field *ngIf="dataFetchStatus && tableDataStatus" class="search-box">
+        <input autofocus [(ngModel)]="filterArray.amenity" matInput placeholder="Search Amenity...">
+      </mat-form-field>
+    </div>
+    <div class="content table-responsive table-full-width">
+      <mat-progress-bar *ngIf="!dataFetchStatus" mode="indeterminate"></mat-progress-bar>
+      <table *ngIf="dataFetchStatus && dataStatus && tableDataStatus" class="table table-hover table-striped">
+        <thead>
+          <tr>
+            <th>Amenity</th>
+            <th>Description</th>
+            <th class="action-th">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let amen of amenities | filterBy: filterArray | paginate: { itemsPerPage: 5, currentPage: p }">
+            <td>{{amen.amenity}}</td>
+            <!-- <td class="center">
+              <button mdTooltip="View Inspections of {{amen.amenity}}" (click)="amenityInspections(amen)" class="animated zoomIn btn btn-xs other-btn">
+              <i class="material-icons">event</i>
+            </button>
+            </td>
+            <td class="center">
+              <button mdTooltip="View Inspectors of {{amen.amenity}}" (click)="viewInspectors(amen)"  class="animated zoomIn btn btn-xs other-btn">
+              <i class="material-icons">supervisor_account</i>
+            </button>
+            </td> -->
+            <td>
+              <div class="scroll">
+                <span [outerHTML]="amen.description | emptyField"></span>
+              </div>
+
+            </td>
+            <td>
+              <button (click)="edit(amen)" class="btn btn-xs edit-btn">Edit</button>
+              <button *ngIf="amen.systemRole === '1'" (click)="delete(amen)"
+                class="btn btn-xs delete-btn" style="margin-left: 3px;">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+
+        <tr class="icon-and-text" *ngIf="(items | filterBy: filterArray).length === 0">
+          <i class="material-icons alert-icon animated wobble">warning</i>
+          <span class="alert-text">No such details available!</span>
+        </tr>
+
+      </table>
+      <pagination-controls *ngIf="dataFetchStatus && dataStatus && tableDataStatus" class="pagination"
+        (pageChange)="p = $event"></pagination-controls>
+      <p *ngIf="!tableDataStatus" class="note center">NOTE: Currently there are no amenities added to this account, You
+        can add new amenity by clicking on the Add New Amenity button</p>
+
+    </div>
+  </div>
+</div>

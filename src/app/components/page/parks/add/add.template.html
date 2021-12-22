@@ -1,0 +1,1850 @@
+<h1 class="dialog-head">
+  <b>{{this.headName}}</b>
+  <span matTooltip="Close" matTooltipPosition="right" (click)="close()">
+    <i class="material-icons">close</i>
+  </span>
+</h1>
+<mat-card style="height: 400px;overflow-y: scroll; width: 800px !important;">
+  <form #addForm="ngForm">
+    <wizard>
+      <!-- step one -->
+      <wizard-step title="{{this.Wizhead}}*">
+        <div *ngIf="!serviceThree3">
+          <div class="row">
+            <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+              <input type="text" pattern="^[A-Za-z0-9](?!.*?\s$)[A-Za-z0-9,.'\s]{0,51}$" minlength="3" maxlength="50"
+                [(ngModel)]="parkName" name="parkName" required matInput placeholder="Park Name">
+            </mat-form-field>
+            <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+              <input type="text" minlength="3" maxlength="50" [(ngModel)]="parkAddress" name="parkAddress" required
+                matInput placeholder="Address">
+            </mat-form-field>
+            <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+            <mat-select required placeholder="Country" ng-disabled="true" [(ngModel)]="parkCountry" name="parkCountry"
+              class="animated fadeInDown col-md-4 col-sm-4" style="padding: 0px;">
+              <mat-option (click)="fetchState(this.countryCode)" [value]="this.countryCode">
+                {{this.countryName}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          </div>
+          <div class="row">
+          <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+            <mat-select (click)="checkCountryStatus()" (selectionChange)="fetchCities()" required placeholder="State"
+              [(ngModel)]="parkState" name="parkState" class="animated fadeInDown col-md-4 col-sm-4" style="padding: 0px;">
+              <mat-option [value]="state.name" *ngFor="let state of allStates">
+                {{state.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+            <mat-select required placeholder="City" [(ngModel)]="parkCity" name="parkCity"
+              class="animated fadeInDown col-md-4 col-sm-4" style="padding: 0px;">
+              <mat-option *ngFor="let cit of cities" [value]="cit.id">
+                {{cit.city}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+            <mat-form-field *ngIf="parkCountry==14" class="animated fadeInDown col-md-4 col-sm-4">
+              <input pattern="[A-Za-z0-9\s]{3,7}$" type="text" [(ngModel)]="parkZipCode" name="parkZipCode" required
+                matInput placeholder="Zipcode">
+            </mat-form-field>
+            <mat-form-field *ngIf="parkCountry!=14" class="animated fadeInDown col-md-4 col-sm-4">
+              <input pattern="[0-9]{4,6}$" type="text" [(ngModel)]="parkZipCode" name="parkZipCode" required matInput
+                placeholder="Zipcode">
+            </mat-form-field>
+          </div>
+
+          <div class="animated fadeInDown col-md-12 col-sm-12" style="width:100%">
+            <label>Services</label>
+            <div class="row">
+              <!--<mat-checkbox class="col-md-4" name="serviceOne" [(ngModel)]="serviceOne"> Playground inspection</mat-checkbox>
+            <mat-checkbox class="col-md-4" name="serviceTwo" [(ngModel)]="serviceTwo">Ice arena Safety inspection</mat-checkbox>
+            <mat-checkbox class="col-md-4" name="serviceThree" [(ngModel)]="serviceThree">Building inspection</mat-checkbox>
+            <mat-checkbox class="col-md-4" name="serviceFour" [(ngModel)]="serviceFour">Sports field inspection</mat-checkbox>
+            <mat-checkbox class="col-md-4" name="serviceFive" [(ngModel)]="serviceFive">Fire inspection</mat-checkbox>
+            <mat-checkbox class="col-md-4" name="serviceSix" [(ngModel)]="serviceSix">Parking lot/Sidewalk inspection</mat-checkbox>-->
+              <div *ngIf="divInActiveOne">
+                <mat-checkbox color="accent" class="col-md-4" name="serviceOne" [(ngModel)]="serviceOne"> Playground inspection
+                </mat-checkbox>
+              </div>
+              <div *ngIf="divInActiveTwo">
+                <mat-checkbox class="col-md-4" name="serviceTwo" [(ngModel)]="serviceTwo">Ice arena Safety inspection
+                </mat-checkbox>
+              </div>
+              <div *ngIf="divInActiveThree">
+                <mat-checkbox class="col-md-4" name="serviceThree" [(ngModel)]="serviceThree">Building inspection
+                </mat-checkbox>
+              </div>
+              <div *ngIf="divInActiveFour">
+                <mat-checkbox class="col-md-4" name="serviceFour" [(ngModel)]="serviceFour">Sports field inspection
+                </mat-checkbox>
+              </div>
+              <div *ngIf="divInActiveFive">
+                <mat-checkbox class="col-md-4" name="serviceFive" [(ngModel)]="serviceFive">Fire inspection</mat-checkbox>
+              </div>
+              <div *ngIf="divInActiveSix">
+                <mat-checkbox class="col-md-4" name="serviceSix" [(ngModel)]="serviceSix">Parking lot/Sidewalk
+                  inspection</mat-checkbox>
+              </div>
+
+            </div>
+          </div>
+
+
+          <div *ngIf="showme">
+            <div class="row">
+            <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+              <mat-select placeholder="Category" [(ngModel)]="parkCategory" name="parkCategory"
+                class="animated fadeInDown col-md-4 col-sm-4" style="padding: 0px;">
+                <mat-option [value]="category.id" *ngFor="let category of categories">
+                  {{category.categoryName}}
+                </mat-option>
+              </mat-select>
+              </mat-form-field>
+              <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+                <input pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" type="email" [(ngModel)]="parkEmail"
+                  name="parkEmail" matInput placeholder="Email">
+              </mat-form-field>
+              <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+                <input pattern="[0-9]{6,11}" type="text" [(ngModel)]="parkPhone" name="parkPhone" matInput
+                  placeholder="Phone">
+              </mat-form-field>
+            </div>
+            <div class="row">
+
+              <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+              <mat-select placeholder="Area" [(ngModel)]="parkArea" name="parkArea"
+                class="animated fadeInDown col-md-4 col-sm-4" style="padding: 0px;">
+                <mat-option [value]="are.id" *ngFor="let are of areas">
+                  {{are.area}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+              <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+                <input type="text" [(ngModel)]="parkWebsite" name="parkWebsite" matInput placeholder="Website">
+              </mat-form-field>
+
+            </div>
+
+            <div class="row">
+
+              <div class="animated fadeInDown col-md-6 col-sm-12">
+                <label>Park Logo</label>
+                <!--<input accept="image/*" (change)="fileEventLogo($event)" [(ngModel)]="parkImage" name="parkImage" type="file" />
+                -->
+                <div style="display: inline-flex;width: 100%;">
+
+                  <ng4-files-drop (filesSelect)="filesSelect($event)" [configId]="'my-gif-config'" style="width: 100%;">
+                    <div
+                      style="display: inline-block; height: 150px; width: 100%; background-color: #f9f9f9;border: 1px dashed;">
+                      <ng4-files-click (filesSelect)="filesSelect($event)" [configId]="'my-image-config'"
+                        style="padding-left:42%; ">
+                        <img src="assets/parkzapp/upload.png" style="padding-top:25%;width:43%; " />
+                        <br />
+                        <span
+                          style="background-color: #598328;color: white;font-family: Roboto, &quot;Helvetica Neue&quot;, sans-serif;font-size: 14px;font-weight: 500;min-width: 88px;line-height: 36px;padding: 7px 16px;border-radius: 2px;/* right: 2%; */margin-left: -27%;">
+                          Choose file</span>
+                        <br />
+                        <span style=" margin: -16px; font-weight: normal; font-size: 9px;">Or drag and drop here</span>
+                      </ng4-files-click>
+                    </div>
+                  </ng4-files-drop>
+                  <div *ngIf="divshown" style="width: 25%;margin-left: 1%;">
+                    <img *ngIf="imageShown" [src]="currentProfileImage" class="imageview" />
+
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="animated fadeInDown col-md-6 col-sm-12">
+                <label>Blue print</label>
+                <!-- <input accept="image/*" (change)="fileEventBlueprint($event)" [(ngModel)]="parkBluePrint" name="parkBluePrint" type="file"
+               -->
+                <div style="display: inline-flex;width: 100%;">
+
+                  <ng4-files-drop (filesSelect)="filesSelect2($event)" [configId]="'my-gif-config2'"
+                    style="width: 100%;">
+                    <div
+                      style="display: inline-block; height: 150px; width: 100%; background-color: #f9f9f9;border: 1px dashed;">
+                      <ng4-files-click (filesSelect)="filesSelect2($event)" [configId]="'my-image-config2'"
+                        style="padding-left:42%; ">
+                        <img src="assets/parkzapp/upload.png" style="padding-top:25%;width:43%; " />
+                        <br />
+                        <span
+                          style="background-color: #598328;color: white;font-family: Roboto, &quot;Helvetica Neue&quot;, sans-serif;font-size: 14px;font-weight: 500;min-width: 88px;line-height: 36px;padding: 7px 16px;border-radius: 2px;/* right: 2%; */margin-left: -27%;">
+                          Choose file</span>
+                        <br />
+                        <span style=" margin: -16px; font-weight: normal; font-size: 9px;">Or drag and drop here</span>
+                      </ng4-files-click>
+                    </div>
+                  </ng4-files-drop>
+                  <div *ngIf="divshown2" style="width: 25%;margin-left: 1%;">
+                    <img *ngIf="imageShown2" [src]="currentProfileImage2" class="imageview" />
+
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <hr style="width: 93%;">
+            <i class="fa fa-chevron-up myuparrow" aria-hidden="true" (click)="funhideme();"></i>
+          </div>
+          <div *ngIf="!showme">
+            <span class="addmore">(Add more)</span>
+            <hr style="width: 93%;">
+            <i class="fa fa-chevron-down mydownarrow" aria-hidden="true" (click)="funshowme();"></i>
+          </div>
+          <div class="col-md-12 ">
+            <p class="note">Note: Acceptable image formats are jpeg, jpg, gif and png, You can use the below buttons to
+              add new data to the
+              dropdown
+            </p>
+
+            <button (click)="addNewCity()" matTooltip="Add new city in list" class="btn btn-xs add-new-btn">Add
+              City</button>
+            <button (click)="addNewArea()" matTooltip="Add new Area in list" class="btn btn-xs add-new-btn" style="margin-left: 3px;">Add
+              Area</button>
+            <button (click)="addNewCategory()" matTooltip="Add new Category in list"
+              class="btn btn-xs add-new-btn" style="margin-left: 3px;">Category</button>
+            <button (click)="findLatLong();myMap.triggerResize();"
+              [disabled]="!addForm.valid ||!imageFileStatusBlueprint ||!imageFileStatusLogo" class="buttons"
+              mat-raised-button type="button" nextStep>Next
+              <i class="material-icons">keyboard_arrow_right</i>
+            </button>
+            <!-- <button class="buttons" mat-raised-button type="button" nextStep>Next <i class="material-icons">keyboard_arrow_right</i></button> -->
+          </div>
+        </div>
+
+        <!--Ends park wizard1  & Starts Building wizard1 -->
+
+        <div *ngIf="serviceThree3">
+          <div class="row">
+            <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+              <input type="text" pattern="^[A-Za-z0-9](?!.*?\s$)[A-Za-z0-9,.'\s]{0,51}$" minlength="3" maxlength="50"
+                [(ngModel)]="parkName" name="parkName" required matInput placeholder="Building Name">
+            </mat-form-field>
+            <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+            <mat-select placeholder="Select Park Name" [(ngModel)]="selectPark" name="selectPark"
+              class="animated fadeInDown col-md-4 col-sm-4">
+              <mat-option [value]="park.id" *ngFor="let park of allParks">
+                {{park.parkName}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+            <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+              <input type="text" minlength="3" maxlength="50" [(ngModel)]="parkAddress" name="parkAddress" required
+                matInput placeholder="Address">
+            </mat-form-field>
+          </div>
+
+
+
+
+
+          <div class="row">
+            <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+            <mat-select required placeholder="Country" ng-disabled="true" [(ngModel)]="parkCountry" name="parkCountry"
+              class="animated fadeInDown col-md-4 col-sm-4">
+              <mat-option (click)="fetchState(this.countryCode)" [value]="this.countryCode">
+                {{this.countryName}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+            <mat-select (click)="checkCountryStatus()" (selectionChange)="fetchCities()" required placeholder="State"
+              [(ngModel)]="parkState" name="parkState" class="animated fadeInDown col-md-4 col-sm-4">
+              <mat-option [value]="state.name" *ngFor="let state of allStates">
+                {{state.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+            <mat-select required placeholder="City" [(ngModel)]="parkCity" name="parkCity"
+              class="animated fadeInDown col-md-4 col-sm-4">
+              <mat-option *ngFor="let cit of cities" [value]="cit.id">
+                {{cit.city}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          </div>
+          <!-- <div class="row">
+            <mat-select required placeholder="Country" [(ngModel)]="parkCountry" name="parkCountry"
+              class="animated fadeInDown col-md-4 col-sm-4">
+              <mat-option (click)="fetchState(country.code)" [value]="country.code" *ngFor="let country of countries">
+                {{country.name}}
+              </mat-option>
+            </mat-select>
+            <mat-select (click)="checkCountryStatus()" (change)="fetchCities()" required placeholder="State"
+              [(ngModel)]="parkState" name="parkState" class="animated fadeInDown col-md-4 col-sm-4">
+              <mat-option [value]="state.name" *ngFor="let state of allStates">
+                {{state.name}}
+              </mat-option>
+            </mat-select>
+            <mat-select required placeholder="City" [(ngModel)]="parkCity" name="parkCity"
+              class="animated fadeInDown col-md-4 col-sm-4">
+              <mat-option *ngFor="let cit of cities" [value]="cit.id">
+                {{cit.city}}
+              </mat-option>
+            </mat-select>
+          </div> -->
+          <div class="row">
+            <mat-form-field *ngIf="parkCountry==14" class="animated fadeInDown col-md-4 col-sm-4">
+              <input pattern="[A-Za-z0-9\s]{3,7}$" type="text" [(ngModel)]="parkZipCode" name="parkZipCode" required
+                matInput placeholder="Zipcode">
+            </mat-form-field>
+            <mat-form-field *ngIf="parkCountry!=14" class="animated fadeInDown col-md-4 col-sm-4">
+              <input pattern="[0-9]{4,6}$" type="text" [(ngModel)]="parkZipCode" name="parkZipCode" required matInput
+                placeholder="Zipcode">
+            </mat-form-field>
+          </div>
+
+          <!-- <div class="animated fadeInDown col-md-12 col-sm-12" style="width:100%">
+            <label>Services</label>
+            <div class="row">
+              <div *ngIf="divInActiveOne">
+                <mat-checkbox class="col-md-4" name="serviceOne" [(ngModel)]="serviceOne"> Playground inspection</mat-checkbox>
+              </div>
+              <div *ngIf="divInActiveTwo">
+                <mat-checkbox class="col-md-4" name="serviceTwo" [(ngModel)]="serviceTwo">Ice arena Safety inspection</mat-checkbox>
+              </div>
+              <div *ngIf="divInActiveThree">
+                <mat-checkbox class="col-md-4" name="serviceThree" [(ngModel)]="serviceThree">Building inspection</mat-checkbox>
+              </div>
+              <div *ngIf="divInActiveFour">
+                <mat-checkbox class="col-md-4" name="serviceFour" [(ngModel)]="serviceFour">Sports field inspection</mat-checkbox>
+              </div>
+              <div *ngIf="divInActiveFive">
+                <mat-checkbox class="col-md-4" name="serviceFive" [(ngModel)]="serviceFive">Fire inspection</mat-checkbox>
+              </div>
+              <div *ngIf="divInActiveSix">
+                <mat-checkbox class="col-md-4" name="serviceSix" [(ngModel)]="serviceSix">Parking lot/Sidewalk inspection</mat-checkbox>
+              </div>
+  
+            </div>
+          </div> -->
+
+
+          <div *ngIf="showme">
+            <div class="row">
+              <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+              <mat-select placeholder="Category" [(ngModel)]="parkCategory" name="parkCategory"
+                class="animated fadeInDown col-md-4 col-sm-4">
+                <mat-option [value]="category.id" *ngFor="let category of categories">
+                  {{category.categoryName}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+              <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+                <input pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" type="email" [(ngModel)]="parkEmail"
+                  name="parkEmail" matInput placeholder="Email">
+              </mat-form-field>
+              <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+                <input pattern="[0-9]{6,11}" type="text" [(ngModel)]="parkPhone" name="parkPhone" matInput
+                  placeholder="Phone">
+              </mat-form-field>
+            </div>
+            <div class="row">
+
+              <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+              <mat-select placeholder="Area" [(ngModel)]="parkArea" name="parkArea"
+                class="animated fadeInDown col-md-4 col-sm-4">
+                <mat-option [value]="are.id" *ngFor="let are of areas">
+                  {{are.area}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+              <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+                <input type="text" [(ngModel)]="parkWebsite" name="parkWebsite" matInput placeholder="Website">
+              </mat-form-field>
+
+            </div>
+
+            <div class="row">
+              <div class="animated fadeInDown col-md-6 col-sm-12">
+                <label>{{this.parkLogo}}</label>
+                <!--<input accept="image/*" (change)="fileEventLogo($event)" [(ngModel)]="parkImage" name="parkImage" type="file" />
+                  -->
+                <div style="display: inline-flex;width: 100%;">
+
+                  <ng4-files-drop (filesSelect)="filesSelect($event)" [configId]="'my-gif-config'" style="width: 100%;">
+                    <div
+                      style="display: inline-block; height: 150px; width: 100%; background-color: #f9f9f9;border: 1px dashed;">
+                      <ng4-files-click (filesSelect)="filesSelect($event)" [configId]="'my-image-config'"
+                        style="padding-left:42%; ">
+                        <img src="assets/parkzapp/upload.png" style="padding-top:25%;width:43%; " />
+                        <br />
+                        <span
+                          style="background-color: #598328;color: white;font-family: Roboto, &quot;Helvetica Neue&quot;, sans-serif;font-size: 14px;font-weight: 500;min-width: 88px;line-height: 36px;padding: 7px 16px;border-radius: 2px;/* right: 2%; */margin-left: -27%;">
+                          Choose file</span>
+                        <br />
+                        <span style=" margin: -16px; font-weight: normal; font-size: 9px;">Or drag and drop here</span>
+                      </ng4-files-click>
+                    </div>
+                  </ng4-files-drop>
+                  <div *ngIf="divshown" style="width: 25%;margin-left: 1%;">
+                    <img *ngIf="imageShown" [src]="currentProfileImage" class="imageview" />
+
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="animated fadeInDown col-md-6 col-sm-12">
+                <label>Blue print</label>
+                <!-- <input accept="image/*" (change)="fileEventBlueprint($event)" [(ngModel)]="parkBluePrint" name="parkBluePrint" type="file"
+                 -->
+                <div style="display: inline-flex;width: 100%;">
+
+                  <ng4-files-drop (filesSelect)="filesSelect2($event)" [configId]="'my-gif-config2'"
+                    style="width: 100%;">
+                    <div
+                      style="display: inline-block; height: 150px; width: 100%; background-color: #f9f9f9;border: 1px dashed;">
+                      <ng4-files-click (filesSelect)="filesSelect2($event)" [configId]="'my-image-config2'"
+                        style="padding-left:42%; ">
+                        <img src="assets/parkzapp/upload.png" style="padding-top:25%;width:43%; " />
+                        <br />
+                        <span
+                          style="background-color: #598328;color: white;font-family: Roboto, &quot;Helvetica Neue&quot;, sans-serif;font-size: 14px;font-weight: 500;min-width: 88px;line-height: 36px;padding: 7px 16px;border-radius: 2px;/* right: 2%; */margin-left: -27%;">
+                          Choose file</span>
+                        <br />
+                        <span style=" margin: -16px; font-weight: normal; font-size: 9px;">Or drag and drop here</span>
+                      </ng4-files-click>
+                    </div>
+                  </ng4-files-drop>
+                  <div *ngIf="divshown2" style="width: 25%;margin-left: 1%;">
+                    <img *ngIf="imageShown2" [src]="currentProfileImage2" class="imageview" />
+
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <hr style="width: 93%;">
+            <i class="fa fa-chevron-up myuparrow" aria-hidden="true" (click)="funhideme();"></i>
+          </div>
+          <div *ngIf="!showme">
+            <span class="addmore">(Add more)</span>
+            <hr style="width: 93%;">
+            <i class="fa fa-chevron-down mydownarrow" aria-hidden="true" (click)="funshowme();"></i>
+          </div>
+          <div class="col-md-12 ">
+            <p class="note">Note: Acceptable image formats are jpeg, jpg, gif and png, You can use the below buttons to
+              add new data to the
+              dropdown
+            </p>
+
+            <button (click)="addNewCity()" matTooltip="Add new city in list" class="btn btn-xs add-new-btn">Add
+              City</button>
+            <button (click)="addNewArea()" matTooltip="Add new Area in list" class="btn btn-xs add-new-btn">Add
+              Area</button>
+            <button (click)="addNewCategory()" matTooltip="Add new Category in list"
+              class="btn btn-xs add-new-btn">Category</button>
+            <button (click)="findLatLong();myMap.triggerResize();"
+              [disabled]="!addForm.valid ||!imageFileStatusBlueprint ||!imageFileStatusLogo" class="buttons"
+              mat-raised-button type="button" nextStep>Next
+              <i class="material-icons">keyboard_arrow_right</i>
+            </button>
+            <!-- <button class="buttons" mat-raised-button type="button" nextStep>Next <i class="material-icons">keyboard_arrow_right</i></button> -->
+          </div>
+        </div>
+
+      </wizard-step>
+      <!-- step one -->
+      <!-- step Map -->
+      <wizard-step title="Location Details">
+
+        <mat-card>
+          <mat-progress-bar *ngIf="loadingStatus" mode="indeterminate"></mat-progress-bar>
+          <agm-map [zoom]="zoom" [latitude]="parkLat" [longitude]="parkLong" #myMap>
+            <agm-marker (dragEnd)="markerDragEnd(m, $event)" [markerDraggable]="true" [latitude]="parkLat"
+              [longitude]="parkLong"></agm-marker>
+          </agm-map>
+          <p class="note">Note: You can drag the location icon in case it's pinned to wrong point </p>
+        </mat-card>
+
+        <br />
+        <br />
+        <div class="col-md-12 margin-top">
+          <button class="buttons" mat-raised-button type="button" nextStep>Confirm
+            <i class="material-icons">keyboard_arrow_right</i>
+          </button>
+          <button class="buttons" mat-raised-button type="button" previousStep>
+            <i class="material-icons">keyboard_arrow_left</i> Back</button>
+        </div>
+      </wizard-step>
+      <!-- step Map -->
+
+      <!-- step two -->
+      <wizard-step *ngIf="!addEquipmentStatus" title="Add Equipment to Parks">
+        <br />
+
+        <br />
+        <mat-form-field style="width: 100%;">
+        <mat-select class="equipment-select" multiple placeholder="Equipment" [(ngModel)]="parkEquipment"
+          name="parkEquipment" style="padding: 0px;">
+          <mat-option [value]="equipment.id" *ngFor="let equipment of equipments">
+            {{equipment.equipmentName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+        <br />
+        <br />
+        <!-- <div class="animated fadeInDown col-md-12 col-sm-12" style="width:104%">
+          <label>Services</label>
+          <div class="row"> 
+              <mat-checkbox class="col-md-4" name="serviceOne" [(ngModel)]="serviceOne"> Playground inspection</mat-checkbox>
+              <mat-checkbox class="col-md-4" name="serviceTwo" [(ngModel)]="serviceTwo">Building inspection</mat-checkbox>
+              <mat-checkbox class="col-md-4" name="serviceThree" [(ngModel)]="serviceThree">Sports field inspection</mat-checkbox>
+              <mat-checkbox class="col-md-4" name="serviceFour" [(ngModel)]="serviceFour">Ice arena Safety inspection</mat-checkbox>
+              <mat-checkbox class="col-md-4" name="serviceFive" [(ngModel)]="serviceFive">Fire inspection</mat-checkbox>
+              <mat-checkbox class="col-md-4" name="serviceSix" [(ngModel)]="serviceSix">Parking lot/Sidewalk inspection</mat-checkbox>
+      </div>
+      </div> -->
+
+        <br />
+        <div class="col-md-12 margin-top">
+          <button class="buttons" mat-raised-button type="button" nextStep>Next
+            <i class="material-icons">keyboard_arrow_right</i>
+          </button>
+          <button class="buttons" mat-raised-button type="button" previousStep>
+            <i class="material-icons">keyboard_arrow_left</i> Back</button>
+        </div>
+      </wizard-step>
+      <!-- step two -->
+
+      <!-- step three -->
+      <wizard-step title="Assign Inspections">
+
+        <div class="content table-responsive table-full-width">
+
+          <!--<table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Inspection</th>
+                <th class="inspection-th">Recurrence</th>
+                <th class="inspection-th">Inspector</th>
+                <th class="inspection-th">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let inspectionType of inspectionTypes let i = index" [attr.data-index]="i" [class.active-td]="asignOneStatus" >
+                  <td>
+                    <mat-checkbox (click)="toggleAsignOne()"></mat-checkbox>{{inspectionType.inspectiontype}}
+                  </td>
+                <td>
+                  <mat-select [disabled]="!asignOneStatus" class="equipment-select" placeholder="Recurrence" [(ngModel)]="recurrence" name="recurrenceOne">
+                    <mat-option [value]="recurrence.id" *ngFor="let recurrence of recurrences">
+                      {{recurrence.schedule_name}}
+                    </mat-option>
+                  </mat-select>
+                </td>
+                <td>
+                  <mat-select [disabled]="!asignOneStatus" class="equipment-select" placeholder="Inspector" [(ngModel)]="inspectorOne" name="inspectorOne">
+                    <mat-option [value]="inspector.user_id" *ngFor="let inspector of inspectors">
+                      {{inspector.first_name}}
+                    </mat-option>
+                  </mat-select>
+                </td>
+                <td>
+                  <mat-form-field *ngIf="!show">
+                    <input onkeydown="return false" [matDatepicker]="picker1" [min]="minDate" [(ngModel)]="dateOne" name="dateOne" disabled matInput
+                      placeholder="Inspect On">
+
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field *ngIf="show">
+                    <input onkeydown="return false" [matDatepicker]="picker1" [min]="minDate" [(ngModel)]="dateOne" name="dateOne" matInput placeholder="Inspect On">
+
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                  </mat-form-field>
+                </td>
+              </tr>
+            </tbody>
+          </table>-->
+          <!--PLAYGROUND START-->
+          <table class="table table-hover" *ngIf="assignmentDivOneStatus">
+            <thead>
+              <tr>
+                <th>Inspection</th>
+                <th class="inspection-th">Recurrence</th>
+                <th class="inspection-th">Inspector</th>
+                <th class="inspection-th">Priority</th>
+                <th class="inspection-th">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <tr [class.active-td]="asignOneStatus">
+                <td>
+                  <mat-checkbox (click)="toggleAsignOne()"></mat-checkbox>{{this.inspectionType1}}
+                  <!-- <mat-checkbox (click)="toggleAsignOne()"></mat-checkbox>{{inspectionType.inspectiontype}} -->
+                </td>
+                <!-- <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+                      <input type="hidden" [(ngModel)]="inspectionType1" name="inspectionType1" matInput>
+                    </mat-form-field> -->
+                <td>
+                  <mat-form-field class="equipment-select" style="width: 132px;">
+                  <mat-select [disabled]="!asignOneStatus" class="equipment-select" placeholder="Recurrence"
+                    [(ngModel)]="recurrenceOne" name="recurrenceOne" style="padding: 0px;">
+                    <mat-option [value]="recurrence.id" *ngFor="let recurrence of recurrences">
+                      {{recurrence.schedule_name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                </td>
+                <td>
+                <mat-form-field class="equipment-select" style="width: 132px;">
+                  <mat-select [disabled]="!asignOneStatus" class="equipment-select" placeholder="Inspector"
+                    [(ngModel)]="inspectorOne" name="inspectorOne" style="padding: 0px;">
+                    <mat-option [value]="inspector.user_id" *ngFor="let inspector of inspectors">
+                      {{inspector.first_name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                </td>
+                <td>
+                <mat-form-field class="equipment-select" class="equipment-select" style="width: 132px;">
+                  <mat-select [disabled]="!asignOneStatus" class="equipment-select" placeholder="Priority"
+                    [(ngModel)]="priorityOne" name="priorityOne">
+                    <mat-option value="High">High</mat-option>
+                    <mat-option value="Medium">Medium </mat-option>
+                    <mat-option value="Low">Low</mat-option>
+                    <mat-option value="None">None</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field *ngIf="!show">
+                    <input onkeydown="return false" [matDatepicker]="picker1" [min]="minDate" [(ngModel)]="dateOne"
+                      name="dateOne" disabled matInput placeholder="Inspect On">
+
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field *ngIf="show">
+                    <input onkeydown="return false" [matDatepicker]="picker1" [min]="minDate" [(ngModel)]="dateOne"
+                      name="dateOne" matInput placeholder="Inspect On">
+
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                  </mat-form-field>
+                </td>
+              </tr>
+
+              <tr [class.active-td]="asignTwoStatus">
+                <td>
+                  <mat-checkbox (click)="toggleAsignTwo()"></mat-checkbox>{{this.inspectionType2}}
+                </td>
+
+
+                <td>
+                  <mat-form-field class="equipment-select" style="width: 132px;">
+                  <mat-select [disabled]="!asignTwoStatus" class="equipment-select" placeholder="Recurrence"
+                    [(ngModel)]="recurrenceTwo" name="recurrenceTwo">
+                    <mat-option [value]="recurrence.id" *ngFor="let recurrence of recurrences">
+                      {{recurrence.schedule_name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field class="equipment-select" style="width: 132px;">
+                  <mat-select [disabled]="!asignTwoStatus" class="equipment-select" placeholder="Inspector"
+                    [(ngModel)]="inspectorTwo" name="inspectorTwo">
+                    <mat-option [value]="inspector.user_id" *ngFor="let inspector of inspectors">
+                      {{inspector.first_name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field class="equipment-select" style="width: 132px;">
+                  <mat-select [disabled]="!asignTwoStatus" class="equipment-select" placeholder="Priority"
+                    [(ngModel)]="priorityTwo" name="priorityTwo">
+                    <mat-option value="High">High</mat-option>
+                    <mat-option value="Medium">Medium </mat-option>
+                    <mat-option value="Low">Low</mat-option>
+                    <mat-option value="None">None</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field *ngIf="!show2">
+                    <input onkeydown="return false" [matDatepicker]="picker2" [min]="minDate" [(ngModel)]="dateTwo"
+                      disabled name="dateTwo" required matInput placeholder="Inspect On">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field *ngIf="show2">
+                    <input onkeydown="return false" [matDatepicker]="picker2" [min]="minDate" [(ngModel)]="dateTwo"
+                      name="dateTwo" required matInput placeholder="Inspect On">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                  </mat-form-field>
+                </td>
+              </tr>
+
+              <tr [class.active-td]="asignThreeStatus">
+                <td>
+                  <mat-checkbox (click)="toggleAsignThree()"></mat-checkbox>{{this.inspectionType3}}
+                </td>
+
+
+                <td>
+                  <mat-form-field class="equipment-select" style="width: 132px;">
+                  <mat-select [disabled]="!asignThreeStatus" class="equipment-select" placeholder="Recurrence"
+                    [(ngModel)]="recurrenceThree" name="recurrenceThree">
+                    <mat-option [value]="recurrence.id" *ngFor="let recurrence of recurrences">
+                      {{recurrence.schedule_name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field class="equipment-select" style="width: 132px;">
+                  <mat-select [disabled]="!asignThreeStatus" class="equipment-select" placeholder="Inspector"
+                    [(ngModel)]="inspectorThree" name="inspectorThree">
+                    <mat-option [value]="inspector.user_id" *ngFor="let inspector of inspectors">
+                      {{inspector.first_name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field class="equipment-select" style="width: 132px;">
+                  <mat-select [disabled]="!asignThreeStatus" class="equipment-select" placeholder="Priority"
+                    [(ngModel)]="priorityThree" name="priorityThree">
+                    <mat-option value="High">High</mat-option>
+                    <mat-option value="Medium">Medium </mat-option>
+                    <mat-option value="Low">Low</mat-option>
+                    <mat-option value="None">None</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field *ngIf="!show3">
+                    <input onkeydown="return false" [matDatepicker]="picker3" [min]="minDate" disabled
+                      [(ngModel)]="dateThree" name="dateThree" required matInput placeholder="Inspect On">
+                    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                    <mat-datepicker #picker3></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field *ngIf="show3">
+                    <input onkeydown="return false" [matDatepicker]="picker3" [min]="minDate" [(ngModel)]="dateThree"
+                      name="dateThree" required matInput placeholder="Inspect On">
+                    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                    <mat-datepicker #picker3></mat-datepicker>
+                  </mat-form-field>
+                </td>
+              </tr>
+
+              <tr [class.active-td]="asignFourStatus">
+                <td>
+
+                  <mat-checkbox (change)="loadPlaygroundCustomizedQuestionSet($event, 4)" [checked]="checked">
+                  </mat-checkbox>Customized
+                  Inspection
+                </td>
+
+
+                <td>
+                  <mat-form-field class="equipment-select" style="width: 132px;">
+                  <mat-select [disabled]="!asignFourStatus" class="equipment-select" placeholder="Recurrence"
+                    [(ngModel)]="recurrenceFour" name="recurrenceFour">
+                    <mat-option [value]="recurrence.id" *ngFor="let recurrence of recurrences">
+                      {{recurrence.schedule_name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field class="equipment-select" style="width: 132px;">
+                  <mat-select [disabled]="!asignFourStatus" class="equipment-select" placeholder="Inspector"
+                    [(ngModel)]="inspectorFour" name="inspectorFour">
+                    <mat-option [value]="inspector.user_id" *ngFor="let inspector of inspectors">
+                      {{inspector.first_name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field class="equipment-select" style="width: 132px;">
+                  <mat-select [disabled]="!asignFourStatus" class="equipment-select" placeholder="Priority"
+                    [(ngModel)]="priorityFour" name="priorityFour">
+                    <mat-option value="High">High</mat-option>
+                    <mat-option value="Medium">Medium </mat-option>
+                    <mat-option value="Low">Low</mat-option>
+                    <mat-option value="None">None</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field *ngIf="!show4">
+                    <input onkeydown="return false" [matDatepicker]="picker4" [min]="minDate" disabled
+                      [(ngModel)]="dateFour" name="dateFour" required matInput placeholder="Inspect On">
+                    <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                    <mat-datepicker #picker4></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field *ngIf="show4">
+                    <input onkeydown="return false" [matDatepicker]="picker4" [min]="minDate" [(ngModel)]="dateFour"
+                      name="dateFour" required matInput placeholder="Inspect On">
+                    <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                    <mat-datepicker #picker4></mat-datepicker>
+                  </mat-form-field>
+                </td>
+              </tr>
+
+
+
+
+              <tr [class.active-td]="asignAmenityStatus">
+                <td>
+                  <mat-checkbox (click)="toggleAsignAmenity()"></mat-checkbox>Amenity
+                </td>
+
+
+                <td>
+                  <mat-form-field class="equipment-select" style="width: 132px;">
+                  <mat-select [disabled]="!asignAmenityStatus" class="equipment-select" placeholder="Recurrence"
+                    [(ngModel)]="recurrenceAmenity" name="recurrenceAmenity">
+                    <mat-option [value]="recurrence.id" *ngFor="let recurrence of recurrences">
+                      {{recurrence.schedule_name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field class="equipment-select" style="width: 132px;">
+                  <mat-select [disabled]="!asignAmenityStatus" class="equipment-select" placeholder="Inspector"
+                    [(ngModel)]="inspectorAmenity" name="inspectorAmenity">
+                    <mat-option [value]="inspector.user_id" *ngFor="let inspector of inspectors">
+                      {{inspector.first_name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field class="equipment-select" style="width: 132px;">
+                  <mat-select [disabled]="!asignAmenityStatus" class="equipment-select" placeholder="Priority"
+                    [(ngModel)]="priorityAmenity" name="priorityAmenity">
+                    <mat-option value="High">High</mat-option>
+                    <mat-option value="Medium">Medium </mat-option>
+                    <mat-option value="Low">Low</mat-option>
+                    <mat-option value="None">None</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field *ngIf="!showAmenity">
+                    <input onkeydown="return false" [matDatepicker]="pickerAmenity" [min]="minDate" disabled
+                      [(ngModel)]="dateAmenity" name="dateAmenity" required matInput placeholder="Inspect On">
+                    <mat-datepicker-toggle matSuffix [for]="pickerAmenity"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerAmenity></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field *ngIf="showAmenity">
+                    <input onkeydown="return false" [matDatepicker]="pickerAmenity" [min]="minDate"
+                      [(ngModel)]="dateAmenity" name="dateAmenity" required matInput placeholder="Inspect On">
+                    <mat-datepicker-toggle matSuffix [for]="pickerAmenity"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerAmenity></mat-datepicker>
+                  </mat-form-field>
+                </td>
+              </tr>
+
+
+
+
+              <tr [class.active-td]="asignVisualStatus">
+                <td>
+                  <mat-checkbox (click)="toggleAsignVisual()"></mat-checkbox>Visual
+                </td>
+
+
+                <td>
+                  <mat-form-field class="equipment-select" style="width: 132px;">
+                  <mat-select [disabled]="!asignVisualStatus" class="equipment-select" placeholder="Recurrence"
+                    [(ngModel)]="recurrenceVisual" name="recurrenceVisual">
+                    <mat-option [value]="recurrence.id" *ngFor="let recurrence of recurrences">
+                      {{recurrence.schedule_name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field class="equipment-select" style="width: 132px;">
+                  <mat-select [disabled]="!asignVisualStatus" class="equipment-select" placeholder="Inspector"
+                    [(ngModel)]="inspectorVisual" name="inspectorVisual">
+                    <mat-option [value]="inspector.user_id" *ngFor="let inspector of inspectors">
+                      {{inspector.first_name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field class="equipment-select" style="width: 132px;">
+                  <mat-select [disabled]="!asignVisualStatus" class="equipment-select" placeholder="Priority"
+                    [(ngModel)]="priorityVisual" name="priorityVisual">
+                    <mat-option value="High">High</mat-option>
+                    <mat-option value="Medium">Medium </mat-option>
+                    <mat-option value="Low">Low</mat-option>
+                    <mat-option value="None">None</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field *ngIf="!showVisual">
+                    <input onkeydown="return false" [matDatepicker]="pickerVisual" [min]="minDate" disabled
+                      [(ngModel)]="dateVisual" name="dateVisual" required matInput placeholder="Inspect On">
+                    <mat-datepicker-toggle matSuffix [for]="pickerVisual"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerVisual></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field *ngIf="showVisual">
+                    <input onkeydown="return false" [matDatepicker]="pickerVisual" [min]="minDate"
+                      [(ngModel)]="dateVisual" name="dateVisual" required matInput placeholder="Inspect On">
+                    <mat-datepicker-toggle matSuffix [for]="pickerVisual"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerVisual></mat-datepicker>
+                  </mat-form-field>
+                </td>
+              </tr>
+
+
+            </tbody>
+          </table>
+          <!--PLAYGROUND END-->
+
+          <!--ICE ARENA START-->
+          <table class="table table-hover" *ngIf="assignmentDivTwoStatus">
+            <thead>
+              <tr>
+                <th>Inspection</th>
+                <th class="inspection-th">Recurrence</th>
+                <th class="inspection-th">Inspector</th>
+                <th class="inspection-th">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr [class.active-td]="asignOneStatus">
+                <td>
+                  <mat-checkbox (click)="toggleAsignOne()"></mat-checkbox>Ice Resurfacer Inspection
+                </td>
+                <!-- <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+                    <input type="hidden" [(ngModel)]="inspectionType6" name="inspectionType6" matInput>
+                  </mat-form-field> -->
+
+                <td>
+                  <mat-form-field>
+                  <mat-select [disabled]="!asignOneStatus" class="equipment-select" placeholder="Recurrence"
+                    [(ngModel)]="recurrenceFive" name="recurrenceFive">
+                    <mat-option [value]="recurrence.id" *ngFor="let recurrence of recurrences">
+                      {{recurrence.schedule_name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field>
+                  <mat-select [disabled]="!asignOneStatus" class="equipment-select" placeholder="Inspector"
+                    [(ngModel)]="inspectorOne" name="inspectorOne">
+                    <mat-option [value]="inspector.user_id" *ngFor="let inspector of inspectors">
+                      {{inspector.first_name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                </td>
+
+                <td>
+                  <mat-form-field>
+                  <mat-select [disabled]="!asignOneStatus" class="equipment-select" placeholder="Priority"
+                    [(ngModel)]="priorityOne" name="priorityOne">
+                    <mat-option value="High">High</mat-option>
+                    <mat-option value="Medium">Medium </mat-option>
+                    <mat-option value="Low">Low</mat-option>
+                    <mat-option value="None">None</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field *ngIf="!show">
+                    <input onkeydown="return false" [matDatepicker]="picker1" [min]="minDate" [(ngModel)]="dateOne"
+                      name="dateOne" disabled matInput placeholder="Inspect On">
+
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field *ngIf="show">
+                    <input onkeydown="return false" [matDatepicker]="picker1" [min]="minDate" [(ngModel)]="dateOne"
+                      name="dateOne" matInput placeholder="Inspect On">
+
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                  </mat-form-field>
+                </td>
+              </tr>
+              <tr [class.active-td]="asignTwoStatus">
+                <td>
+                  <mat-checkbox (click)="toggleAsignTwo()"></mat-checkbox>Compressor Room Inspection
+                </td>
+                <!-- <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+                    <input type="hidden" [(ngModel)]="inspectionType7" name="inspectionType7" matInput>
+                  </mat-form-field> -->
+
+                <td>
+                  <mat-form-field>
+                  <mat-select [disabled]="!asignTwoStatus" class="equipment-select" placeholder="Recurrence"
+                    [(ngModel)]="recurrenceSix" name="recurrenceSix">
+                    <mat-option [value]="recurrence.id" *ngFor="let recurrence of recurrences">
+                      {{recurrence.schedule_name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field>
+                  <mat-select [disabled]="!asignTwoStatus" class="equipment-select" placeholder="Inspector"
+                    [(ngModel)]="inspectorTwo" name="inspectorTwo">
+                    <mat-option [value]="inspector.user_id" *ngFor="let inspector of inspectors">
+                      {{inspector.first_name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field>
+                  <mat-select [disabled]="!asignTwoStatus" class="equipment-select" placeholder="Priority"
+                    [(ngModel)]="priorityTwo" name="priorityTwo">
+                    <mat-option value="High">High</mat-option>
+                    <mat-option value="Medium">Medium </mat-option>
+                    <mat-option value="Low">Low</mat-option>
+                    <mat-option value="None">None</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field *ngIf="!show2">
+                    <input onkeydown="return false" [matDatepicker]="picker2" [min]="minDate" [(ngModel)]="dateTwo"
+                      disabled name="dateTwo" required matInput placeholder="Inspect On">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field *ngIf="show2">
+                    <input onkeydown="return false" [matDatepicker]="picker2" [min]="minDate" [(ngModel)]="dateTwo"
+                      name="dateTwo" required matInput placeholder="Inspect On">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                  </mat-form-field>
+                </td>
+              </tr>
+              <tr [class.active-td]="asignThreeStatus">
+                <td>
+                  <mat-checkbox (click)="toggleAsignThree()"></mat-checkbox>Ice Rink Inspection
+                </td>
+                <!-- <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+                    <input type="text" [(ngModel)]="inspectionType8" name="inspectionType8" matInput>
+                  </mat-form-field> -->
+
+                <td>
+                  <mat-form-field>
+                  <mat-select [disabled]="!asignThreeStatus" class="equipment-select" placeholder="Recurrence"
+                    [(ngModel)]="recurrenceSeven" name="recurrenceSeven">
+                    <mat-option [value]="recurrence.id" *ngFor="let recurrence of recurrences">
+                      {{recurrence.schedule_name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field>
+                  <mat-select [disabled]="!asignThreeStatus" class="equipment-select" placeholder="Inspector"
+                    [(ngModel)]="inspectorThree" name="inspectorThree">
+                    <mat-option [value]="inspector.user_id" *ngFor="let inspector of inspectors">
+                      {{inspector.first_name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                </td>
+
+                <td>
+                  <mat-form-field>
+                  <mat-select [disabled]="!asignThreeStatus" class="equipment-select" placeholder="Priority"
+                    [(ngModel)]="priorityThree" name="priorityThree">
+                    <mat-option value="High">High</mat-option>
+                    <mat-option value="Medium">Medium </mat-option>
+                    <mat-option value="Low">Low</mat-option>
+                    <mat-option value="None">None</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field *ngIf="!show3">
+                    <input onkeydown="return false" [matDatepicker]="picker3" [min]="minDate" disabled
+                      [(ngModel)]="dateThree" name="dateThree" required matInput placeholder="Inspect On">
+                    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                    <mat-datepicker #picker3></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field *ngIf="show3">
+                    <input onkeydown="return false" [matDatepicker]="picker3" [min]="minDate" [(ngModel)]="dateThree"
+                      name="dateThree" required matInput placeholder="Inspect On">
+                    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                    <mat-datepicker #picker3></mat-datepicker>
+                  </mat-form-field>
+                </td>
+              </tr>
+              <tr [class.active-td]="asignFourStatus">
+                <td>
+                  <!-- <mat-checkbox (click)="toggleAsignFour()"></mat-checkbox>Customized Inspection -->
+                  <!-- <mat-checkbox (click)="loadPlaygroundCustomizedQuestionSet('9')"></mat-checkbox>Customized Inspection -->
+                  <mat-checkbox (change)="loadPlaygroundCustomizedQuestionSet($event, 9)" [checked]="checked">
+                  </mat-checkbox>Customized
+                  Inspection
+
+                </td>
+                <!-- <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+                    <input type="hidden" [(ngModel)]="inspectionType9" name="inspectionType9" matInput>
+                  </mat-form-field> -->
+
+                <td>
+                  <mat-form-field>
+                  <mat-select [disabled]="!asignFourStatus" class="equipment-select" placeholder="Recurrence"
+                    [(ngModel)]="recurrenceEight" name="recurrenceEight">
+                    <mat-option [value]="recurrence.id" *ngFor="let recurrence of recurrences">
+                      {{recurrence.schedule_name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field>
+                  <mat-select [disabled]="!asignFourStatus" class="equipment-select" placeholder="Inspector"
+                    [(ngModel)]="inspectorFour" name="inspectorFour">
+                    <mat-option [value]="inspector.user_id" *ngFor="let inspector of inspectors">
+                      {{inspector.first_name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field>
+                  <mat-select [disabled]="!asignFourStatus" class="equipment-select" placeholder="Priority"
+                    [(ngModel)]="priorityFour" name="priorityFour">
+                    <mat-option value="High">High</mat-option>
+                    <mat-option value="Medium">Medium </mat-option>
+                    <mat-option value="Low">Low</mat-option>
+                    <mat-option value="None">None</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field *ngIf="!show4">
+                    <input onkeydown="return false" [matDatepicker]="picker4" [min]="minDate" disabled
+                      [(ngModel)]="dateFour" name="dateFour" required matInput placeholder="Inspect On">
+                    <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                    <mat-datepicker #picker4></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field *ngIf="show4">
+                    <input onkeydown="return false" [matDatepicker]="picker4" [min]="minDate" [(ngModel)]="dateFour"
+                      name="dateFour" required matInput placeholder="Inspect On">
+                    <mat-datepicker-toggle matSuffix [for]="picker4"></mat-datepicker-toggle>
+                    <mat-datepicker #picker4></mat-datepicker>
+                  </mat-form-field>
+                </td>
+              </tr>
+              <tr [class.active-td]="asignFiveStatus">
+                <td>
+                  <mat-checkbox (click)="toggleAsignFive()"></mat-checkbox>Ice Arena Amenities
+                </td>
+                <!-- <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+                    <input type="text" [(ngModel)]="inspectionType5" name="inspectionType5" matInput>
+                  </mat-form-field> -->
+
+                <td>
+                  <mat-form-field>
+                  <mat-select [disabled]="!asignFiveStatus" class="equipment-select" placeholder="Recurrence"
+                    [(ngModel)]="recurrenceNine" name="recurrenceNine">
+                    <mat-option [value]="recurrence.id" *ngFor="let recurrence of recurrences">
+                      {{recurrence.schedule_name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field>
+                  <mat-select [disabled]="!asignFiveStatus" class="equipment-select" placeholder="Inspector"
+                    [(ngModel)]="inspectorFive" name="inspectorFive">
+                    <mat-option [value]="inspector.user_id" *ngFor="let inspector of inspectors">
+                      {{inspector.first_name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field>
+                  <mat-select [disabled]="!asignFiveStatus" class="equipment-select" placeholder="Priority"
+                    [(ngModel)]="priorityFive" name="priorityFive">
+                    <mat-option value="High">High</mat-option>
+                    <mat-option value="Medium">Medium </mat-option>
+                    <mat-option value="Low">Low</mat-option>
+                    <mat-option value="None">None</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field *ngIf="!show5">
+                    <input onkeydown="return false" [matDatepicker]="picker5" [min]="minDate" disabled
+                      [(ngModel)]="dateFive" name="dateFive" required matInput placeholder="Inspect On">
+                    <mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
+                    <mat-datepicker #picker5></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field *ngIf="show5">
+                    <input onkeydown="return false" [matDatepicker]="picker5" [min]="minDate" [(ngModel)]="dateFive"
+                      name="dateFive" required matInput placeholder="Inspect On">
+                    <mat-datepicker-toggle matSuffix [for]="picker5"></mat-datepicker-toggle>
+                    <mat-datepicker #picker5></mat-datepicker>
+                  </mat-form-field>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <!--ICE ARENA END-->
+
+          <!--BUILDING START-->
+          <table class="table table-hover" *ngIf="assignmentDivThreeStatus">
+            <thead>
+              <tr>
+                <th>Inspection</th>
+                <th class="inspection-th">Recurrence</th>
+                <th class="inspection-th">Inspector</th>
+                <th class="inspection-th">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr [class.active-td]="asignOneStatus">
+                <td>
+                  <mat-checkbox (click)="toggleAsignOne()"></mat-checkbox>General Inspection
+                </td>
+                <!-- <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+                    <input type="hidden" [(ngModel)]="inspectionType18" name="inspectionType18" matInput>
+                  </mat-form-field> -->
+
+                <td>
+                  <mat-form-field class="equipment-select" style="width: 132px;">
+                  <mat-select [disabled]="!asignOneStatus" class="equipment-select" placeholder="Recurrence"
+                    [(ngModel)]="recurrenceTen" name="recurrenceTen">
+                    <mat-option [value]="recurrence.id" *ngFor="let recurrence of recurrences">
+                      {{recurrence.schedule_name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                </td>
+                <td>
+                <mat-form-field class="equipment-select" style="width: 132px;">
+                  <mat-select [disabled]="!asignOneStatus" class="equipment-select" placeholder="Inspector"
+                    [(ngModel)]="inspectorOne" name="inspectorOne">
+                    <mat-option [value]="inspector.user_id" *ngFor="let inspector of inspectors">
+                      {{inspector.first_name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                </td>
+                <td>
+                <mat-form-field class="equipment-select" style="width: 132px;">
+                  <mat-select [disabled]="!asignOneStatus" class="equipment-select" placeholder="Priority"
+                    [(ngModel)]="priorityOne" name="priorityOne">
+                    <mat-option value="High">High</mat-option>
+                    <mat-option value="Medium">Medium </mat-option>
+                    <mat-option value="Low">Low</mat-option>
+                    <mat-option value="None">None</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field *ngIf="!show">
+                    <input onkeydown="return false" [matDatepicker]="picker1" [min]="minDate" [(ngModel)]="dateOne"
+                      name="dateOne" disabled matInput placeholder="Inspect On">
+
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field *ngIf="show">
+                    <input onkeydown="return false" [matDatepicker]="picker1" [min]="minDate" [(ngModel)]="dateOne"
+                      name="dateOne" matInput placeholder="Inspect On">
+
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                  </mat-form-field>
+                </td>
+              </tr>
+              <tr [class.active-td]="asignTwoStatus">
+                <td>
+                  <!-- <mat-checkbox (click)="toggleAsignTwo()"></mat-checkbox>Customized Inspection -->
+                  <!-- <mat-checkbox (click)="loadPlaygroundCustomizedQuestionSet('19')"></mat-checkbox>Customized Inspection -->
+                  <mat-checkbox (change)="loadPlaygroundCustomizedQuestionSet($event, 19)" [checked]="checked">
+                  </mat-checkbox>Customized
+                  Inspection
+
+                </td>
+                <!-- <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+                    <input type="hidden" [(ngModel)]="inspectionType19" name="inspectionType19" matInput>
+                  </mat-form-field> -->
+                <td>
+                <mat-form-field class="equipment-select" style="width: 132px;">
+                  <mat-select [disabled]="!asignTwoStatus" class="equipment-select" placeholder="Recurrence"
+                    [(ngModel)]="recurrenceEleven" name="recurrenceEleven">
+                    <mat-option [value]="recurrence.id" *ngFor="let recurrence of recurrences">
+                      {{recurrence.schedule_name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                </td>
+                <td>
+                <mat-form-field class="equipment-select" style="width: 132px;">
+                  <mat-select [disabled]="!asignTwoStatus" class="equipment-select" placeholder="Inspector"
+                    [(ngModel)]="inspectorTwo" name="inspectorTwo">
+                    <mat-option [value]="inspector.user_id" *ngFor="let inspector of inspectors">
+                      {{inspector.first_name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                </td>
+                <td>
+                <mat-form-field class="equipment-select" style="width: 132px;">
+                  <mat-select [disabled]="!asignTwoStatus" class="equipment-select" placeholder="Priority"
+                    [(ngModel)]="priorityTwo" name="priorityTwo">
+                    <mat-option value="High">High</mat-option>
+                    <mat-option value="Medium">Medium </mat-option>
+                    <mat-option value="Low">Low</mat-option>
+                    <mat-option value="None">None</mat-option>
+                  </mat-select>
+                  </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field *ngIf="!show2">
+                    <input onkeydown="return false" [matDatepicker]="picker2" [min]="minDate" [(ngModel)]="dateTwo"
+                      disabled name="dateTwo" required matInput placeholder="Inspect On">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field *ngIf="show2">
+                    <input onkeydown="return false" [matDatepicker]="picker2" [min]="minDate" [(ngModel)]="dateTwo"
+                      name="dateTwo" required matInput placeholder="Inspect On">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                  </mat-form-field>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <!--BUILDING END-->
+
+          <!--SPORTS START-->
+
+          <table class="table table-hover" *ngIf="assignmentDivFourStatus">
+            <thead>
+              <tr>
+                <th>Inspection</th>
+                <th class="inspection-th">Recurrence</th>
+                <th class="inspection-th">Inspector</th>
+                <th class="inspection-th">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr [class.active-td]="asignOneStatus">
+                <td>
+                  <mat-checkbox (click)="toggleAsignOne()"></mat-checkbox>Sports Field Inspection Checklist
+                </td>
+                <!-- <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+                    <input type="hidden" [(ngModel)]="inspectionType11" name="inspectionType11" matInput>
+                  </mat-form-field> -->
+
+                <td>
+                  <mat-form-field class="equipment-select" style="width: 132px;">
+                  <mat-select [disabled]="!asignOneStatus" class="equipment-select" placeholder="Recurrence"
+                    [(ngModel)]="recurrenceTwelve" name="recurrenceTwelve">
+                    <mat-option [value]="recurrence.id" *ngFor="let recurrence of recurrences">
+                      {{recurrence.schedule_name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field class="equipment-select" style="width: 132px;">
+                  <mat-select [disabled]="!asignOneStatus" class="equipment-select" placeholder="Inspector"
+                    [(ngModel)]="inspectorOne" name="inspectorOne">
+                    <mat-option [value]="inspector.user_id" *ngFor="let inspector of inspectors">
+                      {{inspector.first_name}}
+                    </mat-option>
+                  </mat-select>
+                  </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field class="equipment-select" style="width: 132px;">
+                  <mat-select [disabled]="!asignOneStatus" class="equipment-select" placeholder="Priority"
+                    [(ngModel)]="priorityOne" name="priorityOne">
+                    <mat-option value="High">High</mat-option>
+                    <mat-option value="Medium">Medium </mat-option>
+                    <mat-option value="Low">Low</mat-option>
+                    <mat-option value="None">None</mat-option>
+                  </mat-select>
+                  </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field *ngIf="!show">
+                    <input onkeydown="return false" [matDatepicker]="picker1" [min]="minDate" [(ngModel)]="dateOne"
+                      name="dateOne" disabled matInput placeholder="Inspect On">
+
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field *ngIf="show">
+                    <input onkeydown="return false" [matDatepicker]="picker1" [min]="minDate" [(ngModel)]="dateOne"
+                      name="dateOne" matInput placeholder="Inspect On">
+
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                  </mat-form-field>
+                </td>
+              </tr>
+              <tr [class.active-td]="asignTwoStatus">
+                <td>
+                  <mat-checkbox (click)="toggleAsignTwo()"></mat-checkbox>Sports Facility Inspection
+                </td>
+                <!-- <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+                    <input type="hidden" [(ngModel)]="inspectionType10" name="inspectionType10" matInput>
+                  </mat-form-field> -->
+
+                <td>
+                  <mat-form-field class="equipment-select" style="width: 132px;">
+                  <mat-select [disabled]="!asignTwoStatus" class="equipment-select" placeholder="Recurrence"
+                    [(ngModel)]="recurrenceThirteen" name="recurrenceThirteen">
+                    <mat-option [value]="recurrence.id" *ngFor="let recurrence of recurrences">
+                      {{recurrence.schedule_name}}
+                    </mat-option>
+                  </mat-select>
+                  </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field class="equipment-select" style="width: 132px;">
+                  <mat-select [disabled]="!asignTwoStatus" class="equipment-select" placeholder="Inspector"
+                    [(ngModel)]="inspectorTwo" name="inspectorTwo">
+                    <mat-option [value]="inspector.user_id" *ngFor="let inspector of inspectors">
+                      {{inspector.first_name}}
+                    </mat-option>
+                  </mat-select>
+                  </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field class="equipment-select" style="width: 132px;">
+                  <mat-select [disabled]="!asignTwoStatus" class="equipment-select" placeholder="Priority"
+                    [(ngModel)]="priorityTwo" name="priorityTwo">
+                    <mat-option value="High">High</mat-option>
+                    <mat-option value="Medium">Medium </mat-option>
+                    <mat-option value="Low">Low</mat-option>
+                    <mat-option value="None">None</mat-option>
+                  </mat-select>
+                  </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field *ngIf="!show2">
+                    <input onkeydown="return false" [matDatepicker]="picker2" [min]="minDate" [(ngModel)]="dateTwo"
+                      disabled name="dateTwo" required matInput placeholder="Inspect On">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field *ngIf="show2">
+                    <input onkeydown="return false" [matDatepicker]="picker2" [min]="minDate" [(ngModel)]="dateTwo"
+                      name="dateTwo" required matInput placeholder="Inspect On">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                  </mat-form-field>
+                </td>
+              </tr>
+              <tr [class.active-td]="asignThreeStatus">
+                <td>
+                  <!-- <mat-checkbox (click)="toggleAsignThree()"></mat-checkbox>Customized Inspection -->
+                  <!-- <mat-checkbox (click)="loadPlaygroundCustomizedQuestionSet('12')"></mat-checkbox>Customized Inspection -->
+                  <mat-checkbox (change)="loadPlaygroundCustomizedQuestionSet($event, 12)" [checked]="checked">
+                  </mat-checkbox>Customized
+                  Inspection
+
+                </td>
+                <!-- <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+                    <input type="hidden" [(ngModel)]="inspectionType12" name="inspectionType12" matInput>
+                  </mat-form-field> -->
+
+                <td>
+                  <mat-form-field class="equipment-select" style="width: 132px;">
+                  <mat-select [disabled]="!asignThreeStatus" class="equipment-select" placeholder="Recurrence"
+                    [(ngModel)]="recurrenceFourteen" name="recurrenceFourteen">
+                    <mat-option [value]="recurrence.id" *ngFor="let recurrence of recurrences">
+                      {{recurrence.schedule_name}}
+                    </mat-option>
+                  </mat-select>
+                  </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field class="equipment-select" style="width: 132px;">
+                  <mat-select [disabled]="!asignThreeStatus" class="equipment-select" placeholder="Inspector"
+                    [(ngModel)]="inspectorThree" name="inspectorThree">
+                    <mat-option [value]="inspector.user_id" *ngFor="let inspector of inspectors">
+                      {{inspector.first_name}}
+                    </mat-option>
+                  </mat-select>
+                  </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field class="equipment-select" style="width: 132px;">
+                  <mat-select [disabled]="!asignThreeStatus" class="equipment-select" placeholder="Priority"
+                    [(ngModel)]="priorityThree" name="priorityThree">
+                    <mat-option value="High">High</mat-option>
+                    <mat-option value="Medium">Medium </mat-option>
+                    <mat-option value="Low">Low</mat-option>
+                    <mat-option value="None">None</mat-option>
+                  </mat-select>
+                  </mat-form-field>
+                </td>
+                <td>
+                  <mat-form-field *ngIf="!show3">
+                    <input onkeydown="return false" [matDatepicker]="picker3" [min]="minDate" disabled
+                      [(ngModel)]="dateThree" name="dateThree" required matInput placeholder="Inspect On">
+                    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                    <mat-datepicker #picker3></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field *ngIf="show3">
+                    <input onkeydown="return false" [matDatepicker]="picker3" [min]="minDate" [(ngModel)]="dateThree"
+                      name="dateThree" required matInput placeholder="Inspect On">
+                    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                    <mat-datepicker #picker3></mat-datepicker>
+                  </mat-form-field>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <!--SPORTS END-->
+
+          <!--FIRE START-->
+
+          <table class="table table-hover" *ngIf="assignmentDivFiveStatus">
+            <thead>
+              <tr>
+                <th>Inspection</th>
+                <th class="inspection-th">Recurrence</th>
+                <th class="inspection-th">Inspector</th>
+                <th class="inspection-th">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr [class.active-td]="asignOneStatus">
+                <td>
+                  <mat-checkbox (click)="toggleAsignOne()"></mat-checkbox>Fire Inspection
+                </td>
+                <!-- <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+                    <input type="hidden" [(ngModel)]="inspectionType13" name="inspectionType13" matInput>
+                  </mat-form-field> -->
+
+                <td>
+                  <mat-select [disabled]="!asignOneStatus" class="equipment-select" placeholder="Recurrence"
+                    [(ngModel)]="recurrenceFifteen" name="recurrenceFifteen">
+                    <mat-option [value]="recurrence.id" *ngFor="let recurrence of recurrences">
+                      {{recurrence.schedule_name}}
+                    </mat-option>
+                  </mat-select>
+                </td>
+                <td>
+                  <mat-select [disabled]="!asignOneStatus" class="equipment-select" placeholder="Inspector"
+                    [(ngModel)]="inspectorOne" name="inspectorOne">
+                    <mat-option [value]="inspector.user_id" *ngFor="let inspector of inspectors">
+                      {{inspector.first_name}}
+                    </mat-option>
+                  </mat-select>
+                </td>
+                <td>
+                  <mat-select [disabled]="!asignOneStatus" class="equipment-select" placeholder="Priority"
+                    [(ngModel)]="priorityOne" name="priorityOne">
+                    <mat-option value="High">High</mat-option>
+                    <mat-option value="Medium">Medium </mat-option>
+                    <mat-option value="Low">Low</mat-option>
+                    <mat-option value="None">None</mat-option>
+                  </mat-select>
+                </td>
+                <td>
+                  <mat-form-field *ngIf="!show">
+                    <input onkeydown="return false" [matDatepicker]="picker1" [min]="minDate" [(ngModel)]="dateOne"
+                      name="dateOne" disabled matInput placeholder="Inspect On">
+
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field *ngIf="show">
+                    <input onkeydown="return false" [matDatepicker]="picker1" [min]="minDate" [(ngModel)]="dateOne"
+                      name="dateOne" matInput placeholder="Inspect On">
+
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                  </mat-form-field>
+                </td>
+              </tr>
+              <tr [class.active-td]="asignTwoStatus">
+                <td>
+                  <!-- <mat-checkbox (click)="toggleAsignTwo()"></mat-checkbox>Customized Inspection -->
+                  <!-- <mat-checkbox (click)="loadPlaygroundCustomizedQuestionSet('14')"></mat-checkbox>Customized Inspection -->
+                  <mat-checkbox (change)="loadPlaygroundCustomizedQuestionSet($event, 14)" [checked]="checked">
+                  </mat-checkbox>Customized
+                  Inspection
+
+
+                </td>
+                <!-- <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+                    <input type="hidden" [(ngModel)]="inspectionType14" name="inspectionType14" matInput>
+                  </mat-form-field> -->
+
+                <td>
+                  <mat-select [disabled]="!asignTwoStatus" class="equipment-select" placeholder="Recurrence"
+                    [(ngModel)]="recurrenceSixteen" name="recurrenceSixteen">
+                    <mat-option [value]="recurrence.id" *ngFor="let recurrence of recurrences">
+                      {{recurrence.schedule_name}}
+                    </mat-option>
+                  </mat-select>
+                </td>
+                <td>
+                  <mat-select [disabled]="!asignTwoStatus" class="equipment-select" placeholder="Inspector"
+                    [(ngModel)]="inspectorTwo" name="inspectorTwo">
+                    <mat-option [value]="inspector.user_id" *ngFor="let inspector of inspectors">
+                      {{inspector.first_name}}
+                    </mat-option>
+                  </mat-select>
+                </td>
+                <td>
+                  <mat-select [disabled]="!asignTwoStatus" class="equipment-select" placeholder="Priority"
+                    [(ngModel)]="priorityTwo" name="priorityTwo">
+                    <mat-option value="High">High</mat-option>
+                    <mat-option value="Medium">Medium </mat-option>
+                    <mat-option value="Low">Low</mat-option>
+                    <mat-option value="None">None</mat-option>
+                  </mat-select>
+                </td>
+                <td>
+                  <mat-form-field *ngIf="!show2">
+                    <input onkeydown="return false" [matDatepicker]="picker2" [min]="minDate" [(ngModel)]="dateTwo"
+                      disabled name="dateTwo" required matInput placeholder="Inspect On">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field *ngIf="show2">
+                    <input onkeydown="return false" [matDatepicker]="picker2" [min]="minDate" [(ngModel)]="dateTwo"
+                      name="dateTwo" required matInput placeholder="Inspect On">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                  </mat-form-field>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <!--FIRE END-->
+
+          <!--PARKING START-->
+
+          <table class="table table-hover" *ngIf="assignmentDivSixStatus">
+            <thead>
+              <tr>
+                <th>Inspection</th>
+                <th class="inspection-th">Recurrence</th>
+                <th class="inspection-th">Inspector</th>
+                <th class="inspection-th">Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr [class.active-td]="asignOneStatus">
+                <td>
+                  <mat-checkbox (click)="toggleAsignOne()"></mat-checkbox>Parking Lot Security Checklist
+                </td>
+                <!-- <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+                    <input type="hidden" [(ngModel)]="inspectionType15" name="inspectionType15" matInput>
+                  </mat-form-field> -->
+
+                <td>
+                  <mat-select [disabled]="!asignOneStatus" class="equipment-select" placeholder="Recurrence"
+                    [(ngModel)]="recurrenceSeventeen" name="recurrenceSeventeen">
+                    <mat-option [value]="recurrence.id" *ngFor="let recurrence of recurrences">
+                      {{recurrence.schedule_name}}
+                    </mat-option>
+                  </mat-select>
+                </td>
+                <td>
+                  <mat-select [disabled]="!asignOneStatus" class="equipment-select" placeholder="Inspector"
+                    [(ngModel)]="inspectorOne" name="inspectorOne">
+                    <mat-option [value]="inspector.user_id" *ngFor="let inspector of inspectors">
+                      {{inspector.first_name}}
+                    </mat-option>
+                  </mat-select>
+                </td>
+                <td>
+                  <mat-select [disabled]="!asignOneStatus" class="equipment-select" placeholder="Priority"
+                    [(ngModel)]="priorityOne" name="priorityOne">
+                    <mat-option value="High">High</mat-option>
+                    <mat-option value="Medium">Medium </mat-option>
+                    <mat-option value="Low">Low</mat-option>
+                    <mat-option value="None">None</mat-option>
+                  </mat-select>
+                </td>
+                <td>
+                  <mat-form-field *ngIf="!show">
+                    <input onkeydown="return false" [matDatepicker]="picker1" [min]="minDate" [(ngModel)]="dateOne"
+                      name="dateOne" disabled matInput placeholder="Inspect On">
+
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field *ngIf="show">
+                    <input onkeydown="return false" [matDatepicker]="picker1" [min]="minDate" [(ngModel)]="dateOne"
+                      name="dateOne" matInput placeholder="Inspect On">
+
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                  </mat-form-field>
+                </td>
+              </tr>
+              <tr [class.active-td]="asignTwoStatus">
+                <td>
+                  <mat-checkbox (click)="toggleAsignTwo()"></mat-checkbox>Sidewalk Inspection Checklist
+                </td>
+                <!-- <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+                    <input type="hidden" [(ngModel)]="inspectionType16" name="inspectionType16" matInput>
+                  </mat-form-field> -->
+
+                <td>
+                  <mat-select [disabled]="!asignTwoStatus" class="equipment-select" placeholder="Recurrence"
+                    [(ngModel)]="recurrenceEighteen" name="recurrenceEighteen">
+                    <mat-option [value]="recurrence.id" *ngFor="let recurrence of recurrences">
+                      {{recurrence.schedule_name}}
+                    </mat-option>
+                  </mat-select>
+                </td>
+                <td>
+                  <mat-select [disabled]="!asignTwoStatus" class="equipment-select" placeholder="Inspector"
+                    [(ngModel)]="inspectorTwo" name="inspectorTwo">
+                    <mat-option [value]="inspector.user_id" *ngFor="let inspector of inspectors">
+                      {{inspector.first_name}}
+                    </mat-option>
+                  </mat-select>
+                </td>
+                <td>
+                  <mat-select [disabled]="!asignTwoStatus" class="equipment-select" placeholder="Priority"
+                    [(ngModel)]="priorityTwo" name="priorityTwo">
+                    <mat-option value="High">High</mat-option>
+                    <mat-option value="Medium">Medium </mat-option>
+                    <mat-option value="Low">Low</mat-option>
+                    <mat-option value="None">None</mat-option>
+                  </mat-select>
+                </td>
+                <td>
+                  <mat-form-field *ngIf="!show2">
+                    <input onkeydown="return false" [matDatepicker]="picker2" [min]="minDate" [(ngModel)]="dateTwo"
+                      disabled name="dateTwo" required matInput placeholder="Inspect On">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field *ngIf="show2">
+                    <input onkeydown="return false" [matDatepicker]="picker2" [min]="minDate" [(ngModel)]="dateTwo"
+                      name="dateTwo" required matInput placeholder="Inspect On">
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                  </mat-form-field>
+                </td>
+              </tr>
+              <tr [class.active-td]="asignThreeStatus">
+                <td>
+                  <!-- <mat-checkbox (click)="toggleAsignThree()"></mat-checkbox>Customized Inspection -->
+                  <!-- <mat-checkbox (click)="loadPlaygroundCustomizedQuestionSet('17')"></mat-checkbox>Customized Inspection -->
+                  <mat-checkbox (change)="loadPlaygroundCustomizedQuestionSet($event, 17)" [checked]="checked">
+                  </mat-checkbox>Customized
+                  Inspection
+
+                </td>
+                <!-- <mat-form-field class="animated fadeInDown col-md-4 col-sm-4">
+                    <input type="text" [(ngModel)]="inspectionType17" name="inspectionType17" matInput>
+                  </mat-form-field> -->
+
+                <td>
+                  <mat-select [disabled]="!asignThreeStatus" class="equipment-select" placeholder="Recurrence"
+                    [(ngModel)]="recurrenceNineteen" name="recurrenceNineteen">
+                    <mat-option [value]="recurrence.id" *ngFor="let recurrence of recurrences">
+                      {{recurrence.schedule_name}}
+                    </mat-option>
+                  </mat-select>
+                </td>
+                <td>
+                  <mat-select [disabled]="!asignThreeStatus" class="equipment-select" placeholder="Inspector"
+                    [(ngModel)]="inspectorThree" name="inspectorThree">
+                    <mat-option [value]="inspector.user_id" *ngFor="let inspector of inspectors">
+                      {{inspector.first_name}}
+                    </mat-option>
+                  </mat-select>
+                </td>
+                <td>
+                  <mat-select [disabled]="!asignThreeStatus" class="equipment-select" placeholder="Priority"
+                    [(ngModel)]="priorityThree" name="priorityThree">
+                    <mat-option value="High">High</mat-option>
+                    <mat-option value="Medium">Medium </mat-option>
+                    <mat-option value="Low">Low</mat-option>
+                    <mat-option value="None">None</mat-option>
+                  </mat-select>
+                </td>
+                <td>
+                  <mat-form-field *ngIf="!show3">
+                    <input onkeydown="return false" [matDatepicker]="picker3" [min]="minDate" disabled
+                      [(ngModel)]="dateThree" name="dateThree" required matInput placeholder="Inspect On">
+                    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                    <mat-datepicker #picker3></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field *ngIf="show3">
+                    <input onkeydown="return false" [matDatepicker]="picker3" [min]="minDate" [(ngModel)]="dateThree"
+                      name="dateThree" required matInput placeholder="Inspect On">
+                    <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+                    <mat-datepicker #picker3></mat-datepicker>
+                  </mat-form-field>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!--PARKING END-->
+
+
+          <p *ngIf="assignmentDivThreeStatus" class="note">Note: Select the inspections need to assign for the building
+            and
+            provide all fields</p>
+          <p *ngIf="assignmentDivThreeStatus != '1'" class="note">Note: Select the inspections need to assign for the
+            park and
+            provide all fields</p>
+
+
+          <!-- <p class="note">Note: Select the inspections need to assign for the park and provide all fields</p> -->
+        </div>
+        <div class="col-md-12 ">
+          <!-- <button (click)="checkAssignInspection()">click</button> -->
+
+          <button (click)="add()" [disabled]="!btnStatus" class="buttons" mat-raised-button type="button">{{btnLabel}}
+            <i class="material-icons">done</i>
+          </button>
+          <!-- <button *ngIf="!serviceThree" (click)="add()" [disabled]="!btnStatus" class="buttons" mat-raised-button
+            type="button">{{btnLabel}}
+            <i class="material-icons">done</i>
+          </button>
+          <button *ngIf="serviceThree" (click)="add()" [disabled]="!btnStatus" class="buttons" mat-raised-button
+            type="button">{{btnLabelBuilding}}
+            <i class="material-icons">done</i>
+          </button> -->
+
+
+          <button class="buttons" mat-raised-button type="button" previousStep>
+            <i class="material-icons">keyboard_arrow_left</i> Back</button>
+        </div>
+      </wizard-step>
+      <!-- step three -->
+
+    </wizard>
+  </form>
+</mat-card>

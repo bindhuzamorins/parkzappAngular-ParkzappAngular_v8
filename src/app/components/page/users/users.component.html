@@ -1,0 +1,61 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="header">
+      <h4 class="title">List of all Users</h4>
+      <!-- <button (click)="download()" mdTooltip="Add new" md-raised-button>Download</button> -->
+      <button (click)="add()" matTooltip="Add new" mat-raised-button>Add New User</button>
+      <br />
+      <mat-form-field *ngIf="dataFetchStatus" class="search-box">
+        <input autofocus [(ngModel)]="filterArray.first_name" matInput placeholder="Search Users...">
+      </mat-form-field>
+    </div>
+    <div class="content table-responsive table-full-width">
+      <mat-progress-bar *ngIf="!dataFetchStatus || loadingStatus" mode="indeterminate"></mat-progress-bar>
+      <table *ngIf="dataFetchStatus" class="table table-hover table-striped">
+        <thead>
+          <tr>
+            <th>Full name</th>
+            <th>Role</th>
+            <!-- <th>Phone</th> -->
+            <th>Email</th>
+            <th>{{this.userAssignHead}}</th>
+            <th>Notification</th>
+            <th class="action-th">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of users | filterBy: filterArray | paginate: { itemsPerPage: 5, currentPage: p }">
+            <td class="name">{{user.first_name}} {{user.last_name}}</td>
+            <td>{{user.role}}</td>
+            <!-- <td><span [outerHTML]="user.phone | emptyField"></span></td> -->
+            <td>
+              <a matTooltip="Click to send mail" href="mailto:{{user.email}}">{{user.email}}</a>
+            </td>
+            <td>
+              <button (click)="viewParks(user)" class="btn btn-xs">{{this.userAssignButton}}</button>
+            </td>
+            <td>
+              <mat-slide-toggle (click)="toggleNotification(user)" [checked]='user.notification_status' [color]="color">
+              </mat-slide-toggle>
+              {{user.notification_status | onOff}}
+            </td>
+            <td>
+              <button (click)="viewMore(user)" class="btn btn-xs view-btn view" style="margin-left: 3px;">View More</button>
+              <button *ngIf="user.role_id !== '1' || user.user_name === userName" (click)="edit(user)"
+                class="btn btn-xs edit-btn edit" style="margin-left: 3px;">Edit</button>
+              <button *ngIf="user.role_id !== '1' || user.user_name === userName" (click)="delete(user)"
+                class="btn btn-xs delete-btn delete" style="margin-left: 3px;">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+
+        <tr class="icon-and-text" *ngIf="(items | filterBy: filterArray).length === 0">
+          <i class="material-icons alert-icon animated wobble">warning</i>
+          <span class="alert-text">No such details available!</span>
+        </tr>
+
+      </table>
+      <pagination-controls *ngIf="dataFetchStatus" class="pagination" (pageChange)="p = $event"></pagination-controls>
+    </div>
+  </div>
+</div>

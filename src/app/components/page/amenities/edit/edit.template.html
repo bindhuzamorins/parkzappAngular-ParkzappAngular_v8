@@ -1,0 +1,21 @@
+<h1 class="dialog-head">
+  <b>Edit Amenity</b>
+  <span matTooltip="Close" matTooltipPosition="right" (click)="close()">
+    <i class="material-icons">close</i>
+  </span>
+</h1>
+<mat-card>
+  <form #editForm="ngForm" (ngSubmit)="edit(editForm.value)">
+    <mat-form-field *ngIf="moreDetails.systemRole === '1'">
+      <input (keyup)="enableButton()" pattern="^[A-Za-z0-9,](?!.*?\s$)[A-Za-z0-9.\s]{0,}$" minlength="3" maxlength="50"
+        type="text" [ngModel]="moreDetails.amenity" name="amenity" required matInput placeholder="Amenity name">
+    </mat-form-field>
+    <h4 *ngIf="moreDetails.systemRole !== '1'">{{moreDetails.amenity}}</h4>
+    <br />
+    <mat-form-field>
+      <textarea (keyup)="enableButton()" maxlength="300" type="text" [ngModel]="moreDetails.description" rows="4"
+        name="description" matInput placeholder="Description (if any)"></textarea>
+    </mat-form-field>
+    <button type="submit" [disabled]="!editForm.valid ||!btnStatus" mat-raised-button>{{btnLabel}}</button>
+  </form>
+</mat-card>

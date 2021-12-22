@@ -1,0 +1,281 @@
+<h1 class="dialog-head"><b>Inspection Report</b>
+  <span matTooltip="Close" matTooltipPosition="right" (click)="close()"><i class="material-icons">close</i></span>
+</h1>
+
+<div class="print-section">
+  <table>
+    <tr>
+      <!-- <td width="60%"></td> -->
+      <td><button (click)="printCombinedReport($event.target)" class="btn btn-xs common-btn printme">Print</button>
+      </td>
+      <td><button (click)="sentemail(inspectionReport)" class="btn btn-xs commn-btn">Send Mail to</button>
+      </td>
+    </tr>
+  </table>
+</div>
+<div id="scrollable-area">
+  <div id="print-combined-report">
+    <mat-card>
+      <img src="{{imageUrl}}{{parkImage}}" />
+      <br>
+      <br>
+      <!-- <div *ngIf="fieldsStatus"> -->
+      <div style="align-items: center;">
+        <b class="headIng">Parkname</b> :
+        <span class="headIng">{{parkName}}</span>
+        <br>
+        <b class="headIng">Street Address</b> :
+        <span class="headIng">{{parkDetails.streetAddress}}</span>
+        <br>
+        <b class="headIng">City</b> :
+        <span class="headIng">{{parkDetails.city}}</span>
+        <br>
+      </div>
+
+
+      <!--<button (click)="print()">print</button> <br>-->
+      <div *ngFor="let inspectionReport of inspectionDetails">
+        <b class="headIng">Inspected date</b> :
+        <span class="headIng">{{inspectionReport.inspectedDate}}</span>
+        <br>
+        <b class="headIng">Inspected by</b> :
+        <span class="headIng">{{inspectionReport.inspectorName}}</span>
+        <br>
+        <b class="headIng">Certificate Number</b> :
+        <!-- <span *ngIf=certificateStatus class="headIng">{{inspectionReport.certificateNumber}}</span> -->
+        <span class="headIng">{{inspectionReport.certificateNumber}}</span>
+        <br>
+        <b class="headIng">Inspection type</b>:
+        <span class="headIng">{{inspectionReport.inspectionType}}</span>
+        <br>
+        <b class="headIng">Inspection time</b>:
+        <span class="headIng">{{inspectionReport.time}}</span>
+        <br>
+        <b class="headIng">Temperature</b>:
+        <span class="headIng">{{inspectionReport.temperature}} F</span>
+        <br>
+        <b class="headIng">Weather</b>:
+        <span class="headIng">{{inspectionReport.weather}}</span>
+        <br>
+        <b class="headIng">Overview Note</b>:
+        <span class="headIng">{{inspectionReport.overviewNote}}</span>
+
+        <!-- <table *ngIf="fieldsStatus" class="table table-hover table-striped" ID="print-section"> -->
+        <table class="table table-hover table-striped" ID="print-section">
+          <thead>
+            <!-- <div *ngFor="let report of reports"> -->
+            <tr *ngFor="let questionSet of inspectionReport.questionSetAndQuestions">
+              <td colspan="3" style="text-align: left;">QUESTION SET :{{questionSet.questionSetName}}
+                <table class="table table-hover table-striped">
+                  <thead>
+                    <tr>
+                      <th style="width:5%; text-align: left;">SL #</th>
+                      <th>QUESTIONS</th>
+                      <th class="answer">ANSWER</th>
+                      <th>UPDATED NOTE</th>
+
+                    </tr>
+                    <tr *ngFor="let question of questionSet.questions let i=index">
+                      <td style="width:5%; text-align: left;">{{i + 1}}</td>
+                      <td>{{question.question}}<br><span [class.hidden]="question.attachStatus"
+                          [ngStyle]="{'color': question.attachStatus? 'black' : 'red'}">Note :
+                          {{question.answerNote}}</span><br>
+                        <div [class.hidden]="question.videoStatus"><a
+                            href="{{imageUrl}}{{question.attachedFile}}">{{imageUrl}}{{question.attachedFile}}</a></div>
+                      </td>
+                      <td><span
+                          [ngStyle]="{'color': question.colorStatus? 'black' : 'red'}">{{question.answer}}</span><br>
+                        <div [class.hidden]="question.imgStatus"><img class="img-r"
+                            (click)="goToLink(question.attachedFile)" src="{{imageUrl}}{{question.attachedFile}}"></div>
+                      </td>
+                      <td>
+
+                        <span>
+                          {{question.updatedNote}}</span><br>
+
+                        <div [class.hidden]="question.updateImgStatus"><img class="img-r"
+                            (click)="goToLink(question.updatedFile)" src="{{imageUrl}}{{question.updatedFile}}"></div>
+                      </td>
+
+                      <td colspan="2">
+                        <button matTooltip="Add Note" (click)="addNote(question)" class="btn btn-xs"
+                          style="border:none;">
+                          <i class="fa fa-plus-circle" style="font-size:23px;color:#488305bd"></i></button>
+                        <button matTooltip="View Note" (click)="viewNote(question)" class="btn btn-xs"
+                          style="border:none;">
+                          <i class="fa fa-eye" style="font-size:23px;color:#488305bd"></i></button>
+
+                      </td>
+
+                    </tr>
+                  </thead>
+                </table>
+              </td>
+            </tr>
+
+            <!-- <div *ngIf="fieldsStatus"> -->
+            <!-- <b class="headIng">Summary:</b> -->
+            <br>
+            <b class="headIng">Issues Requiring Immediate Attention:</b>
+            <span class="headIng">{{inspectionReport.immediateIssue}}</span>
+            <br>
+            <b class="headIng">Issues Requiring Attention In Next Budget Period:</b>
+            <span class="headIng">{{inspectionReport.issueNextPeriod}}</span>
+            <br>
+            <b class="headIng">Other Comments:</b>
+            <span class="headIng">{{inspectionReport.comments}}</span>
+            <br>
+            <b class="headIng">Contact Person Concerning Above Noted Issue(s):</b>
+            <span class="headIng">{{inspectionReport.contactPerson}}</span>
+            <br>
+            <hr>
+            <!-- </div> -->
+          </thead>
+        </table>
+      </div>
+      <!-- End Report -->
+
+      <!-- Assesment Report -->
+
+
+      <div *ngFor="let report of assesmentReportData">
+        <b class="headIng">Inspected date</b> :
+        <span class="headIng">{{report.inspectedDate}}</span>
+        <br>
+        <b class="headIng">Inspected by</b> :
+        <span class="headIng">{{report.inspectorName}}</span>
+        <br>
+        <b class="headIng">Certificate Number</b> :
+        <!-- <span *ngIf=certificateStatus class="headIng">{{report.certificateNumber}}</span> -->
+        <span class="headIng">{{report.certificateNumber}}</span>
+        <br>
+        <b class="headIng">Inspection type</b>:
+        <span class="headIng">Assesment Checklist</span>
+        <br>
+        <b class="headIng">Inspection time</b>:
+        <span class="headIng">{{report.timeTaken}}</span>
+
+        <!-- <table *ngIf="fieldsStatus" class="table table-hover table-striped" ID="print-section"> -->
+        <table class="table table-hover table-striped" ID="print-section">
+          <thead>
+            <div *ngFor="let report of assesmentReportData">
+              <tr *ngFor="let checkListSet of report.checkList">
+                <td colspan="3" style="text-align: left;"><b>{{checkListSet.mainCheckList}}</b>
+                  <table>
+                    <tr *ngFor="let subCheckListSet of checkListSet.subCheckList">
+                      <td style="width: 905px;">{{subCheckListSet.subname}}
+                        <table class="table table-hover table-striped">
+                          <thead>
+
+                            <tr>
+                              <th style="width:5%; text-align: left;">SL #</th>
+                              <th>QUESTIONS</th>
+                              <th class="answer">ANSWER</th>
+                              <th>Updated Note</th>
+                              <th>Actions</th>
+                            </tr>
+                            <tr *ngFor="let question of subCheckListSet.subquestion let i=index">
+                              <td style="width:5%; text-align: centre;">{{i+1}}</td>
+                              <td style="widows: 75% !important;">{{question.questions}}<br>
+                                <!--<span>Note : {{question.answerNote}}</span><br>-->
+                                <span [class.hidden]="question.noteStatus"
+                                  [ngStyle]="{'color': question.noteStatus? 'black' : 'red'}">Note :
+                                  {{question.answerNote}}</span>
+                                <div [class.hidden]="question.videoStatus"><a
+                                    href="{{imageUrl}}{{question.attachment}}">{{imageUrl}}{{question.attachment}}</a>
+                                </div>
+                              </td>
+                              <td [ngStyle]="{'color': question.answer === 'Not OK'? 'red' : 'black'}">
+                                {{question.answer}}<br>
+                                <div [class.hidden]="question.imgStatus"><img class="img-r"
+                                    src="{{imageUrl}}{{question.attachment}}"></div>
+                              </td>
+                              <td>
+                                <span>
+                                  {{question.updatedNote}}</span><br>
+
+                                <div [class.hidden]="question.updateImgStatus"><img class="img-r"
+                                    (click)="goToLink(question.updatedFile)" src="{{imageUrl}}{{question.updatedFile}}">
+                                </div>
+                              </td>
+                              <td colspan="2">
+                                <button matTooltip="Add Note" (click)="addNoteCheckList(question)" class="btn btn-xs"
+                                  style="border:none;">
+                                  <i class="fa fa-plus-circle" style="font-size:23px;color:#488305bd"></i></button>
+                                <button matTooltip="View Note" (click)="viewNoteCheckList(question)" class="btn btn-xs"
+                                  style="border:none;">
+                                  <i class="fa fa-eye" style="font-size:23px;color:#488305bd"></i></button>
+                              </td>
+                            </tr>
+                          </thead>
+                        </table>
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </div>
+          </thead>
+        </table>
+      </div>
+      <!-- End Assesment Report -->
+      <!-- </div> -->
+
+      <!-- <table *ngIf="fieldsStatus" class="table table-hover table-striped" ID="print-section">
+      <thead>
+        <div *ngFor="let report of reports">
+          <tr *ngFor="let questionSet of report.questionSetAndQuestions">
+            <td colspan="3" style="text-align: left;">QUESTION SET :{{questionSet.questionSetName}}
+              <table class="table table-hover table-striped">
+                <thead>
+                  <tr>
+                    <th style="width:5%; text-align: left;">SL #</th>
+                    <th>QUESTIONS</th>
+                    <th class="answer">ANSWER</th>
+
+                  </tr>
+                  <tr *ngFor="let question of questionSet.questions let i=index">
+                    <td style="width:5%; text-align: left;">{{i + 1}}</td>
+                    <td>{{question.question}}<br><span [class.hidden]="question.attachStatus"
+                        [ngStyle]="{'color': question.attachStatus? 'black' : 'red'}">Note :
+                        {{question.answerNote}}</span><br>
+                      <div [class.hidden]="question.videoStatus"><a
+                          href="{{imageUrl}}{{question.attachedFile}}">{{imageUrl}}{{question.attachedFile}}</a></div>
+                    </td>
+                    <td><span
+                        [ngStyle]="{'color': question.colorStatus? 'black' : 'red'}">{{question.answer}}</span><br>
+                      <div [class.hidden]="question.imgStatus"><img class="img-r"
+                          (click)="goToLink(question.attachedFile)" src="{{imageUrl}}{{question.attachedFile}}"></div>
+                    </td>
+                    <td>
+
+                      <span>
+                        {{question.updatedNote}}</span><br>
+
+                      <div [class.hidden]="question.updateImgStatus"><img class="img-r"
+                          (click)="goToLink(question.updatedFile)" src="{{imageUrl}}{{question.updatedFile}}"></div>
+                    </td>
+
+                    <td>
+                      <button mdTooltip="Add Note" (click)="addNote(question)" class="btn btn-xs" style="border:none;">
+                        <i class="fa fa-plus-circle" style="font-size:23px;color:#488305bd"></i></button>
+                      <button mdTooltip="View Note" (click)="viewNote(question)" class="btn btn-xs"
+                        style="border:none;">
+                        <i class="fa fa-eye" style="font-size:23px;color:#488305bd"></i></button>
+
+                    </td>
+
+
+
+
+                  </tr>
+                </thead>
+              </table>
+            </td>
+          </tr>
+        </div>
+      </thead>
+    </table> -->
+    </mat-card>
+  </div>
+</div>

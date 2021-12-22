@@ -1,0 +1,55 @@
+<div class="col-md-12">
+  <div class="card">
+    <div>
+      <div class="header">
+        <a matTooltip="Back to reports" routerLink="/generalReport" class="pe-7s-angle-left table-back">Back</a>
+        <h4 class="title">Combined Reports</h4>
+      </div>
+      <!-- <md-card *ngIf='!formStatus'> -->
+      <mat-card>
+        <form #searchForm="ngForm">
+          <div class="row">
+            <mat-form-field class="col-md-12 col-sm-12"> 
+            <mat-select class="col-md-12 col-sm-12" required placeholder="Select Park" [(ngModel)]="parkName"
+              name="parkName" style="padding: 0px;">
+              <mat-option [value]="park.id" *ngFor="let park of parks">
+                {{park.parkName}}
+              </mat-option>
+            </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class=" col-md-6">
+              <input onkeydown="return false" (dateInput)="choosemindate();" [max]="maxDate" [matDatepicker]="picker1"
+                [(ngModel)]="dateone" name="dateone" required matInput placeholder="From Date">
+              <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+              <mat-datepicker #picker1></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class=" col-md-6" style=" padding-left: 15px;">
+              <input onkeydown="return false" (dateInput)="choosemaxdate();" [max]="allmaxDate" [min]="minDate"
+                [matDatepicker]="picker2" [min]="minDate" [(ngModel)]="datetwo" name="datetwo" required matInput
+                placeholder="To">
+              <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+              <mat-datepicker #picker2></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <!-- <md-input-container class=" col-md-6">
+            <input onkeydown="return false" [mdDatepicker]="picker1" [(ngModel)]="dateone" name="dateone" required
+              mdInput placeholder="Search Date">
+            <md-datepicker-toggle mdSuffix [for]="picker1"></md-datepicker-toggle>
+            <md-datepicker #picker1></md-datepicker>
+          </md-input-container> -->
+
+          <div class="submit_search">
+            <button [disabled]="!searchForm.valid || !btnStatus" (click)="search()"
+              mat-raised-button>{{btnLabel}}</button>
+          </div>
+        </form>
+        <br>
+        <mat-progress-bar mode="indeterminate" *ngIf="loadStatus"></mat-progress-bar>
+
+      </mat-card>
+    </div>
+
+  </div>
+</div>

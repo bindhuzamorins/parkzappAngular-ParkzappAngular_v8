@@ -1,0 +1,40 @@
+<h1 class="dialog-head">
+    <b>Add inspection to </b>
+    <span matTooltip="Close" matTooltipPosition="right" (click)="close()">
+      <i class="material-icons">close</i>
+    </span>
+  </h1>
+  <mat-card>
+    <form #addForm="ngForm">
+      <mat-select required class="equipment-select" placeholder="Inspection Type" [(ngModel)]="inspectionType" name="inspectionType">
+        <mat-option (click)="Customized(inspectionType.id)" [value]="inspectionType.id" *ngFor="let inspectionType of inspectionTypes">
+          {{inspectionType.inspectiontype}}
+        </mat-option>
+      </mat-select>
+      <br/>
+      <br/>
+      <mat-select required class="equipment-select" placeholder="Inspector" [(ngModel)]="inspector" name="inspecctor">
+        <mat-option [value]="inspector.user_id" *ngFor="let inspector of inspectors">
+          {{inspector.first_name}}
+        </mat-option>
+      </mat-select>
+      <br/>
+      <br/>
+      <mat-select required class="equipment-select" placeholder="Recurrence" [(ngModel)]="recurrence" name="recurrence">
+        <mat-option [value]="recurrence.id" *ngFor="let recurrence of recurrences">
+          {{recurrence.schedule_name}}
+        </mat-option>
+      </mat-select>
+      <br/>
+      <br/>
+      <mat-form-field>
+        <input onkeydown="return false" [matDatepicker]="picker" [min]="minDate"  (change)="removePreviousDate()" [(ngModel)]="date"
+          name="date" required matInput placeholder="Inspect On">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+      <br/>
+      <button class="add-btn" (click)="add()" [disabled]="!addForm.valid ||!btnStatus" mat-raised-button>{{btnLabel}}</button>
+    </form>
+  </mat-card>
+  

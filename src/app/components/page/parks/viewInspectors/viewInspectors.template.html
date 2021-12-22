@@ -1,0 +1,27 @@
+<h1 class="dialog-head"><b>Inspectors assigned for {{moreDetails.parkName}}</b>
+  <span matTooltip="Close" matTooltipPosition="right" (click)="close()"><i class="material-icons">close</i></span>
+</h1>
+<mat-form-field class="search-box">
+  <input autofocus [(ngModel)]="filterArray.inspector" matInput placeholder="Search inspector name...">
+</mat-form-field>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Inspector</th>
+      <th>Inspection Type</th>
+      <th>Inspection Due</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let assignedInspector of assignedInspectors | filterBy: filterArray  | paginate: { itemsPerPage: 8, currentPage: p }">
+      <td>{{assignedInspector.inspector}}</td>
+      <td>{{assignedInspector.inspectionType}}</td>
+      <td>{{assignedInspector.inspectionDue  | date:'shortDate'}}</td>
+    </tr>
+  </tbody>
+  <tr class="icon-and-text" *ngIf="(items | filterBy: filterArray).length === 0">
+    <i class="material-icons alert-icon animated wobble">warning</i>
+    <span class="alert-text">No such details available!</span>
+  </tr>
+</table>
+<pagination-controls class="pagination" (pageChange)="p = $event"></pagination-controls>

@@ -1,0 +1,53 @@
+.large {
+    font-size: 60px;
+  }
+  
+  /*FOR PLAY GROUND SERVICE COLOR*/
+  
+  .playHome {
+    color: #4c751a !important;
+  }
+  
+  /*FOR ICE ARENA SERVICE COLOR*/
+  
+  .iceHome {
+    /* color: rgba(51, 40, 131, 0.74) !important; */
+    color: #164b96 !important;
+  
+  }
+  
+  /*FOR BUILDING SERVICE COLOR*/
+  .building {
+    color: #8350e2 !important; 
+  }
+  
+  /*FOR FIRE SERVICE COLOR*/
+  .fire {
+    color: #e90004d2 !important;
+  }
+  
+  /*FOR SPORTS FIELD SERVICE COLOR*/
+  .sports {
+    color: #ee5d03e7 !important;
+  }
+  
+  /*FOR PARKING LOT/SIDE WALK SERVICE COLOR*/
+  .parking {
+    color: #968013 !important; 
+  }
+  
+  @media screen and (max-width: 768px) {
+    .tiles-content span {
+      font-family: 'Simonetta', cursive;
+      font-weight: bold;
+      font-size: 24px;
+  }
+   
+  }
+  @media screen and (max-width: 1024px){
+    .tiles-content span {
+      font-family: 'Simonetta', cursive;
+      font-weight: bold;
+      font-size: 22px;
+  }
+  }

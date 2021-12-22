@@ -1,0 +1,34 @@
+<mat-card>
+
+  <a matTooltip="Back to Home" routerLink="/home" class="pe-7s-angle-left table-back">Back</a>
+  <button *ngIf="dataFetchStatus" (click)="customPayment()"
+    class="more-details custom-payment right mat-raised-button">Custom Payment</button>
+  <h3>List of all plans</h3>
+  <mat-progress-bar *ngIf="!dataFetchStatus" mode="indeterminate"></mat-progress-bar>
+  <table *ngIf="dataFetchStatus" class="table table-hover">
+    <tbody>
+      <!-- <tr [ngClass]="{'current-plan': plan.id ==planId}" *ngFor="let plan of plans">
+        <td>{{plan.planName}}
+          <span *ngIf="plan.id ==planId">(Current plan)</span>
+        </td>
+        <td>
+          <span *ngIf="plan.validity =='365'">{{plan.price | currency:'USD':true}}</span>
+          <span *ngIf="plan.validity =='365'">Annual Subscription.</span>
+          <span *ngIf="plan.validity =='30'">{{plan.validity}} Days Free Trial</span>
+        </td>
+        <td>
+          <button class="mat-raised-button more-details" (click)="viewMoreDetails(plan)">More Details</button>
+          <button *ngIf="plan.id ==planId && plan.validity !='30'" (click)="upgradePlan(plan)" class="mat-raised-button extend-btn">Renew current plan</button>
+          <button *ngIf="plan.id !=planId && plan.validity !='30'" (click)="upgradePlan(plan)" class="mat-raised-button upgrade-btn">Upgrade plan</button>
+        </td>
+      </tr> -->
+      <tr>
+        <td>Customized Plan</td>
+        <td class="grey-text">For Customizing your plan please contact us</td>
+        <td>
+          <button routerLink="/contactUs" class="mat-raised-button upgrade-btn contact-btn">Contact US</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</mat-card>

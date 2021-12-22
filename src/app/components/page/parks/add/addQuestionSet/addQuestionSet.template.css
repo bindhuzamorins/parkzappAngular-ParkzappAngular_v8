@@ -1,0 +1,51 @@
+.dialog-head {
+    color: #666666;
+    font-size: 20px;
+    margin-top: 0px;
+  }
+  
+  .dialog-head span {
+    float: right;
+    cursor: pointer;
+  }
+  
+  mat-form-field {
+    width: 100%;
+    font-family: 'Simonetta', cursive;
+    font-weight: bold;
+    font-size: 16px;
+  }
+  
+  img {
+    width: 300px;
+    height: 200px;
+  }
+  
+  mat-dialog-container {
+    width: 100%;
+    transform: none;
+    opacity: 1;
+  }
+  
+  ul {
+    padding-left: 0px;
+    list-style: none;
+    color: #666666;
+    font-size: 18px;
+    max-height: 200px;
+    overflow: auto;
+  }
+  
+  
+  .li-details {
+    font-weight: 200 !important;
+    margin-left: 5px;
+  }
+  
+  agm-map {
+    height: 115px;
+  }
+  
+  .widthaddress{
+    width: 333px;
+  }

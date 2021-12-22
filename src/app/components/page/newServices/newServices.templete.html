@@ -1,0 +1,117 @@
+<h1 class="dialog-head">
+  <b>Switch to</b>
+  <span *ngIf="closeButtonStatus" matTooltip="Close" matTooltipPosition="right" (click)="close()">
+    <i class="material-icons">close</i>
+  </span>
+</h1>
+<mat-card class="scrollNew">
+
+
+  <div class="row">
+    <a class="col-md-4 col-sm-4 tiles">
+      <div (click)="switchTo(1)" *ngIf="activeservice['Playground inspection']==1" class="tiles-content height">
+        <i class="fa fa-leaf animated fadeInUp" style="font-size:35px"></i>
+        <span class=" lineh">
+          <br />PLAYGROUND
+          <br> INSPECTION</span>
+
+      </div>
+      <div *ngIf="activeservice['Playground inspection']==0" class="tiles-content height disabled">
+        <i class="fa fa-leaf animated fadeInUp" style="font-size:35px"></i>
+        <span class=" lineh">
+          <br />PLAYGROUND
+          <br> INSPECTION</span>
+
+      </div>
+    </a>
+    <a class="col-md-4 col-sm-4 tiles">
+
+      <div (click)="switchTo(3)" *ngIf="activeservice['Building Inspection']==1" class="tiles-content height ">
+        <!-- <i class="pe-7s-users animated fadeInUp"></i> -->
+        <i class="fa fa-building-o animated fadeInUp" style="font-size:35px"></i>
+        <span class=" lineh">
+          <br />BUILDING
+          <br> INSPECTION</span>
+
+      </div>
+      <div *ngIf="activeservice['Building Inspection']==0" class="tiles-content height disabled">
+        <!-- <i class="pe-7s-users animated fadeInUp"></i> -->
+        <i class="fa fa-building-o animated fadeInUp" style="font-size:35px"></i>
+        <span class=" lineh">
+          <br />BUILDING
+          <br> INSPECTION</span>
+
+      </div>
+
+    </a>
+    <a class="col-md-4 col-sm-4 tiles">
+      <div (click)="switchTo(4)" *ngIf="activeservice['Sports Field Inspection']==1" class="tiles-content height ">
+        <i class="	fa fa-soccer-ball-o	animated fadeInUp" style="font-size:35px"></i>
+        <br>
+        <span class=" lineh">SPORTS FIELD
+          <br> INSPECTION</span>
+
+      </div>
+      <div *ngIf="activeservice['Sports Field Inspection']==0" class="tiles-content height disabled">
+        <i class="	fa fa-soccer-ball-o	animated fadeInUp" style="font-size:35px"></i>
+        <br>
+        <span class=" lineh">SPORTS FIELD
+          <br> INSPECTION</span>
+
+      </div>
+    </a>
+  </div>
+  <div class="row">
+    <!-- <a class="col-md-4 col-sm-4 tiles" (click)="mapTo()"> -->
+    <a class="col-md-4 col-sm-4 tiles">
+      <div (click)="switchTo(2)" *ngIf="activeservice['Ice Arena Safety Inspection']==1" class="tiles-content height">
+        <i class="fa fa-flag-checkered animated fadeInUp" style="font-size:35px;"></i>
+        <span class=" lineh">
+          <br />ICE ARENA SAFETY
+          <br> INSPECTION</span>
+
+      </div>
+      <div *ngIf="activeservice['Ice Arena Safety Inspection']==0" class="tiles-content height disabled">
+        <i class="material-icons animated fadeInUp" style="font-size:35px;">markunread_mailbox</i>
+        <span class=" lineh">
+          <br />ICE ARENA SAFETY
+          <br> INSPECTION</span>
+
+      </div>
+    </a>
+    <a class="col-md-4 col-sm-4 tiles">
+      <div (click)="switchTo(5)" *ngIf="activeservice['FIRE Inspection']==1" class="tiles-content height ">
+        <!-- <i class="pe-7s-users animated fadeInUp"></i> -->
+        <i class="fa fa-fire animated fadeInUp" style="font-size:35px"></i>
+        <span class=" lineh">
+          <br />FIRE
+          <br> INSPECTION</span>
+
+      </div>
+      <div *ngIf="activeservice['FIRE Inspection']==0" class="tiles-content height disabled">
+        <!-- <i class="pe-7s-users animated fadeInUp"></i> -->
+        <i class="fa fa-fire animated fadeInUp" style="font-size:35px"></i>
+        <span class=" lineh">
+          <br />FIRE
+          <br> INSPECTION</span>
+
+      </div>
+    </a>
+    <a class="col-md-4 col-sm-4 tiles">
+      <div (click)="switchTo(6)" *ngIf="activeservice['Parking/Lot/Side Walk Inspection']==1"
+        class="tiles-content height ">
+        <i class="fa fa-road animated fadeInUp" style="font-size:35px"></i>
+        <br>
+        <span class=" lineh">PARKING LOT/SIDE WALK INSPECTION</span>
+
+      </div>
+      <div *ngIf="activeservice['Parking/Lot/Side Walk Inspection']==0" class="tiles-content height disabled">
+        <i class="fa fa-road animated fadeInUp" style="font-size:35px"></i>
+        <br>
+        <span class=" lineh">PARKING LOT/SIDE WALK INSPECTION</span>
+
+      </div>
+    </a>
+  </div>
+
+</mat-card>

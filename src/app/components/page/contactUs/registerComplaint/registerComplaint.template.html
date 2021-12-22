@@ -1,0 +1,32 @@
+<h1 class="dialog-head"><b>Register your complaint</b>
+  <span matTooltip="Close" matTooltipPosition="right" (click)="close()"><i class="material-icons">close</i></span>
+</h1>
+<mat-card>
+  <form #addForm="ngForm">
+    <mat-form-field>
+      <input pattern="[A-Za-z ]{0,}" type="text" [(ngModel)]="name" name="name" required matInput placeholder="Name">
+    </mat-form-field><br/>
+    <mat-form-field>
+      <input pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" type="text" [(ngModel)]="email" name="email" required matInput
+        placeholder="Email">
+    </mat-form-field><br/>
+    <mat-form-field>
+    <mat-select required placeholder="Subject" [(ngModel)]="subject" name="subject" style="padding: 0px;">
+      <mat-option [value]="sub.id" *ngFor="let sub of subjects">
+        {{sub.subject}}
+      </mat-option>
+    </mat-select></mat-form-field><br/>
+    <mat-form-field>
+      <input type="text" [(ngModel)]="complaint" name="complaint" required matInput placeholder="Complaint">
+    </mat-form-field><br/>
+    <mat-form-field>
+    <mat-select required placeholder="Priority" [(ngModel)]="priority" name="priority" style="padding: 0px;">
+      <mat-option [value]="priority.code" *ngFor="let priority of priorities">
+        {{priority.name}}
+      </mat-option>
+    </mat-select></mat-form-field><br/><br/><br/>
+    <label>Screeshot/other</label>
+    <input accept="image/*" (change)="fileEvent($event)" [(ngModel)]="image" name="image" type="file" /><br/>
+    <button (click)="add()" [disabled]="!addForm.valid ||!btnStatus || !imageFileStatus" mat-raised-button>{{btnLabel}}</button>
+  </form>
+</mat-card>

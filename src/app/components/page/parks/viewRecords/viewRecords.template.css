@@ -1,0 +1,74 @@
+.dialog-head {
+  color: #666666;
+  font-size: 20px;
+  margin-top: 0px;
+  min-width: 500px;
+}
+
+.dialog-head span {
+  float: right;
+  cursor: pointer;
+}
+
+mat-form-field {
+  width: 100%;
+  font-family: 'Simonetta', cursive;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+img {
+  width: 300px;
+  height: 200px;
+}
+
+mat-dialog-container {
+  width: 100%;
+  transform: none;
+  opacity: 1;
+}
+
+ul {
+  padding-left: 0px;
+  list-style: none;
+  color: #666666;
+  font-size: 18px;
+  max-height: 200px;
+  overflow: auto;
+}
+
+.add-btn {
+  float: right;
+  background-color: #598328;
+  color: white;
+}
+
+.li-details {
+  font-weight: 200 !important;
+  margin-left: 5px;
+}
+
+agm-map {
+  height: 115px;
+}
+
+.doc-icon {
+  color: #b75c3f;
+}
+
+.img-icon {
+  color: #4f8aaf;
+}
+
+.new-search-input {
+  width: 50%;
+  display: inline;
+  border-radius: 0px;
+}
+
+.view-btn {
+  border-color: rgba(19, 97, 148, 0.93) !important;
+  color: white !important;
+  background-color: rgba(19, 97, 148, 0.93) !important;
+}
+

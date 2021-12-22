@@ -1,0 +1,27 @@
+<div class="col-md-12">
+  <div class="card">
+    <div class="header">
+      <a matTooltip="Back to setup" routerLink="/setup" class="pe-7s-angle-left table-back">Back</a>
+      <h4 class="title">Customized Questions</h4>
+      <br/>
+    </div>
+
+    <div class="main-div">
+      <ul class="nav nav-tabs">
+        <li [ngClass]="{'active': pageName =='QuestionSet'}" (click)="QuestionSet()">
+          <a>Question set</a>
+        </li>
+        <li [ngClass]="{'active': pageName =='customQuestion'}" (click)="customQuestion()">
+          <a>Questions</a>
+        </li>
+      </ul>
+      
+      <div *ngIf="pageName =='QuestionSet'" class="animated fadeInDown">
+        <app-QuestionSet></app-QuestionSet>
+      </div>
+      <div *ngIf="pageName =='customQuestion'" class="animated fadeInDown">
+        <app-customQuestion></app-customQuestion>
+      </div>
+    </div>
+  </div>
+</div>

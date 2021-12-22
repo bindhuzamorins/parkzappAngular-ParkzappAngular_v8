@@ -1,0 +1,206 @@
+<h1 class="dialog-head">
+  <b>Edit {{moreDetails.first_name}} {{moreDetails.last_name}}'s details</b>
+  <span matTooltip="Close" matTooltipPosition="right" (click)="close()">
+    <i class="material-icons">close</i>
+  </span>
+</h1>
+<mat-card>
+  <form #editForm="ngForm" (ngSubmit)="edit(editForm.value)">
+    <wizard>
+
+      <wizard-step title="User details *">
+        <mat-form-field class="animated fadeInDown col-md-6 col-sm-6">
+          <input pattern="[A-Za-z]{2,50}" type="text" [ngModel]="moreDetails.first_name" name="first_name" required
+            matInput placeholder="First Name">
+        </mat-form-field>
+        <mat-form-field class="animated fadeInDown col-md-6 col-sm-6">
+          <input pattern="[A-Za-z ]{2,50}" type="text" [ngModel]="moreDetails.last_name" name="last_name" required
+            matInput placeholder="Last Name">
+        </mat-form-field>
+        <mat-form-field class="animated fadeInDown col-md-6 col-sm-6">
+          <input pattern="^[a-zA-Z1-9].*.{2,50}" type="text" [(ngModel)]="moreDetails.user_name" name="username"
+            required matInput placeholder="Username" [readonly]="true">
+        </mat-form-field>
+        <mat-form-field class="animated fadeInDown col-md-6 col-sm-6">
+          <input pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,})+$" type="email" maxlength="64"
+            [ngModel]="moreDetails.email" name="email" required matInput placeholder="Email">
+        </mat-form-field>
+        <mat-form-field class="animated fadeInDown col-md-6">
+        <mat-select class="animated fadeInDown col-md-6" required placeholder="Role" [(ngModel)]="moreDetails.role_id"
+          name="role" style="padding: 0px;">
+          <mat-option [value]="role.id" *ngFor="let role of roles">
+            {{role.roleName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+        <br />
+        <!-- <div class="animated fadeInDown col-md-12 col-sm-12">
+          <label>Services</label>
+          <div class="row"> 
+              <md-checkbox checked="checked" class="col-md-4" > Playground inspection</md-checkbox>
+              <md-checkbox class="col-md-4">Building inspection</md-checkbox>
+              <md-checkbox class="col-md-4">Sports field inspection</md-checkbox>
+              <md-checkbox class="col-md-4">Ice arena Safety inspection</md-checkbox>
+              <md-checkbox class="col-md-4">Fire inspection</md-checkbox>
+              <md-checkbox class="col-md-4">Parking lot/Sidewalk inspection</md-checkbox>
+      </div>
+    </div> 
+        <br/>-->
+
+        <div class="animated fadeInDown col-md-12 col-sm-12">
+          <label>Services</label>
+          <div class="row">
+            <div *ngIf="divInActiveOne">
+              <mat-checkbox class="col-md-4" name="servicesOne" [(ngModel)]="servicesOne"
+                [disabled]="serviceOneDisabled"> Playground inspection</mat-checkbox>
+            </div>
+            <div *ngIf="divInActiveTwo">
+              <mat-checkbox class="col-md-4" name="servicesTwo" [(ngModel)]="servicesTwo"
+                [disabled]="serviceTwoDisabled">Ice arena Safety inspection</mat-checkbox>
+            </div>
+            <div *ngIf="divInActiveThree">
+              <mat-checkbox class="col-md-4" name="servicesThree" [(ngModel)]="servicesThree"
+                [disabled]="serviceThreeDisabled">Building inspection</mat-checkbox>
+            </div>
+            <div *ngIf="divInActiveFour">
+              <mat-checkbox class="col-md-4" name="servicesFour" [(ngModel)]="servicesFour"
+                [disabled]="serviceFourDisabled">Sports field inspection</mat-checkbox>
+            </div>
+            <div *ngIf="divInActiveFive">
+              <mat-checkbox class="col-md-4" name="servicesFive" [(ngModel)]="servicesFive"
+                [disabled]="serviceFiveDisabled">Fire inspection</mat-checkbox>
+            </div>
+            <div *ngIf="divInActiveSix">
+              <mat-checkbox class="col-md-4" name="servicesSix" [(ngModel)]="servicesSix"
+                [disabled]="serviceSixDisabled">Parking lot/Sidewalk inspection</mat-checkbox>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-md-12 ">
+          <button class="buttons" mat-raised-button type="button" nextStep>Next
+            <i class="material-icons">keyboard_arrow_right</i>
+          </button>
+        </div>
+      </wizard-step>
+
+      <wizard-step title="Contact details">
+        <mat-form-field class="animated fadeInDown col-md-6 col-sm-6">
+          <input pattern="[0-9]{7,15}" type="text" [(ngModel)]="moreDetails.phone" name="phone" matInput
+            placeholder="Phone">
+        </mat-form-field>
+        <mat-form-field class="animated fadeInDown col-md-6 col-sm-6">
+          <input type="text" [(ngModel)]="moreDetails.street_address" name="address" matInput placeholder="Address">
+        </mat-form-field>
+        <mat-form-field class="animated fadeInDown col-md-6 col-sm-12">
+        <mat-select placeholder="Country" [(ngModel)]="moreDetails.country" name="country"
+          class="animated fadeInDown col-md-6 col-sm-12" style="padding: 0px;">
+          <mat-option (click)="fetchState(country.code)" [value]="country.code" *ngFor="let country of countries">
+            {{country.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="animated fadeInDown col-md-6 col-sm-12">
+        <mat-select (click)="checkCountryStatus()" placeholder="State" [(ngModel)]="moreDetails.state" name="state"
+          class="animated fadeInDown col-md-6 col-sm-12" style="padding: 0px;">
+          <mat-option [value]="state.name" *ngFor="let state of allStates">
+            {{state.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+        <mat-form-field class="margin-top animated fadeInDown col-md-6 col-sm-6">
+          <input type="text" [ngModel]="moreDetails.city" name="city" matInput placeholder="City">
+        </mat-form-field>
+
+
+        <mat-form-field *ngIf="moreDetails.country!=14" class="margin-top animated fadeInDown col-md-6 col-sm-6">
+          <input pattern="[0-9]{4,6}" type="text" [(ngModel)]="moreDetails.zip_code" name="zipcode" matInput
+            placeholder="Zip code">
+        </mat-form-field>
+        <mat-form-field *ngIf="moreDetails.country==14" class="margin-top animated fadeInDown col-md-6 col-sm-6">
+          <input pattern="[A-Za-z0-9\s]{3,7}$" type="text" [(ngModel)]="moreDetails.zip_code" name="zipcode" matInput
+            placeholder="Zip code">
+        </mat-form-field>
+
+        <div class="col-md-12 margin-top">
+          <button class="buttons" mat-raised-button type="button" nextStep>Next
+            <i class="material-icons">keyboard_arrow_right</i>
+          </button>
+          <button class="buttons" mat-raised-button type="button" previousStep>
+            <i class="material-icons">keyboard_arrow_left</i> Back</button>
+        </div>
+      </wizard-step>
+
+      <wizard-step title="Others">
+        <mat-form-field class="animated fadeInDown col-md-6 col-sm-12">
+        <mat-select placeholder="Work Type" [ngModel]="moreDetails.work_type" name="workType"
+          class="animated fadeInDown col-md-6 col-sm-12" style="padding: 0px;">
+          <mat-option [value]="workType.name" *ngFor="let workType of workTypes">
+            {{workType.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+        <mat-form-field class="animated fadeInDown col-md-6 col-sm-6">
+          <input [matDatepicker]="picker3" [(ngModel)]="date1" name="certExpiry" matInput
+            placeholder="Certification Expiry Date">
+          <mat-datepicker-toggle matSuffix [for]="picker3"></mat-datepicker-toggle>
+          <mat-datepicker #picker3></mat-datepicker>
+
+          <!--  <input type="date" [ngModel]="moreDetails.certificate_expiery_date" name="certExpiry" mdInput placeholder="Certifiaction Expiry Date"> -->
+        </mat-form-field>
+        <mat-form-field class="animated fadeInDown col-md-6 col-sm-6" style="width: 50%;margin-right: 500px">
+          <input type="text" pattern="[A-Za-z0-9 #-/.;:]{3,30}" minlength="3" maxlength="30"
+            [ngModel]="moreDetails.certification_no" name="CertNumber" matInput placeholder="Certification Number">
+        </mat-form-field>
+        <!-- <mat-form-field class="animated fadeInDown col-md-6 col-sm-6">
+                      <input  [mdDatepicker]="picker4" [max]="minDate"  [(ngModel)]="date2" name="dob" 
+                      mdInput placeholder="Date of birth">
+                      <md-datepicker-toggle mdSuffix [for]="picker4"></md-datepicker-toggle>
+                      <md-datepicker #picker4></md-datepicker>
+                  </mat-form-field> -->
+
+        <div class="animated fadeInDown col-md-12 col-sm-12">
+          <label>Choose New Profile Image</label>
+          <!--  <input accept="image/*" (change)="fileEvent($event)" [(ngModel)]="image" name="image" type="file" />
+                  -->
+          <div style="display: inline-flex;width: 100%;">
+
+            <ng4-files-drop (filesSelect)="filesSelect($event)" [configId]="'my-gif-config'" style="width: 100%;">
+              <div
+                style="display: inline-block; height: 150px; width: 100%; background-color: #f9f9f9;border: 1px dashed;">
+                <ng4-files-click (filesSelect)="filesSelect($event)" [configId]="'my-image-config'"
+                  style="padding-left:48%; ">
+                  <img src="assets/parkzapp/upload.png" style="padding-top:25%;width:43%; " />
+                  <br /> <span
+                    style="background-color: #598328;color: white;font-family: Roboto, &quot;Helvetica Neue&quot;, sans-serif;font-size: 14px;font-weight: 500;min-width: 88px;line-height: 36px;padding: 7px 16px;border-radius: 2px;/* right: 2%; */margin-left: -20%;">
+                    Choose file</span>
+                  <br />
+                  <span style=" margin: -16px; font-weight: normal; font-size: 9px;">Or drag and drop here</span>
+                </ng4-files-click>
+              </div>
+            </ng4-files-drop>
+            <div *ngIf="divshown" style="width: 25%;margin-left: 1%;">
+              <img *ngIf="imageShown" [src]="currentProfileImage" class="imageview" />
+
+            </div>
+          </div>
+          <p class="note" style="float: left;">Note: Acceptable image formats are jpeg, jpg, gif and png</p>
+          <br />
+
+        </div>
+
+
+        <div class="col-md-12 ">
+          <button [disabled]="!editForm.valid || !imageFileStatus || !btnStatus" class="buttons" mat-raised-button
+            type="submit">{{btnLabel}}
+            <i class="material-icons">done</i>
+          </button>
+          <button class="buttons" mat-raised-button type="button" previousStep>
+            <i class="material-icons">keyboard_arrow_left</i> Back</button>
+        </div>
+      </wizard-step>
+
+    </wizard>
+  </form>
+</mat-card>

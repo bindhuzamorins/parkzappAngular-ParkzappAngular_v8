@@ -1,0 +1,85 @@
+<h1 class="dialog-head">
+  <b>REASSIGN WORKORDER</b>
+  <span matTooltip="Close" matTooltipPosition="right" (click)="close()">
+    <i class="material-icons">close</i>
+  </span>
+</h1>
+<div id="scrollable-area">
+  <mat-card>
+    <!-- <img src="{{imageUrl}}{{moreDetails.parkImage}}" /> -->
+    <ul>
+      <li>Park Name:
+        <span class="li-details">{{reassignDetails.parkName}}</span>
+      </li>
+      <li>Park Address:
+        <span class="li-details">{{reassignDetails.streetAddress}},{{reassignDetails.city}}</span>
+      </li>
+      <li>Inspected Date:
+        <span class="li-details"> {{reassignDetails.date}}</span>
+      </li>
+      <li>Work order No:
+        <span class="li-details"> {{reassignDetails.workOrderNo}}</span>
+      </li>
+      <li>Work Description:
+        <span class="li-details lineHeight">
+          <div [innerHTML]="reassignDetails.workDesc | nl2br : true"></div>
+        </span>
+
+
+      </li>
+      <li>Work Order Sender info:
+        <span class="li-details"> {{reassignDetails.recipientEmail}}</span>
+      </li>
+
+
+      <li>Work Order Created Date:
+        <span class="li-details"> {{reassignDetails.workoderdate}}</span>
+      </li>
+      <form #assignForm="ngForm">
+        <div class="row">
+          <mat-form-field>
+          <mat-select class="col-md-12" multiple required placeholder="Select emails" [(ngModel)]="newemail"
+            name="newemail" style="margin-bottom: 0%;padding: 0px;">
+            <mat-option [value]="email.emailId" *ngFor="let email of emails">
+              {{email.emailId}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+          <!-- <md-input-container class="col-md-12"> -->
+
+          <!-- <md-input-container>
+            <input maxlength="50" type="text" [(ngModel)]="newemail" name="newemail" required mdInput
+              placeholder="Amenity Name">
+          </md-input-container> -->
+
+          <!-- </textarea> -->
+          <!-- </md-input-container> -->
+
+          <!-- <md-form-field class="col-md-12">
+            <input mdInput [(ngModel)]="newemail" type="text" placeholder="Email Id" name="newemail"
+              [md-autocomplete]="auto" />
+            <md-autocomplete #auto="md-autocomplete">
+              <md-option *ngFor="let email of emails" [value]=email.emailId>
+                {{email.emailId}}
+              </md-option>
+            </md-autocomplete>                      
+          </md-form-field> -->
+
+        </div>
+        <br>
+        <div class="row">
+          <div class="col-md-6"><button (click)="add()" [disabled]="!assignForm.valid"
+              mat-raised-button>{{btnLabel}}</button></div>
+          <div class="col-md-6"><button (click)="close()" mat-raised-button class="cancel">Cancel</button></div>
+        </div>
+      </form>
+    </ul>
+  </mat-card>
+</div>
+
+<!-- <md-select multiple class="col-md-3 col-sm-3 email-select" required placeholder="Select emails" [(ngModel)]="email"
+  name="email">
+  <md-option [value]="email.emailId" *ngFor="let email of emails">
+    {{email.emailId}}
+  </md-option>
+</md-select> -->

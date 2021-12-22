@@ -1,0 +1,49 @@
+<div class="main-content">
+  <a routerLink="/due" class="col-md-6 col-sm-6 tiles">
+    <div class="tiles-content {{this.homeClass}}">
+      <i class="pe-7s-timer animated fadeInUp"></i>
+      <span style="margin-left: 15px;">Due for Inspection</span>
+      <p class="description">View {{this.subTile}} that require inspections.</p>
+    </div>
+  </a>
+  <a routerLink="/inspectionRequest" class="col-md-6 col-sm-6 tiles">
+    <div class="tiles-content {{this.homeClass}}">
+      <i class="pe-7s-comment animated fadeInUp"></i>
+      <span style="margin-left: 15px;">Inspection Requests</span>
+      <p class="description">View current & previous inspection requests.</p>
+    </div>
+  </a>
+  <a routerLink="/generalReport" class="col-md-6 col-sm-6 tiles">
+    <div class="tiles-content {{this.homeClass}}">
+      <i class="pe-7s-note animated fadeInUp"></i>
+      <span style="margin-left: 15px;">Inspection Reports</span>
+      <p class="description">View reports for specific {{this.subTile}}.</p>
+    </div>
+  </a>
+  <a routerLink="/usercomplaints" class="col-md-6 col-sm-6 tiles">
+    <div class="tiles-content {{this.homeClass}}">
+      <!-- <i class="pe-7s-note animated fadeInUp"></i> -->
+      <i class="pe-7s-display1 animated fadeInUp"></i>
+      <span style="margin-left: 15px;">Work Order</span>
+      <p class="description">Generate Work Order.</p>
+    </div>
+  </a>
+  <a routerLink="/parkHistory" class="col-md-6 col-sm-6 tiles">
+    <div class="tiles-content {{this.homeClass}}">
+      <i class="pe-7s-date animated fadeInUp"></i>
+      <span style="margin-left: 15px;">{{this.headTile}}</span>
+      <p class="description">View inspection history for specific {{this.subTile}}.</p>
+    </div>
+  </a>
+  <a routerLink="/workOrder" class="col-md-6 col-sm-6 tiles">
+    <div class="tiles-content {{this.homeClass}}">
+      <i class="pe-7s-notebook large material-icons animated fadeInUp"></i>
+      <!-- <i class="pe-7s-notebook animated fadeInUp"></i> -->
+      <span style="margin-left: 15px;">Work Order History</span>
+      <p class="description">View pending and finished Work Order.</p>
+    </div>
+  </a>
+
+
+
+</div>

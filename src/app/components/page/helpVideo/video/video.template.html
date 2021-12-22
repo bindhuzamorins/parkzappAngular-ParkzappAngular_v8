@@ -1,0 +1,11 @@
+<h1 class="dialog-head">
+  <b>Help Video</b>
+  <span matTooltip="Close" matTooltipPosition="right" (click)="close()">
+    <i class="material-icons">close</i>
+  </span>
+</h1>
+<mat-card>
+  <video width="900" controls>
+    <source src="{{videoUrl}}{{moreDetails}}" type="video/ogg">
+  </video>
+</mat-card>

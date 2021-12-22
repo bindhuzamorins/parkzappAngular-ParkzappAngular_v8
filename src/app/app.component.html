@@ -1,0 +1,285 @@
+<router-outlet *ngIf="!loggedInstatus"></router-outlet>
+<div *ngIf="loggedInstatus" class="wrapper" (click)="resettoogle($event);">
+
+  <div id="greenmenu" class="sidebar" data-color="green" data-image="assets/dashboard/img/sidebar.jpg">
+    <!-- <div *ngIf="service1" class="sidebar" data-color="green" data-image="assets/dashboard/img/sidebar.jpg"> -->
+
+    <div class="sidebar-wrapper">
+      <div class="logo">
+        <a routerLink="/home" class="simple-text">ParkZapp Admin</a>
+      </div>
+      <ul class="nav">
+        <!--services-->
+        <li style="text-align:center;">
+          <button mat-raised-button (click)="newServiceButton()" class="serviceButton">
+            <i id="iconofser" class="fa fa-leaf fa-3x pull-left" style="color:black;"></i>
+            <p id="inspectionname" style="color:black;line-height:1.4;margin-left:7%;">PLAYGROUND
+              <br />INSPECTIONS</p>
+          </button>
+        </li>
+        <!--SERVICES END-->
+
+        <li [routerLinkActive]="['active']">
+          <a routerLink="/home">
+            <i class="pe-7s-home"></i>
+            <p>Home</p>
+          </a>
+        </li>
+        <li [routerLinkActive]="['active']">
+          <a routerLink="/parks">
+            <i id="iconservice" class="pe-7s-leaf"></i>
+            <p id="inspection">Parks</p>
+          </a>
+        </li>
+        <li [routerLinkActive]="['active']">
+          <a routerLink="/users">
+            <i class="pe-7s-users"></i>
+            <p>Users</p>
+          </a>
+        </li>
+        <li [routerLinkActive]="['active']">
+          <a routerLink="/records">
+            <i class="pe-7s-note2"></i>
+            <p>Records</p>
+          </a>
+        </li>
+        <li [routerLinkActive]="['active']">
+          <a routerLink="/reports">
+            <i class="pe-7s-news-paper"></i>
+            <p>Reports</p>
+          </a>
+        </li>
+        <li [routerLinkActive]="['active']">
+          <a routerLink="/setup">
+            <i class="pe-7s-config"></i>
+            <p>Setup</p>
+          </a>
+        </li>
+        <li [routerLinkActive]="['active']">
+          <a routerLink="/help">
+            <i class="pe-7s-help1"></i>
+            <p>Help</p>
+          </a>
+        </li>
+        <li [routerLinkActive]="['active']" class="active-pro">
+          <a routerLink="/planList">
+            <i class="pe-7s-rocket"></i>
+            <p>Plan upgrade</p>
+          </a>
+        </li>
+
+      </ul>
+
+    </div>
+
+  </div>
+
+
+
+  <div class="main-panel">
+    <nav class="navbar navbar-default navbar-fixed">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigation-example-2">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a *ngIf="clientCode" class="navbar-brand">
+            <b>Zappcode:</b> {{clientCode}}</a>
+          <a *ngIf="clientCode" class="navbar-brand">
+            <b>Username:</b> {{userName}}</a>
+          <button id="mobileLogout" mat-menu-item (click)="logout()">
+            <i class="pe-7s-power"></i>
+            <span class="green-tick">Logout</span>
+          </button>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li [class]="reset">
+              <i mat-raised-button data-toggle="reset" id="reset" (click)="toogleme();" class="material-icons"
+                matTooltip="Reset password" style="font-size:38px; color:#457c22;">person_pin</i>
+              <ul class="dropdown-menu">
+                <li style="text-align:center;" class="">
+                  <button mat-raised-button (click)="resetButton()">
+                    <i style="opacity:0.7 ;color:#457c22;font-size:20px;" class="material-icons">vpn_key</i> &nbsp;
+                    Reset Password</button>
+
+                </li>
+              </ul>
+            </li>
+            <li *ngIf="clientCode" class="dropdown">
+              <p mat-raised-button matTooltip="View more plan details" class="dropdown-toggle expiry-date"
+                data-toggle="dropdown">
+                <span>{{planName}}</span>
+              </p>
+              <ul class="dropdown-menu scrollnew">
+                <li>
+                  <a>
+                    <b>Registered Date:</b> {{licencedDate | date:'shortDate'}}</a>
+                </li>
+                <li>
+                  <a>
+                    <b>Expiry Date:</b> {{expiryDate | date:'shortDate'}}</a>
+                </li>
+                <li>
+                  <a>
+                    <b>Plan Period:</b> {{validDays}} days</a>
+                </li>
+                <li>
+                  <a>
+                    <b>Max. Playgrounds:</b> {{maximumPlaygrounds}}</a>
+                </li>
+                <li>
+                  <a>
+                    <b>Max. Playground Users:</b> {{maximumPlaygroundUsers}}</a>
+                </li>
+                <li *ngIf="buildingStatus">
+                  <a>
+                    <b>Max. Buildings:</b> {{maximumBuildings}}</a>
+
+                  <a>
+                    <b>Max. Building Users:</b> {{maximumBuildingUsers}}</a>
+                </li>
+                <li *ngIf="icearenaStatus">
+                  <a>
+                    <b>Max. Ice Arena:</b> {{maximumIcearenas}}</a>
+
+                  <a>
+                    <b>Max. Ice Arena Users:</b> {{maximumIcearenaUsers}}</a>
+                </li>
+                <li *ngIf="sportsfieldStatus">
+                  <a>
+                    <b>Max. Sports Field:</b> {{maximumSportsfield}}</a>
+
+                  <a>
+                    <b>Max. Sports Field Users:</b> {{maximumSportsfieldUsers}}</a>
+                </li>
+                <li *ngIf="fireStatus">
+                  <a>
+                    <b>Max. Fire&Safety Field:</b> {{maximumFiresafety}}</a>
+
+                  <a>
+                    <b>Max. Fire&Safety Users:</b> {{maximumFiresafetyUsers}}</a>
+                </li>
+                <li *ngIf="parkingLots">
+                  <a>
+                    <b>Max. Parking Lot:</b> {{maximumParkinglots}}</a>
+
+                  <a>
+                    <b>Max. Parking Lot Users:</b> {{maximumParkinglotUsers}}</a>
+                </li>
+                <li>
+                  <a>
+                    <b>Max. Storage:</b> {{totalStorageInGb}}</a>
+                </li>
+                <li>
+                  <a>
+                    <b>Remaining Storage:</b> {{remainingStorageIngb}}</a>
+                </li>
+
+
+                <!-- new add -->
+                <!-- <li>
+                  <a>
+
+                    <div class="progress">
+                      <div class="progress-bar progress-bar-success" role="progressbar" style="width:40%">
+                        Free Space
+                      </div>
+                      <div class="progress-bar progress-bar-warning" role="progressbar" style="width:10%">
+                        Warning
+                      </div>
+                      <div class="progress-bar progress-bar-danger" role="progressbar" style="width:20%">
+                        Danger
+                      </div>
+                    </div>
+                  </a>
+                </li> -->
+                <!-- <li>
+                  <a>
+                    <span class="{{msgClass}}">Remaining {{remainingStorageIngb}}</span>
+                    <div class="progress statusBar">
+                      <div class="progress-bar {{barStyle}}" role="progressbar" [style.width.%]="balance">
+                      </div>
+                      <div class="progress-bar vacum" role="progressbar" [style.width.%]="current"></div>
+                    </div>
+                    <div class="progress_bar_text">
+                      <span class="start">0</span>
+                      <span class="days">GB</span>
+                      <span class="validDays">{{totalStorageInGb}}</span>
+                    </div>
+                  </a>
+                </li> -->
+                <li>
+                  <a>
+                    <span class="{{msgClass}}">Remaining {{remainingDays}} {{showDay}}</span>
+                    <!--  <div class="progress statusBar">
+                      <div class="progress-bar progress-bar-success" role="progressbar" [style.width.%]="balance">
+                      </div>
+                      <div class="progress-bar progress-bar-danger" role="progressbar" [style.width.%]="current"></div>
+                      <div class="progress-bar progress-bar-danger" role="progressbar" [style.width.%]="current"></div>
+                    </div>-->
+                    <div class="progress statusBar">
+                      <div class="progress-bar {{barStyle}}" role="progressbar" [style.width.%]="balance">
+                      </div>
+                      <div class="progress-bar vacum" role="progressbar" [style.width.%]="current"></div>
+                    </div>
+                    <div class="progress_bar_text">
+                      <span class="start">0</span>
+                      <span class="days">days</span>
+                      <span class="validDays">{{validDays}}</span>
+                    </div>
+
+                  </a>
+                </li>
+                <li>
+                  <a routerLink="/planList" mat-raised-button class="upgrade-btn">
+                    <i class="pe-7s-rocket upgarde-icon"></i>PLAN UPGRADE
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li id="desktopLogout">
+              <a [matMenuTriggerFor]="menu" matTooltip="Logout from account" mat-raised-button class="logout-btn">
+                <i class="pe-7s-power"></i> Log out
+              </a>
+              <mat-menu #menu="matMenu">
+                <p class="center confirm-msg">Are you sure to logout?</p>
+                <button mat-menu-item (click)="logout()">
+                  <i class="material-icons green-tick">done</i>
+                  <span class="green-tick">Confirm</span>
+                </button>
+                <button mat-menu-item>
+                  <i class="material-icons red-close">close</i>
+                  <span class="red-close">Cancel</span>
+                </button>
+              </mat-menu>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
+    <!------------------start main content---------------->
+    <div class="content">
+      <div class="container-fluid">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+    <!------------------stop main content---------------->
+
+    <footer class="footer">
+      <div class="container-fluid">
+        <p class="copyright pull-right">
+          &copy; 2015 -{{mydate | date: 'yy'}}
+          <a target="_blank" href="https://www.zamorinstech.com">www.zamorinstech.com</a> , Smarter App. Safer
+          Playgrounds. Stellar communities.
+        </p>
+      </div>
+    </footer>
+
+  </div>
+</div>

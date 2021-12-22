@@ -1,0 +1,92 @@
+h3 {
+  font-size: 20px;
+  text-align: center;
+  font-family: 'Simonetta', cursive;
+  font-weight: bold;
+  color: #878787;
+}
+
+mat-card {
+  overflow: auto;
+}
+
+.links {
+  margin-top: 25px;
+}
+
+.tiles-content span {
+  font-size: 20px;
+}
+
+.tiles-content i {
+  font-size: 30px;
+}
+
+.tiles-content {
+  font-size: 38px;
+}
+
+.upgrade-btn {
+  background-color: #7fa057;
+  border-color: #7fa057;
+  color: white;
+  font-family: 'Simonetta', cursive;
+  font-weight: bold;
+}
+
+.more-details {
+  background-color: #557782;
+  border-color: #557782;
+  color: white;
+  font-family: 'Simonetta', cursive;
+  font-weight: bold;
+}
+
+@media screen and (max-width: 1024px){
+  .more-details {
+    margin-bottom: 6px;
+  }
+}
+
+.extend-btn {
+  background-color: #7f7fc7;
+  border-color: #7f7fc7;
+  color: white;
+  font-family: 'Simonetta', cursive;
+  font-weight: bold;
+}
+
+.right {
+  float: right;
+}
+
+td span {
+  color: #968f8f;
+}
+
+.table td {
+  font-family: 'Simonetta', cursive;
+  font-weight: bold;
+  color: #557782;
+  font-size: 19px;
+  padding-top: 10px !important;
+  padding-bottom: 10px !important;
+}
+
+.custom-payment {
+  margin-right: 10px;
+  background-color: #ca6c4f;
+}
+
+.current-plan {
+  background-color: #e1e1f3;
+}
+
+.grey-text {
+  color: #968f8f !important;
+}
+
+.contact-btn {
+  width: 100%;
+  background-color: #71598a;
+}

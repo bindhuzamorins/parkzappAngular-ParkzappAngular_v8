@@ -1,0 +1,90 @@
+.dialog-head {
+  color: #666666;
+  font-size: 20px;
+  margin-top: 0px;
+}
+
+.dialog-head span {
+  float: right;
+  cursor: pointer;
+}
+
+mat-form-field {
+  width: 100%;
+  font-family: 'Simonetta', cursive;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+img {
+  width: 300px;
+  height: 200px;
+}
+
+mat-dialog-container {
+  width: 100%;
+  transform: none;
+  opacity: 1;
+}
+
+ul {
+  padding-left: 0px;
+  list-style: none;
+  color: #666666;
+  font-size: 18px;
+  max-height: 200px;
+  overflow: auto;
+}
+
+.li-details {
+  font-weight: 200 !important;
+  margin-left: 5px;
+}
+
+agm-map {
+  height: 115px;
+}
+
+.add-btn {
+  float: right;
+  background-color: #598328;
+  color: white;
+}
+
+mat-select {
+  width: 100%;
+}
+
+.more-width {
+  width: 250px;
+}
+
+.text-box {
+  width: 70%;
+  border: 1px solid #e4e1e1;
+  padding: 2px;
+  padding-left: 4px;
+}
+
+.tick-btn {
+  color: #598328;
+  cursor: pointer;
+}
+
+.close-btn {
+  color: #c52727;
+  cursor: pointer;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+a i {
+  font-size: 20px;
+}
+.logo-img-eqp {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+}
